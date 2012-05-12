@@ -1,9 +1,11 @@
+#!/usr/bin/env ruby
+
 $filename = "data.txt"
-list = []
 
 module List
 
 	def self.print
+		puts "tracking display (run \"tracking help\" for help)"
 		File.open($filename,"r").each do |l|
 			puts l
 		end
@@ -29,17 +31,14 @@ module List
 end
 
 if ARGV.length == 0
-	puts "DEBUG: printing"
 	List.print
 else
 	if ARGV[0] == "clear"
-		puts "DEBUG: clearing"
+		puts "list cleared"
 		List.clear
 	elsif ARGV[0] == "edit"
-		puts "DEBUG: editing"
 		List.edit
 	else
-		puts "DEBUG: adding"
 		List.add ARGV[0]
 		List.print
 	end
