@@ -16,4 +16,3 @@ Command line time tracking with a minimal and configurable UI.
 ##Similar Projects
 - [timetrap](https://github.com/samg/timetrap)
 - [d-time-tracker](https://github.com/DanielVF/d-time-tracker)
-- [t-time-tracker](https://github.com/christiangenco/t-time-tracker)
