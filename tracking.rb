@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+#imports
+require "time"
+
 #data file
 $filename = "data.txt"
 
@@ -10,15 +13,21 @@ module List
 	def self.print
 		puts "tracking display (run \"tracking help\" for help)"
 		File.open($filename,"r").each do |l|
-			puts l
+			line = l.split("|")
+			time = Time.parse(line[0])
+			puts time.strftime("%H:%M")+" "+line[1]
 		end
 	end
 
 	#adds an item to the list
 	def self.add item
 		File.open($filename,"a") do |f|
-			date = "DATE"
-			f.write("\n"+date+" "+item)
+			newline = "\n"
+			if File.zero?($filename)
+				newline = ""
+			end
+			date = Time.now.to_s
+			f.write(newline+date+"|"+item.chomp)
 		end
 	end
 
