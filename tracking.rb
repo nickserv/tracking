@@ -33,6 +33,17 @@ module List
 		end
 	end
 
+	#removes an item from the list
+	def self.remove
+		lines = File.readlines($filename)
+		lines.pop
+		File.open($filename, "w") do |f| 
+			lines.each do |line|
+				f.puts(line)
+			end
+		end
+	end
+
 	#clears the entire list
 	def self.clear
 		File.open($filename,"w") do |f|
@@ -64,6 +75,9 @@ else
 	if ARGV[0] == "clear"
 		puts "list cleared"
 		List.clear
+	elsif ARGV[0] == "rm"
+		List.remove
+		List.print
 	elsif ARGV[0] == "edit"
 		List.edit
 	elsif ARGV[0] == "help"
