@@ -11,14 +11,20 @@ module List
 
 	#prints the entire list
 	def self.print
-		puts "tracking display (run \"tracking help\" for help)"
+		puts "+-------+------------------------------+"
 		File.open($filename,"r").each do |l|
 			line = l.split("|")
 			if line[0].chomp != ""
 				time = Time.parse(line[0])
-				puts time.strftime("%H:%M")+" "+line[1]
+				line = "| #{time.strftime("%H:%M")} | #{line[1].chomp}"
+				until line.length == 39
+					line += " "
+				end
+				line += "|"
+				puts line
 			end
 		end
+		puts "+-------+------------------------------+"
 	end
 
 	#adds an item to the list
