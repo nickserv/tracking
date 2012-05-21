@@ -4,7 +4,7 @@
 require "time"
 
 #data file
-$filename = "data.txt"
+$filename = ENV["HOME"]+"/.tracking"
 
 #methods for manipulating and displaying the list of data
 module List
