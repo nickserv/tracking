@@ -14,8 +14,10 @@ module List
 		puts "tracking display (run \"tracking help\" for help)"
 		File.open($filename,"r").each do |l|
 			line = l.split("|")
-			time = Time.parse(line[0])
-			puts time.strftime("%H:%M")+" "+line[1]
+			if line[0].chomp != ""
+				time = Time.parse(line[0])
+				puts time.strftime("%H:%M")+" "+line[1]
+			end
 		end
 	end
 
@@ -67,7 +69,7 @@ else
 	elsif ARGV[0] == "help"
 		List.help
 	else
-		List.add ARGV[0]
+		List.add ARGV.join(" ")
 		List.print
 	end
 end
