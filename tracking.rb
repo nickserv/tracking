@@ -19,16 +19,16 @@ module List
 	#prints the entire list
 	def self.print
 		puts $settings["first_line"]
-		File.open($filename,"r").each do |l|
-			line = l.split("|")
-			if line[0].chomp != ""
-				time = Time.parse(line[0])
-				line = $settings["line_start"]+time.strftime("%H:%M")+$settings["line_middle"]+line[1].chomp
-				until line.length == $settings["line_length"]-$settings["line_end"].length
-					line += " "
+		File.open($filename,"r").each do |before|
+			before = before.split("|")
+			if before[0].chomp != ""
+				time = Time.parse(before[0])
+				after = $settings["line_start"]+time.strftime("%H:%M")+$settings["line_middle"]+before[1].chomp
+				until after.length == $settings["line_length"]-$settings["line_end"].length
+					after += " "
 				end
-				line += $settings["line_end"]
-				puts line
+				after += $settings["line_end"]
+				puts after
 			end
 		end
 		puts $settings["last_line"]
