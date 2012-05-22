@@ -5,26 +5,33 @@ require "time"
 
 #data file
 $filename = ENV["HOME"]+"/.tracking"
+$settings = Hash.new();
+$settings["first_line"]  = "+-------+------------------------------+"
+$settings["last_line"]   = "+-------+------------------------------+"
+$settings["line_start"]  = "| "
+$settings["line_middle"] = " | "
+$settings["line_end"]    = " |"
+$settings["line_length"] = 40
 
 #methods for manipulating and displaying the list of data
 module List
 
 	#prints the entire list
 	def self.print
-		puts "+-------+------------------------------+"
+		puts $settings["first_line"]
 		File.open($filename,"r").each do |l|
 			line = l.split("|")
 			if line[0].chomp != ""
 				time = Time.parse(line[0])
-				line = "| #{time.strftime("%H:%M")} | #{line[1].chomp}"
-				until line.length == 39
+				line = $settings["line_start"]+time.strftime("%H:%M")+$settings["line_middle"]+line[1].chomp
+				until line.length == $settings["line_length"]-$settings["line_end"].length
 					line += " "
 				end
-				line += "|"
+				line += $settings["line_end"]
 				puts line
 			end
 		end
-		puts "+-------+------------------------------+"
+		puts $settings["last_line"]
 	end
 
 	#adds an item to the list
