@@ -4,8 +4,9 @@
 require "time"
 
 #data file
-$filename = ENV["HOME"]+"/.tracking"
+$datafile = ENV["HOME"]+"/.tracking"
 $settings = Hash.new();
+$settings["lines"] = 10
 $settings["first_line"]  = "+-------+------------------------------+"
 $settings["last_line"]   = "+-------+------------------------------+"
 $settings["line_start"]  = "| "
@@ -19,16 +20,20 @@ module List
 	#prints the entire list
 	def self.print
 		puts $settings["first_line"]
-		File.open($filename,"r").each do |before|
-			before = before.split("|")
-			if before[0].chomp != ""
-				time = Time.parse(before[0])
-				after = $settings["line_start"]+time.strftime("%H:%M")+$settings["line_middle"]+before[1].chomp
-				until after.length == $settings["line_length"]-$settings["line_end"].length
-					after += " "
+		file_length = 0
+		File.open($datafile) {|f| file_length = f.read.count("\n")}
+		File.open($datafile,"r").each_with_index do |before, index=1|
+			if index > file_length - $settings["lines"]
+				before = before.split("|")
+				if before[0].chomp != ""
+					time = Time.parse(before[0])
+					after = $settings["line_start"]+time.strftime("%H:%M")+$settings["line_middle"]+before[1].chomp
+					until after.length == $settings["line_length"]-$settings["line_end"].length
+						after += " "
+					end
+					after += $settings["line_end"]
+					puts after
 				end
-				after += $settings["line_end"]
-				puts after
 			end
 		end
 		puts $settings["last_line"]
@@ -36,9 +41,9 @@ module List
 
 	#adds an item to the list
 	def self.add item
-		File.open($filename,"a") do |f|
+		File.open($datafile,"a") do |f|
 			newline = "\n"
-			if File.zero?($filename)
+			if File.zero?($datafile)
 				newline = ""
 			end
 			date = Time.now.to_s
@@ -48,9 +53,9 @@ module List
 
 	#removes an item from the list
 	def self.remove
-		lines = File.readlines($filename)
+		lines = File.readlines($datafile)
 		lines.pop
-		File.open($filename, "w") do |f| 
+		File.open($datafile, "w") do |f| 
 			lines.each do |line|
 				f.puts(line)
 			end
@@ -59,14 +64,14 @@ module List
 
 	#clears the entire list
 	def self.clear
-		File.open($filename,"w") do |f|
+		File.open($datafile,"w") do |f|
 			f.write ""
 		end
 	end
 
 	#opens the list data file in a text editor
 	def self.edit
-		system ENV["EDITOR"] + " " + $filename
+		system ENV["EDITOR"] + " " + $datafile
 	end
 
 	#prints help for working with tracking
