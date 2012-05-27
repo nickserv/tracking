@@ -90,15 +90,16 @@ end
 if ARGV.length == 0
 	List.print
 else
-	if ARGV[0] == "clear"
+	case ARGV[0]
+	when "clear"
 		puts "list cleared"
 		List.clear
-	elsif ARGV[0] == "rm"
+	when "rm"
 		List.remove
 		List.print
-	elsif ARGV[0] == "edit"
+	when "edit"
 		List.edit
-	elsif ARGV[0] == "help"
+	when "help"
 		List.help
 	else
 		List.add ARGV.join(" ")
