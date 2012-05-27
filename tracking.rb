@@ -5,14 +5,15 @@ require "time"
 
 #data file
 $datafile = ENV["HOME"]+"/.tracking"
-$settings = Hash.new();
-$settings["lines"] = 10
-$settings["first_line"]  = "+-------+------------------------------+"
-$settings["last_line"]   = "+-------+------------------------------+"
-$settings["line_start"]  = "| "
-$settings["line_middle"] = " | "
-$settings["line_end"]    = " |"
-$settings["line_length"] = 40
+$settings = {
+	"lines"       => 10,
+	"first_line"  => "+-------+------------------------------+",
+	"last_line"   => "+-------+------------------------------+",
+	"line_start"  => "| ",
+	"line_middle" => " | ",
+	"line_end"    => " |",
+	"line_length" => 40
+}
 
 #methods for manipulating and displaying the list of data
 module List
