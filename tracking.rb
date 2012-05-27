@@ -76,12 +76,13 @@ module List
 
 	#prints help for working with tracking
 	def self.help
-		puts "tracking commands
-t:        displays all tracked tasks
-t <task>: adds a new task with the given text
-t clear:  deletes all tracked tasks
-t edit:   opens your data file in the default text editor
-t help:   display this help information"
+		puts "Usage:
+                display all tasks
+  <task>:       add a new task with the given text
+  -c, --clear   delete all tasks
+  -d, --delete  delete the latest task
+  -e, --edit    open data file in your default text editor
+  -h, --help    display this help information"
 	end
 
 end
@@ -91,15 +92,15 @@ if ARGV.length == 0
 	List.print
 else
 	case ARGV[0]
-	when "clear"
+	when "-c","--clear"
 		puts "list cleared"
 		List.clear
-	when "rm"
+	when "-d","--delete"
 		List.remove
 		List.print
-	when "edit"
+	when "-e","--edit"
 		List.edit
-	when "help"
+	when "-h","--help"
 		List.help
 	else
 		List.add ARGV.join(" ")
