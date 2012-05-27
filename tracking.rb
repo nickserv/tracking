@@ -19,11 +19,12 @@ module List
 
 	#prints the entire list
 	def self.print
-		puts $settings["first_line"]
+		display = []
 		file_length = 0
+		display.push $settings["first_line"]
 		File.open($datafile) {|f| file_length = f.read.count("\n")}
-		File.open($datafile,"r").each_with_index do |before, index=1|
-			if index > file_length - $settings["lines"]
+		File.open($datafile,"r").each_with_index do |before, index=0|
+			if index+1 > file_length - $settings["lines"]
 				before = before.split("|")
 				if before[0].chomp != ""
 					time = Time.parse(before[0])
@@ -32,11 +33,14 @@ module List
 						after += " "
 					end
 					after += $settings["line_end"]
-					puts after
+					display.push after
 				end
 			end
 		end
-		puts $settings["last_line"]
+		display.push $settings["last_line"]
+		display.each do |line|
+			puts line
+		end
 	end
 
 	#adds an item to the list
