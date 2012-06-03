@@ -10,7 +10,7 @@ $settings = {
 	"first_line"  => "+-------+------------------------------+",
 	"last_line"   => "+-------+------------------------------+",
 	"line_start"  => "| ",
-	"line_middle" => " | ",
+	"line_separator" => " | ",
 	"line_end"    => " |",
 	"line_length" => 40
 }
@@ -20,28 +20,31 @@ module List
 
 	#prints the entire list
 	def self.print
-		display = []
+		#read data file
+		data = []
 		file_length = 0
-		display.push $settings["first_line"]
 		File.open($datafile) {|f| file_length = f.read.count("\n")}
-		File.open($datafile,"r").each_with_index do |before, index=0|
+		File.open($datafile,"r").each_with_index do |line, index=0|
 			if index+1 > file_length - $settings["lines"]
-				before = before.split("|")
-				if before[0].chomp != ""
-					time = Time.parse(before[0])
-					after = $settings["line_start"]+time.strftime("%H:%M")+$settings["line_middle"]+before[1].chomp
-					until after.length == $settings["line_length"]-$settings["line_end"].length
-						after += " "
-					end
-					after += $settings["line_end"]
-					display.push after
-				end
+				data.push line.split("|")
 			end
 		end
-		display.push $settings["last_line"]
-		display.each do |line|
+		#display data
+		puts $settings["first_line"]
+		for i in 0..data.length-1
+			#grab and reformat data
+			time = Time.parse(data[i][0]).strftime("%H:%M")
+			task = data[i][1].chomp
+			#ready data for display
+			line = $settings["line_start"]+time+$settings["line_separator"]+task+$settings["line_separator"]
+			until line.length == $settings["line_length"]-$settings["line_end"].length
+				line += " "
+			end
+			line += $settings["line_end"]
+			#print data
 			puts line
 		end
+		puts $settings["last_line"]
 	end
 
 	#adds an item to the list
