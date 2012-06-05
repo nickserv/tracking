@@ -35,12 +35,17 @@ module List
 			#grab and reformat data
 			time = Time.parse(data[i][0]).strftime("%H:%M")
 			task = data[i][1].chomp
+			if i < data.length - 1
+				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
+			else
+				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
+			end
 			#ready data for display
-			line = $settings["line_start"]+time+$settings["line_separator"]+task+$settings["line_separator"]
-			until line.length == $settings["line_length"]-$settings["line_end"].length
+			line = $settings["line_start"] + time + $settings["line_separator"] + task
+			until line.length >= $settings["line_length"] - ($settings["line_separator"] + elapsed + $settings["line_end"]).length
 				line += " "
 			end
-			line += $settings["line_end"]
+			line += $settings["line_separator"] + elapsed + $settings["line_end"]
 			#print data
 			puts line
 		end
@@ -93,6 +98,36 @@ module List
   -h, --help    display this help information"
 	end
 
+end
+
+def getElapsedTime(time1, time2)
+	s = (time2 - time1).floor
+	if s >= 60
+		m = s/60
+		s = s%60
+		if m >= 60
+			h = m/60
+			m = m%60
+			if h >= 24
+				d = h/24
+				h = h%24
+			end
+		end
+	end
+	display = ""
+	if d
+		display += "#{d.to_s}d "
+	end
+	if h
+		display += "#{h.to_s}h "
+	end
+	if m
+		display += "#{m.to_s}m "
+	end
+	if s
+		display += "#{s.to_s}s"
+	end
+	return display
 end
 
 #command line interface
