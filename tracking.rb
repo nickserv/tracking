@@ -18,8 +18,8 @@ $settings = {
 #methods for manipulating and displaying the list of data
 module List
 
-	#prints the entire list
-	def self.print
+	#displays the entire list
+	def self.display
 		#read data file
 		data = []
 		file_length = 0
@@ -89,13 +89,15 @@ module List
 
 	#prints help for working with tracking
 	def self.help
-		puts "Usage:
+		puts <<EOF
+Usage:
                 display all tasks
   <task>:       add a new task with the given text
   -c, --clear   delete all tasks
   -d, --delete  delete the latest task
   -e, --edit    open data file in your default text editor
   -h, --help    display this help information"
+EOF
 	end
 
 end
@@ -132,7 +134,7 @@ end
 
 #command line interface
 if ARGV.length == 0
-	List.print
+	List.display
 else
 	case ARGV[0]
 	when "-c","--clear"
@@ -140,13 +142,13 @@ else
 		List.clear
 	when "-d","--delete"
 		List.remove
-		List.print
+		List.display
 	when "-e","--edit"
 		List.edit
 	when "-h","--help"
 		List.help
 	else
 		List.add ARGV.join(" ")
-		List.print
+		List.display
 	end
 end
