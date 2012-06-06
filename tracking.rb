@@ -41,11 +41,7 @@ module List
 				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
 			end
 			#ready data for display
-			line = $settings["line_start"] + time + $settings["line_separator"] + task
-			until line.length >= $settings["line_length"] - ($settings["line_separator"] + elapsed + $settings["line_end"]).length
-				line += " "
-			end
-			line += $settings["line_separator"] + elapsed + $settings["line_end"]
+			line = $settings["line_start"] + pad(time,5) + $settings["line_separator"] + pad(task,20) + $settings["line_separator"] + pad(elapsed,13,:right) + $settings["line_end"]
 			#print data
 			puts line
 		end
@@ -130,6 +126,21 @@ def getElapsedTime(time1, time2)
 		display += "#{s.to_s}s"
 	end
 	return display
+end
+
+def pad(string, length, align=:left)
+	if align==:right
+		until string.length >= length
+			string.insert(0," ")
+		end
+	#elsif align==:center
+		#do stuff
+	else
+		until string.length >= length
+			string += " "
+		end
+	end
+	return string
 end
 
 #command line interface
