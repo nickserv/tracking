@@ -6,13 +6,13 @@ require "time"
 #data file
 $datafile = ENV["HOME"]+"/.tracking"
 $settings = {
-	"lines"       => 10,
-	"first_line"  => "+-------+------------------------------+",
-	"last_line"   => "+-------+------------------------------+",
-	"line_start"  => "| ",
-	"line_separator" => " | ",
-	"line_end"    => " |",
-	"line_length" => 40
+	:lines       => 10,
+	:first_line  => "+-------+------------------------------+",
+	:last_line   => "+-------+------------------------------+",
+	:line_start  => "| ",
+	:line_separator => " | ",
+	:line_end    => " |",
+	:line_length => 40
 }
 
 #methods for manipulating and displaying the list of data
@@ -24,13 +24,13 @@ module List
 		data = []
 		file_length = 0
 		File.open($datafile) {|f| file_length = f.read.count("\n")}
-		File.open($datafile,"r").each_with_index do |line, index=0|
-			if index+1 > file_length - $settings["lines"]
+		File.open($datafile).each_with_index do |line, index=0|
+			if index+1 > file_length - $settings[:lines]
 				data.push line.split("|")
 			end
 		end
 		#display data
-		puts $settings["first_line"]
+		puts $settings[:first_line]
 		for i in 0..data.length-1
 			#grab and reformat data
 			time = Time.parse(data[i][0]).strftime("%H:%M")
@@ -41,11 +41,11 @@ module List
 				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
 			end
 			#ready data for display
-			line = $settings["line_start"] + pad(time,5) + $settings["line_separator"] + pad(task,20) + $settings["line_separator"] + pad(elapsed,13,:right) + $settings["line_end"]
+			line = $settings[:line_start] + pad(time,5) + $settings[:line_separator] + pad(task,20) + $settings[:line_separator] + pad(elapsed,13,:right) + $settings[:line_end]
 			#print data
 			puts line
 		end
-		puts $settings["last_line"]
+		puts $settings[:last_line]
 	end
 
 	#adds an item to the list
