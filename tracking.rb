@@ -7,12 +7,8 @@ require "time"
 $datafile = ENV["HOME"]+"/.tracking"
 $settings = {
 	:lines       => 10,
-	:first_line  => "+-------+------------------------------+",
-	:last_line   => "+-------+------------------------------+",
-	:line_start  => "| ",
-	:line_separator => " | ",
-	:line_end    => " |",
-	:line_length => 40
+	:first_line  => "+-------+--------------------------------------+",
+	:last_line   => "+-------+--------------------------------------+"
 }
 
 #methods for manipulating and displaying the list of data
@@ -41,7 +37,7 @@ module List
 				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
 			end
 			#ready data for display
-			line = $settings[:line_start] + pad(time,5) + $settings[:line_separator] + pad(task,20) + $settings[:line_separator] + pad(elapsed,13,:right) + $settings[:line_end]
+			line = "| #{pad(time,5)} | #{pad(task,20)} | #{pad(elapsed,13,:right)} |"
 			#print data
 			puts line
 		end
