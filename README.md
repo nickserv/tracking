@@ -1,4 +1,4 @@
-#tracking
+#Tracking (in development)
 Command line time tracking with a minimal and configurable UI.
 
 ##Ideas
