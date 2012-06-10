@@ -36,8 +36,13 @@ module List
 			else
 				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
 			end
+			tasks = split_task(task)
 			#ready data for display
-			line = "| #{pad(time,5)} | #{pad(task,20)} | #{pad(elapsed,13,:right)} |"
+			line = "| #{pad(time,5)} | #{pad(tasks[0],20)} | #{pad(elapsed,13,:right)} |"
+			tasks[1..-1].each do |x|
+				line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
+			end
+
 			#print data
 			puts line
 		end
@@ -137,6 +142,32 @@ def pad(string, length, align=:left)
 		end
 	end
 	return string
+end
+
+def split_task(task)
+	split = Array.new
+	if task.length > 20 
+		task_words = task.split(" ")
+		line = ""
+		task_words.each do |x|
+			if x.length > 20 
+				split_word = x.scan(%r[.{1,20}])
+				split_word[0..-2].each do |word|
+					split << word
+				end
+				line = split_word.last[-1]+" "
+			elsif (line + x).length > 20
+				split << line.chomp
+				line = x + " "
+			else
+				line += x + " "
+			end
+		end
+		split << line
+	else
+		split = [task]
+	end
+	return split
 end
 
 #command line interface
