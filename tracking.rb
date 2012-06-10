@@ -155,7 +155,7 @@ def split_task(task)
 				split_word[0..-2].each do |word|
 					split << word
 				end
-				line = split_word.last[-1]+" "
+				line = split_word.last+" "
 			elsif (line + x).length > 20
 				split << line.chomp
 				line = x + " "
