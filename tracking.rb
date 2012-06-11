@@ -149,33 +149,37 @@ end
 
 #word wraps tasks for display
 def split_task(task)
+	width = 20
 	split = Array.new
-	if task.length > 20 
+	if task.length > width #if the task needs to be split
 		task_words = task.split(" ")
 		line = ""
 		task_words.each do |x|
-			if x.length > 20 
-				while line.length < 20 
+			if x.length > width #if the word needs to be split
+				#add the start of the word onto the first line (even if it has already started)
+				while line.length < width
 					line += x[0]
 					x = x[1..-1]
 				end
 				split << line
-				split_word = x.scan(%r[.{1,20}])
+				#split the rest of the word up onto new lines
+				split_word = x.scan(%r[.{1,#{width}}])
 				split_word[0..-2].each do |word|
 					split << word
 				end
 				line = split_word.last+" "
-			elsif (line + x).length > 19
+			elsif (line + x).length > width-1 #if the word would fit alone on its own line
 				split << line.chomp
 				line = x + " "
-			else
+			else #if the word can be added to this line
 				line += x + " "
 			end
 		end
 		split << line
-	else
+	else #if the task doesn't need to be split
 		split = [task]
 	end
+	#give back the split line
 	return split
 end
 
