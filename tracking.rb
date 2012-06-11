@@ -170,7 +170,7 @@ def split_task(task)
 				line = split_word.last+" "
 			elsif (line + x).length > width-1 #if the word would fit alone on its own line
 				split << line.chomp
-				line = x + " "
+				line = x
 			else #if the word can be added to this line
 				line += x + " "
 			end
