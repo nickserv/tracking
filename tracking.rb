@@ -147,7 +147,7 @@ def pad(string, length, align=:left)
 	return string
 end
 
-#splits the task into the lines for displaying them
+#word wraps tasks for display
 def split_task(task)
 	split = Array.new
 	if task.length > 20 
