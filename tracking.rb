@@ -67,7 +67,10 @@ module List
 		lines.pop
 		File.open($datafile, "w") do |f| 
 			lines.each do |line|
-				f.puts(line)
+				if line == lines.last
+					line.chomp!
+				end
+				f.print(line)
 			end
 		end
 	end
@@ -144,6 +147,7 @@ def pad(string, length, align=:left)
 	return string
 end
 
+#splits the task into the lines for displaying them
 def split_task(task)
 	split = Array.new
 	if task.length > 20 
@@ -151,12 +155,17 @@ def split_task(task)
 		line = ""
 		task_words.each do |x|
 			if x.length > 20 
+				while line.length < 20 
+					line += x[0]
+					x = x[1..-1]
+				end
+				split << line
 				split_word = x.scan(%r[.{1,20}])
 				split_word[0..-2].each do |word|
 					split << word
 				end
 				line = split_word.last+" "
-			elsif (line + x).length > 20
+			elsif (line + x).length > 19
 				split << line.chomp
 				line = x + " "
 			else
