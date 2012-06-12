@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+#Tracking's command line interface (view).
 
 #imports
 require_relative "tracking"

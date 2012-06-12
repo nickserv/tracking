@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+#Tracking's core.
 
 #imports
 require_relative "config"
