@@ -3,9 +3,9 @@
 #imports
 require "time"
 
-#data file
+#settings
 $settings = {
-	:datafile    => ENV["HOME"]+"/.tracking",
+	:data_file   => ENV["HOME"] + "/.tracking",
 	:lines       => 10,
 	:first_line  => "+-------+--------------------------------------+",
 	:last_line   => "+-------+--------------------------------------+"
@@ -16,9 +16,9 @@ module Tracking
 
 	#adds an item to the list
 	def self.add item
-		File.open($settings[:datafile],"a") do |f|
+		File.open($settings[:data_file],"a") do |f|
 			newline = "\n"
-			if File.zero?($settings[:datafile])
+			if File.zero?($settings[:data_file])
 				newline = ""
 			end
 			date = Time.now.to_s
@@ -28,34 +28,34 @@ module Tracking
 
 	#removes an item from the list
 	def self.remove
-		lines = File.readlines($settings[:datafile])
+		lines = File.readlines($settings[:data_file])
 		lines.pop
-		File.open($settings[:datafile], "w") do |f| 
+		File.open($settings[:data_file],"w") do |f| 
 			lines.each do |line|
 				if line == lines.last
 					line.chomp!
 				end
-				f.print(line)
+				f.print line
 			end
 		end
 	end
 
 	#clears the entire list
 	def self.clear
-		File.open($settings[:datafile],"w") do |f|
+		File.open($settings[:data_file],"w") do |f|
 			f.write ""
 		end
 	end
 
 	#opens the list data file in a text editor
 	def self.edit
-		system ENV["EDITOR"] + " " + $settings[:datafile]
+		system ENV["EDITOR"] + " " + $settings[:data_file]
 	end
 
 end
 
 #gets and formats the amount of time passed between two times
-def getElapsedTime(time1, time2)
+def get_elapsed_time(time1, time2)
 	s = (time2 - time1).floor
 	if s >= 60
 		m = s/60

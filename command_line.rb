@@ -4,16 +4,16 @@
 require_relative "tracking"
 
 #view module methods
-module Command_Line
+module CommandLine
 
 	#displays the entire list
 	def self.display
 		#read data file
 		data = []
-		datafile = File.open($settings[:datafile])
-		file_length = datafile.readlines.size
-		datafile.seek(0)
-		datafile.each_with_index do |line, index=0|
+		data_file = File.open($settings[:data_file])
+		file_length = data_file.readlines.size
+		data_file.seek(0)
+		data_file.each_with_index do |line, index=0|
 			if index+1 > file_length - $settings[:lines]
 				data.push line.split("|")
 			end
@@ -25,9 +25,9 @@ module Command_Line
 			time = Time.parse(data[i][0]).strftime("%H:%M")
 			task = data[i][1].chomp
 			if i < data.length - 1
-				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
+				elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
 			else
-				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
+				elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.now())
 			end
 			tasks = split_task(task)
 			#ready data for display
@@ -35,7 +35,6 @@ module Command_Line
 			tasks[1..-1].each do |x|
 				line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
 			end
-
 			#print data
 			puts line
 		end
@@ -111,7 +110,7 @@ end
 
 #command line interface
 if ARGV.length == 0
-	Command_Line.display
+	CommandLine.display
 else
 	case ARGV[0]
 	when "-c","--clear"
