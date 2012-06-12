@@ -11,44 +11,8 @@ $settings = {
 	:last_line   => "+-------+--------------------------------------+"
 }
 
-#methods for manipulating and displaying the list of data
-module List
-
-	#displays the entire list
-	def self.display
-		#read data file
-		data = []
-		datafile = File.open($settings[:datafile])
-		file_length = datafile.readlines.size
-		datafile.seek(0)
-		datafile.each_with_index do |line, index=0|
-			if index+1 > file_length - $settings[:lines]
-				data.push line.split("|")
-			end
-		end
-		#display data
-		puts $settings[:first_line]
-		for i in 0..data.length-1
-			#grab and reformat data
-			time = Time.parse(data[i][0]).strftime("%H:%M")
-			task = data[i][1].chomp
-			if i < data.length - 1
-				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
-			else
-				elapsed = getElapsedTime(Time.parse(data[i][0]), Time.now())
-			end
-			tasks = split_task(task)
-			#ready data for display
-			line = "| #{pad(time,5)} | #{pad(tasks[0],20)} | #{pad(elapsed,13,:right)} |"
-			tasks[1..-1].each do |x|
-				line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
-			end
-
-			#print data
-			puts line
-		end
-		puts $settings[:last_line]
-	end
+#model/controller module methods
+module Tracking
 
 	#adds an item to the list
 	def self.add item
@@ -88,21 +52,9 @@ module List
 		system ENV["EDITOR"] + " " + $settings[:datafile]
 	end
 
-	#prints help for working with tracking
-	def self.help
-		puts <<EOF
-Usage:
-                display all tasks
-  <task>:       add a new task with the given text
-  -c, --clear   delete all tasks
-  -d, --delete  delete the latest task
-  -e, --edit    open data file in your default text editor
-  -h, --help    display this help information"
-EOF
-	end
-
 end
 
+#gets and formats the amount of time passed between two times
 def getElapsedTime(time1, time2)
 	s = (time2 - time1).floor
 	if s >= 60
@@ -131,55 +83,4 @@ def getElapsedTime(time1, time2)
 		display += "#{s.to_s}s"
 	end
 	return display
-end
-
-def pad(string, length, align=:left)
-	if align==:right
-		until string.length >= length
-			string.insert(0," ")
-		end
-	#elsif align==:center
-		#do stuff
-	else
-		until string.length >= length
-			string += " "
-		end
-	end
-	return string
-end
-
-#word wraps tasks for display
-def split_task(task)
-	width = 20
-	split = Array.new
-	if task.length > width #if the task needs to be split
-		task_words = task.split(" ")
-		line = ""
-		task_words.each do |x|
-			if x.length > width #if the word needs to be split
-				#add the start of the word onto the first line (even if it has already started)
-				while line.length < width
-					line += x[0]
-					x = x[1..-1]
-				end
-				split << line
-				#split the rest of the word up onto new lines
-				split_word = x.scan(%r[.{1,#{width}}])
-				split_word[0..-2].each do |word|
-					split << word
-				end
-				line = split_word.last+" "
-			elsif (line + x).length > width-1 #if the word would fit alone on its own line
-				split << line.chomp
-				line = x
-			else #if the word can be added to this line
-				line += x + " "
-			end
-		end
-		split << line
-	else #if the task doesn't need to be split
-		split = [task]
-	end
-	#give back the split line
-	return split
 end
