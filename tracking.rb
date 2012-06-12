@@ -1,24 +1,17 @@
 #!/usr/bin/env ruby
 
 #imports
+require_relative "config"
 require "time"
-
-#settings
-$settings = {
-	:data_file   => ENV["HOME"] + "/.tracking",
-	:lines       => 10,
-	:first_line  => "+-------+--------------------------------------+",
-	:last_line   => "+-------+--------------------------------------+"
-}
 
 #model/controller module methods
 module Tracking
 
 	#adds an item to the list
 	def self.add item
-		File.open($settings[:data_file],"a") do |f|
+		File.open($config[:data_file],"a") do |f|
 			newline = "\n"
-			if File.zero?($settings[:data_file])
+			if File.zero?($config[:data_file])
 				newline = ""
 			end
 			date = Time.now.to_s
@@ -28,9 +21,9 @@ module Tracking
 
 	#removes an item from the list
 	def self.remove
-		lines = File.readlines($settings[:data_file])
+		lines = File.readlines($config[:data_file])
 		lines.pop
-		File.open($settings[:data_file],"w") do |f| 
+		File.open($config[:data_file],"w") do |f| 
 			lines.each do |line|
 				if line == lines.last
 					line.chomp!
@@ -42,14 +35,14 @@ module Tracking
 
 	#clears the entire list
 	def self.clear
-		File.open($settings[:data_file],"w") do |f|
+		File.open($config[:data_file],"w") do |f|
 			f.write ""
 		end
 	end
 
 	#opens the list data file in a text editor
 	def self.edit
-		system ENV["EDITOR"] + " " + $settings[:data_file]
+		system ENV["EDITOR"] + " " + $config[:data_file]
 	end
 
 end
