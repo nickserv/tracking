@@ -4,8 +4,8 @@
 require "time"
 
 #data file
-$datafile = ENV["HOME"]+"/.tracking"
 $settings = {
+	:datafile    => ENV["HOME"]+"/.tracking",
 	:lines       => 10,
 	:first_line  => "+-------+--------------------------------------+",
 	:last_line   => "+-------+--------------------------------------+"
@@ -18,9 +18,10 @@ module List
 	def self.display
 		#read data file
 		data = []
-		file_length = 0
-		File.open($datafile) {|f| file_length = f.read.count("\n")}
-		File.open($datafile).each_with_index do |line, index=0|
+		datafile = File.open($settings[:datafile])
+		file_length = datafile.readlines.size
+		datafile.seek(0)
+		datafile.each_with_index do |line, index=0|
 			if index+1 > file_length - $settings[:lines]
 				data.push line.split("|")
 			end
@@ -51,9 +52,9 @@ module List
 
 	#adds an item to the list
 	def self.add item
-		File.open($datafile,"a") do |f|
+		File.open($settings[:datafile],"a") do |f|
 			newline = "\n"
-			if File.zero?($datafile)
+			if File.zero?($settings[:datafile])
 				newline = ""
 			end
 			date = Time.now.to_s
@@ -63,9 +64,9 @@ module List
 
 	#removes an item from the list
 	def self.remove
-		lines = File.readlines($datafile)
+		lines = File.readlines($settings[:datafile])
 		lines.pop
-		File.open($datafile, "w") do |f| 
+		File.open($settings[:datafile], "w") do |f| 
 			lines.each do |line|
 				if line == lines.last
 					line.chomp!
@@ -77,14 +78,14 @@ module List
 
 	#clears the entire list
 	def self.clear
-		File.open($datafile,"w") do |f|
+		File.open($settings[:datafile],"w") do |f|
 			f.write ""
 		end
 	end
 
 	#opens the list data file in a text editor
 	def self.edit
-		system ENV["EDITOR"] + " " + $datafile
+		system ENV["EDITOR"] + " " + $settings[:datafile]
 	end
 
 	#prints help for working with tracking
