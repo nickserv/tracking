@@ -3,6 +3,7 @@
 
 #imports
 require_relative "tracking"
+require "optparse"
 
 #view module methods
 module CommandLine
@@ -40,19 +41,6 @@ module CommandLine
 			puts line
 		end
 		puts $config[:last_line]
-	end
-
-	#prints help for working with tracking
-	def self.help
-		puts <<EOF
-Usage:
-                display all tasks
-  <task>:       add a new task with the given text
-  -c, --clear   delete all tasks
-  -d, --delete  delete the latest task
-  -e, --edit    open data file in your default text editor
-  -h, --help    display this help information"
-EOF
 	end
 
 end
@@ -109,23 +97,41 @@ def split_task(task)
 	return split
 end
 
+options = {}
+
 #command line interface
-if ARGV.length == 0
-	CommandLine.display
-else
-	case ARGV[0]
-	when "-c","--clear"
-		puts "list cleared"
-		Tracking.clear
-	when "-d","--delete"
-		Tracking.remove
-		Tracking.display
-	when "-e","--edit"
-		Tracking.edit
-	when "-h","--help"
-		Tracking.help
-	else
+optparse = OptionParser.new do |opts|
+
+	opts.banner = "Usage: tracking [options] [task text]"
+
+	opts.on(nil,nil,"Display all tasks") do
+		CommandLine.display
+	end
+
+	opts.on(nil,nil,"Add a new task with the given text") do
 		Tracking.add ARGV.join(" ")
 		Tracking.display
 	end
+
+	opts.on("-c","--clear","Delete all tasks") do
+		puts "list cleared"
+		Tracking.clear
+	end
+
+	opts.on("-d","--delete","Delete the latest task") do
+		Tracking.remove
+		Tracking.display
+	end
+
+	opts.on("-e","--edit","Open data file in your default text editor") do
+		Tracking.edit
+	end
+
+	opts.on("-h","--help","Display this help information") do
+		puts opts
+		#exit
+	end
+
 end
+
+optparse.parse!
