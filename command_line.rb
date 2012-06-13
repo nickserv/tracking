@@ -8,7 +8,7 @@ require_relative "tracking"
 module CommandLine
 
 	#displays the entire list
-	def self.display
+	def self.display_tasks
 		#read data file
 		data = []
 		data_file = File.open($config[:data_file])
@@ -111,7 +111,7 @@ end
 
 #command line interface
 if ARGV.length == 0
-	CommandLine.display
+	CommandLine.display_tasks
 else
 	case ARGV[0]
 	when "-c","--clear"
@@ -119,13 +119,13 @@ else
 		Tracking.clear
 	when "-d","--delete"
 		Tracking.remove
-		Tracking.display
+		CommandLine.display_tasks
 	when "-e","--edit"
 		Tracking.edit
 	when "-h","--help"
 		Tracking.help
 	else
 		Tracking.add ARGV.join(" ")
-		Tracking.display
+		CommandLine.display_tasks
 	end
 end
