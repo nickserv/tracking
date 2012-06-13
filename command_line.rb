@@ -100,36 +100,41 @@ end
 options = {}
 
 #command line interface
-optparse = OptionParser.new do |opts|
+optparse = OptionParser.new(:collect) do |opts|
 
 	opts.banner = "Usage: tracking [options] [task text]"
 
 	opts.on(nil,nil,"Display all tasks") do
+		puts "display"
 		CommandLine.display_tasks
 	end
 
 	opts.on(nil,nil,"Add a new task with the given text") do
+		puts "add"
 		Tracking.add ARGV.join(" ")
 		CommandLine.display_tasks
 	end
 
 	opts.on("-c","--clear","Delete all tasks") do
-		puts "list cleared"
+		puts "clear"
+		puts "List cleared."
 		Tracking.clear
 	end
 
 	opts.on("-d","--delete","Delete the latest task") do
+		puts "delete"
 		Tracking.remove
 		CommandLine.display_tasks
 	end
 
 	opts.on("-e","--edit","Open data file in your default text editor") do
+		puts "edit"
 		Tracking.edit
 	end
 
 	opts.on("-h","--help","Display this help information") do
+		puts "help"
 		puts opts
-		#exit
 	end
 
 end
