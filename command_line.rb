@@ -9,7 +9,7 @@ require "optparse"
 module CommandLine
 
 	#displays the entire list
-	def self.display
+	def self.display_tasks
 		#read data file
 		data = []
 		data_file = File.open($config[:data_file])
@@ -105,12 +105,12 @@ optparse = OptionParser.new do |opts|
 	opts.banner = "Usage: tracking [options] [task text]"
 
 	opts.on(nil,nil,"Display all tasks") do
-		CommandLine.display
+		CommandLine.display_tasks
 	end
 
 	opts.on(nil,nil,"Add a new task with the given text") do
 		Tracking.add ARGV.join(" ")
-		Tracking.display
+		CommandLine.display_tasks
 	end
 
 	opts.on("-c","--clear","Delete all tasks") do
@@ -120,7 +120,7 @@ optparse = OptionParser.new do |opts|
 
 	opts.on("-d","--delete","Delete the latest task") do
 		Tracking.remove
-		Tracking.display
+		CommandLine.display_tasks
 	end
 
 	opts.on("-e","--edit","Open data file in your default text editor") do

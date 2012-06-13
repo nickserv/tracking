@@ -63,18 +63,18 @@ def get_elapsed_time(time1, time2)
 			end
 		end
 	end
-	display = ""
+	elapsed = ""
 	if d
-		display += "#{d.to_s}d "
+		elapsed += "#{d.to_s}d "
 	end
 	if h
-		display += "#{h.to_s}h "
+		elapsed += "#{h.to_s}h "
 	end
 	if m
-		display += "#{m.to_s}m "
+		elapsed += "#{m.to_s}m "
 	end
 	if s
-		display += "#{s.to_s}s"
+		elapsed += "#{s.to_s}s"
 	end
-	return display
+	return elapsed
 end
