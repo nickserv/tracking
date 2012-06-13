@@ -50,31 +50,33 @@ end
 
 #gets and formats the amount of time passed between two times
 def get_elapsed_time(time1, time2)
-	s = (time2 - time1).floor
-	if s >= 60
-		m = s/60
-		s = s%60
-		if m >= 60
-			h = m/60
-			m = m%60
-			if h >= 24
-				d = h/24
-				h = h%24
+	#calculate the elapsed time and break it down into different units
+	seconds = (time2 - time1).floor
+	if seconds >= 60
+		minutes = seconds / 60
+		seconds = seconds % 60
+		if minutes >= 60
+			hours = minutes / 60
+			minutes = minutes % 60
+			if hours >= 24
+				days = hours / 24
+				hours = hours % 24
 			end
 		end
 	end
+	#return a string of the formatted elapsed time
 	elapsed = ""
-	if d
-		elapsed += "#{d.to_s}d "
+	if days
+		elapsed += "#{days.to_s}d "
 	end
-	if h
-		elapsed += "#{h.to_s}h "
+	if hours
+		elapsed += "#{hours.to_s}h "
 	end
-	if m
-		elapsed += "#{m.to_s}m "
+	if minutes
+		elapsed += "#{minutes.to_s}m "
 	end
-	if s
-		elapsed += "#{s.to_s}s"
+	if seconds
+		elapsed += "#{seconds.to_s}s"
 	end
 	return elapsed
 end
