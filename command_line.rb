@@ -39,6 +39,13 @@ module CommandLine
 			#print data
 			puts line
 		end
+		if data.length==0
+			#puts pad("You haven't started any tasks yet.", 20)
+			puts "| You haven't started any tasks yet! :(        |"
+			puts "|                                              |"
+			puts "| Run this to begin your first task:           |"
+			puts "|     tracking starting some work              |"
+		end
 		puts $config[:last_line]
 	end
 
