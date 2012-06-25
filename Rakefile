@@ -25,10 +25,10 @@ desc "link tracking to ~/bin"
 task :link do
 	puts "Linking Tracking to ~/bin...."
 	if File.directory? File.expand_path("~/Bin")
-		ln_s File.expand_path("command_line.rb"), File.expand_path("~/Bin/tracking")
+		ln_s File.expand_path("command_line.rb"), File.expand_path("~/Bin/tracking"), :force => true
 	else
 		mkdir File.expand_path("~/bin") unless File.directory? file.expand_path("~/bin")
-		ln_s File.expand_path("command_line.rb"), File.expand_path("~/bin/tracking")
+		ln_s File.expand_path("command_line.rb"), File.expand_path("~/bin/tracking"), :force => true
 	end
 end
 
