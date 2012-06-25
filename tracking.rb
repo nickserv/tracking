@@ -2,11 +2,14 @@
 #Tracking's core.
 
 #imports
-require_relative "config"
+require "yaml"
 require "time"
 
 #model/controller module methods
 module Tracking
+
+	$config = YAML.load_file("config.yml")
+	$config[:data_file] = File.expand_path($config[:data_file])
 
 	#adds an item to the list
 	def self.add item
