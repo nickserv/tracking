@@ -1,9 +1,11 @@
 #Tracking (in development)
 Command line time tracking with a minimal and configurable UI.
 
-##Ideas
+##Features
 - concise display, show one task on each line (with time started and time elapsed)
 - simple syntax
+
+##Ideas
 - portable data
 - configurable display
 - hashtag-like tags for organizing tasks

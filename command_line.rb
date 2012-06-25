@@ -43,12 +43,14 @@ module CommandLine
 			puts "+-------+--------------------------------------+"
 		else
 			#puts pad("You haven't started any tasks yet.", 20)
-			puts "+----------------------------------------------+"
-			puts "| You haven't started any tasks yet! :(        |"
-			puts "|                                              |"
-			puts "| Run this to begin your first task:           |"
-			puts "|     tracking starting some work              |"
-			puts "+----------------------------------------------+"
+			puts <<EOF
++----------------------------------------------+
+| You haven't started any tasks yet! :(        |
+|                                              |
+| Run this to begin your first task:           |
+|     tracking starting some work              |
++----------------------------------------------+
+EOF
 		end
 	end
 
