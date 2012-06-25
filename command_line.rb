@@ -21,26 +21,36 @@ module CommandLine
 			end
 		end
 		#display data
-		puts $config[:first_line]
-		for i in 0..data.length-1
-			#grab and reformat data
-			time = Time.parse(data[i][0]).strftime("%H:%M")
-			task = data[i][1].chomp
-			if i < data.length - 1
-				elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
-			else
-				elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.now())
+		if data.length > 0
+			puts "+-------+--------------------------------------+"
+			for i in 0..data.length-1
+				#grab and reformat data
+				time = Time.parse(data[i][0]).strftime("%H:%M")
+				task = data[i][1].chomp
+				if i < data.length - 1
+					elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
+				else
+					elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.now())
+				end
+				tasks = split_task(task)
+				#ready data for display
+				line = "| #{pad(time,5)} | #{pad(tasks[0],20)} | #{pad(elapsed,13,:right)} |"
+				tasks[1..-1].each do |x|
+					line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
+				end
+				#print data
+				puts line
 			end
-			tasks = split_task(task)
-			#ready data for display
-			line = "| #{pad(time,5)} | #{pad(tasks[0],20)} | #{pad(elapsed,13,:right)} |"
-			tasks[1..-1].each do |x|
-				line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
-			end
-			#print data
-			puts line
+			puts "+-------+--------------------------------------+"
+		else
+			#puts pad("You haven't started any tasks yet.", 20)
+			puts "+----------------------------------------------+"
+			puts "| You haven't started any tasks yet! :(        |"
+			puts "|                                              |"
+			puts "| Run this to begin your first task:           |"
+			puts "|     tracking starting some work              |"
+			puts "+----------------------------------------------+"
 		end
-		puts $config[:last_line]
 	end
 
 end
