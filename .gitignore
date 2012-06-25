@@ -1,3 +1,6 @@
+data.txt
+
+# Ruby
 *.gem
 *.rbc
 .bundle
