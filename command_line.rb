@@ -11,10 +11,9 @@ module CommandLine
 	def self.display_tasks
 		#read data file
 		data = []
-		data_file = File.open($config[:data_file])
-		file_length = data_file.readlines.size
-		data_file.seek(0)
-		data_file.each_with_index do |line, index=0|
+		file_length = $data_file.readlines.size
+		$data_file.seek(0)
+		$data_file.each_with_index do |line, index=0|
 			if index+1 > file_length - $config[:lines]
 				data.push line.split("|")
 			end

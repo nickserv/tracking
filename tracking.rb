@@ -11,23 +11,20 @@ module Tracking
 	$config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
 	$config[:data_file] = File.expand_path($config[:data_file])
 
+	$data_file = File.new($config[:data_file])
+
 	#adds an item to the list
 	def self.add item
-		File.open($config[:data_file],"a") do |f|
-			newline = "\n"
-			if File.zero?($config[:data_file])
-				newline = ""
-			end
-			date = Time.now.to_s
-			f.write(newline+date+"|"+item.chomp)
-		end
+		newline = "\n"
+		date = Time.now.to_s
+		$data_file.write(newline+date+"|"+item.chomp)
 	end
 
 	#removes an item from the list
 	def self.remove
-		lines = File.readlines($config[:data_file])
+		lines = $data_file.readlines
 		lines.pop
-		File.open($config[:data_file],"w") do |f| 
+		$data_file.write do |f|
 			lines.each do |line|
 				if line == lines.last
 					line.chomp!
@@ -39,7 +36,7 @@ module Tracking
 
 	#clears the entire list
 	def self.clear
-		File.open($config[:data_file],"w") do |f|
+		$data_file.write do |f|
 			f.write ""
 		end
 	end
