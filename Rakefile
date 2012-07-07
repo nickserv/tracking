@@ -1,35 +1,53 @@
-task :install do
-	puts "Installing Tracking...."
-	Rake::Task[:link].execute
-	puts "Tracking has been successfully installed!"
-	puts "Try running \"tracking\" now. If it doesn't work, make sure ~/bin (or ~/Bin) is in your PATH."
+# encoding: utf-8
+
+require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
+
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "tracking"
+  gem.homepage = "http://github.com/thenickperson/tracking"
+  gem.license = "MIT"
+  gem.summary = %Q{TODO: one-line summary of your gem}
+  gem.description = %Q{TODO: longer description of your gem}
+  gem.email = "thenickperson@gmail.com"
+  gem.authors = ["Nicolas McCurdy"]
+  # dependencies defined in Gemfile
+end
+Jeweler::RubygemsDotOrgTasks.new
+
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
 end
 
-desc "reset tracking to its default settings and clear its data file"
-task :reset do
-	#TODO
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |test|
+  test.libs << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
+  test.rcov_opts << '--exclude "gems/*"'
 end
 
-=begin
-desc "update Tracking to a stable release (force stable update)"
-end
-=end
+task :default => :test
 
-desc "pull tracking's git repository (force unstable update)"
-task :pull do
-	puts "Pulling git repository...."
-	system "git pull"
-end
+require 'rdoc/task'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
-desc "link tracking to ~/bin"
-task :link do
-	puts "Linking Tracking to ~/bin...."
-	if File.directory? File.expand_path("~/Bin")
-		ln_s File.expand_path("command_line.rb"), File.expand_path("~/Bin/tracking"), :force => true
-	else
-		mkdir File.expand_path("~/bin") unless File.directory? file.expand_path("~/bin")
-		ln_s File.expand_path("command_line.rb"), File.expand_path("~/bin/tracking"), :force => true
-	end
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "tracking #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
-task :default => [:pull]
