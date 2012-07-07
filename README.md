@@ -4,7 +4,7 @@ Command line time tracking with a minimal and configurable UI.
 ##Installation
 
 ```
-curl https://raw.github.com/thenickperson/tracking/master/bootstrap.sh -o - | sh
+gem install tracking
 ```
 
 That's it!
