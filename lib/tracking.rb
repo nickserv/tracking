@@ -9,5 +9,3 @@ end
 
 require File.join(File.dirname(__FILE__), "tracking", "list")
 require File.join(File.dirname(__FILE__), "tracking", "cli")
-
-Tracking::CLI.parse
