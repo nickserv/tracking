@@ -9,7 +9,7 @@ module Tracking
 
 		extend self
 
-		PATH = File.join(ENV['HOME'], '.tracking', 'config.yml')
+		PATH = File.join(ENV["HOME"], ".tracking", "config.yml")
 		
 		#default values
 		def defaults
@@ -23,16 +23,16 @@ module Tracking
 
 		#accessor for values in the config
 		def [] key
-			fileval = YAML.load_file PATH
-			defaults.merge(fileval)[key]
+			data = YAML.load_file PATH
+			defaults.merge(data)[key]
 		end
 
 		#setter for keys in config
 		def []= key, value
-			fileval = YAML.load_file PATH
-			configs = defaults.merge(fileval)
+			data = YAML.load_file PATH
+			configs = defaults.merge(data)
 			configs[key] = value
-			File.open(PATH, 'w') do |fh|
+			File.open(PATH, "w") do |fh|
 				fh.puts(configs.to_yaml)
 			end
 		end
@@ -44,8 +44,8 @@ module Tracking
 			else 
 				defaults
 			end
-			File.open(PATH, 'w') do |fh|
-				fh.puts(configs.to_yaml)
+			File.open(PATH, "w") do |fh|
+				fh.puts configs.to_yaml
 			end
 		end
 
