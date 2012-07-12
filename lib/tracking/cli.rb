@@ -117,24 +117,26 @@ EOF
 			return split
 		end
 
-		#command line interface
-		if ARGV.length == 0
-			display_tasks
-		else
-			case ARGV[0]
-			when "-c","--clear"
-				puts "list cleared"
-				List.clear
-			when "-d","--delete"
-				List.remove
+		#parse options for the command line interface
+		def parse
+			if ARGV.length == 0
 				display_tasks
-			when "-e","--edit"
-				List.edit
-			when "-h","--help"
-				List.help
 			else
-				List.add ARGV.join(" ")
-				display_tasks
+				case ARGV[0]
+				when "-c","--clear"
+					puts "list cleared"
+					List.clear
+				when "-d","--delete"
+					List.remove
+					display_tasks
+				when "-e","--edit"
+					List.edit
+				when "-h","--help"
+					List.help
+				else
+					List.add ARGV.join(" ")
+					display_tasks
+				end
 			end
 		end
 
