@@ -25,9 +25,9 @@ module Tracking
 					time = Time.parse(data[i][0]).strftime("%H:%M")
 					task = data[i][1].chomp
 					if i < data.length - 1
-						elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
+						elapsed = List.get_elapsed_time(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
 					else
-						elapsed = get_elapsed_time(Time.parse(data[i][0]), Time.now())
+						elapsed = List.get_elapsed_time(Time.parse(data[i][0]), Time.now())
 					end
 					tasks = split_task(task)
 					#ready data for display
