@@ -2,11 +2,12 @@
 
 #view module methods
 module Tracking
-
 	module CLI
 
+		extend self
+
 		#displays the entire list
-		def self.display_tasks
+		def display_tasks
 			#read data file
 			data = []
 			file_length = $data_file.readlines.size
@@ -52,7 +53,7 @@ EOF
 		end
 
 		#prints help for working with tracking
-		def self.help
+		def help
 			puts <<EOF
 Usage:
 		display all tasks
@@ -116,27 +117,27 @@ EOF
 		end
 		#give back the split line
 		return split
-	end
 
-	#command line interface
-	if ARGV.length == 0
-		CommandLine.display_tasks
-	else
-		case ARGV[0]
-		when "-c","--clear"
-			puts "list cleared"
-			Tracking.clear
-		when "-d","--delete"
-			Tracking.remove
-			CommandLine.display_tasks
-		when "-e","--edit"
-			Tracking.edit
-		when "-h","--help"
-			Tracking.help
+		#command line interface
+		if ARGV.length == 0
+			display_tasks
 		else
-			Tracking.add ARGV.join(" ")
-			CommandLine.display_tasks
+			case ARGV[0]
+			when "-c","--clear"
+				puts "list cleared"
+				List.clear
+			when "-d","--delete"
+				List.remove
+				display_tasks
+			when "-e","--edit"
+				List.edit
+			when "-h","--help"
+				List.help
+			else
+				List.add ARGV.join(" ")
+				display_tasks
+			end
 		end
-	end
 
+	end
 end
