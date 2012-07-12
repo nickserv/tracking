@@ -13,7 +13,7 @@ module Tracking
 		$config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
 		$config[:data_file] = File.expand_path($config[:data_file])
 
-		$data_file = File.new($config[:data_file])
+		$data_file = File.new($config[:data_file], "r+")
 
 		#adds an item to the list
 		def add item
