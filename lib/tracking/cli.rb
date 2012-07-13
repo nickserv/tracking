@@ -11,8 +11,21 @@ module Tracking
 
 		#displays the entire list
 		def display_tasks
+			#horizontal border for the top or bottom of tracking's display
+			horizontal_border = "+-------+--------------------------------------+"
+			#intro message, displayed when no valid tasks are found
+			introduction = <<EOF
++----------------------------------------------+
+| You haven't started any tasks yet! :(        |
+|                                              |
+| Run this to begin your first task:           |
+|     tracking starting some work              |
++----------------------------------------------+
+EOF
 			#read data file
 			data = []
+			valid_lines = 0
+			invalid_lines = 0
 			file_length = $data_file.readlines.size
 			$data_file.seek(0)
 			$data_file.each_with_index do |line, index=0|
@@ -21,9 +34,8 @@ module Tracking
 				end
 			end
 			#display data
-			if data.length > 0
-				puts "+-------+--------------------------------------+"
-				for i in 0..data.length-1
+			for i in 0..data.length-1
+				if data[i].length == 2
 					#grab and reformat data
 					time = Time.parse(data[i][0]).strftime("%H:%M")
 					task = data[i][1].chomp
@@ -39,19 +51,24 @@ module Tracking
 						line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
 					end
 					#print data
+					puts horizontal_border if valid_lines == 0
 					puts line
+					valid_lines += 1
+				else
+					invalid_lines += 1
 				end
-				puts "+-------+--------------------------------------+"
+			end
+			#display intro, if needed
+			if valid_lines > 0
+				puts horizontal_border
 			else
-				#puts pad("You haven't started any tasks yet.", 20)
-				puts <<EOF
-+----------------------------------------------+
-| You haven't started any tasks yet! :(        |
-|                                              |
-| Run this to begin your first task:           |
-|     tracking starting some work              |
-+----------------------------------------------+
-EOF
+				puts introduction
+			end
+			#display warnings, if needed
+			if invalid_lines == 1
+				warn "Error: 1 invalid line found in data file."
+			elsif invalid_lines > 1
+				warn "Error: #{invalid_lines} invalid lines found in data file."
 			end
 		end
 
