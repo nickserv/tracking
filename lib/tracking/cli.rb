@@ -10,7 +10,7 @@ module Tracking
 		extend self
 
 		#displays the entire list
-		def display_tasks
+		def display
 			#horizontal border for the top or bottom of tracking's display
 			horizontal_border = "+-------+--------------------------------------+"
 			#intro message, displayed when no valid tasks are found
@@ -143,7 +143,7 @@ EOF
 				end
 				opts.on("-d", "--delete", "delete the last task" ) do
 					List.remove
-					display_tasks
+					display
 					done = true
 					return
 				end
@@ -162,11 +162,11 @@ EOF
 			if not done
 				if ARGV.count == 0
 					#display all tasks
-					display_tasks
+					display
 				else
 					#start a new task
 					List.add ARGV.join(" ")
-					display_tasks
+					display
 				end
 			end
 		end
