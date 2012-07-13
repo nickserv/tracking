@@ -130,7 +130,8 @@ EOF
 			done = false
 
 			OptionParser.new do |opts|
-				opts.version = "?"
+				version_path = File.expand_path("../../VERSION", File.dirname(__FILE__))
+				opts.version = File.exist?(version_path) ? File.read(version_path) : ""
 				opts.banner = "Usage: tracking [mode]"
 				opts.separator "                                     display all tasks"
 				opts.separator "    <task>                           start a new task with the given text"
