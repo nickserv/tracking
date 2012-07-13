@@ -3,6 +3,7 @@
 #imports
 require "yaml"
 require "time"
+require "csv"
 
 #model/controller module methods
 module Tracking
@@ -12,13 +13,13 @@ module Tracking
 
 		$config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
 		$config[:data_file] = File.expand_path($config[:data_file])
-		$data_file = File.new($config[:data_file], "r+")
+		$data_file = CSV.new(File.new($config[:data_file], "r+"), {:col_sep => "|"})
 
 		#adds an item to the list
 		def add item
 			newline = "\n"
 			date = Time.now.to_s
-			$data_file.write(newline+date+"|"+item.chomp)
+			$data_file << [ newline+date, item.chomp ]
 		end
 
 		#removes an item from the list

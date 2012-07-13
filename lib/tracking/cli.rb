@@ -30,7 +30,7 @@ EOF
 			$data_file.seek(0)
 			$data_file.each_with_index do |line, index=0|
 				if index+1 > file_length - $config[:lines]
-					data.push line.split("|")
+					data << line
 				end
 			end
 			#display data
