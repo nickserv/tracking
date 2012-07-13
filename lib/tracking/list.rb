@@ -12,7 +12,6 @@ module Tracking
 
 		$config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
 		$config[:data_file] = File.expand_path($config[:data_file])
-
 		$data_file = File.new($config[:data_file], "r+")
 
 		#adds an item to the list
@@ -38,9 +37,8 @@ module Tracking
 
 		#clears the entire list
 		def clear
-			$data_file.write do |f|
-				f.write ""
-			end
+			FileUtils.rm $config[:data_file]
+			FileUtils.touch $config[:data_file]
 		end
 
 		#opens the list data file in a text editor
