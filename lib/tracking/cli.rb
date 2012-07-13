@@ -1,5 +1,8 @@
 #Tracking's command line interface (view).
 
+#imports
+require "optparse"
+
 #view module methods
 module Tracking
 	module CLI
@@ -50,19 +53,6 @@ module Tracking
 +----------------------------------------------+
 EOF
 			end
-		end
-
-		#prints help for working with tracking
-		def help
-			puts <<EOF
-Usage:
-		display all tasks
-  <task>:       add a new task with the given text
-  -c, --clear   delete all tasks
-  -d, --delete  delete the latest task
-  -e, --edit    open data file in your default text editor
-  -h, --help    display this help information"
-EOF
 		end
 
 		#pads tasks with whitespace to align them for display
@@ -117,23 +107,46 @@ EOF
 			return split
 		end
 
-		#parse options for the command line interface
+		#use option parser to parse command line arguments
 		def parse
-			if ARGV.length == 0
-				display_tasks
-			else
-				case ARGV[0]
-				when "-c","--clear"
-					puts "list cleared"
+			#options = {}
+			done = false
+
+			OptionParser.new do |opts|
+				opts.version = "?"
+				opts.banner = "Usage: tracking [mode]"
+				opts.separator "                                     display all tasks"
+				opts.separator "    <task>                           start a new task with the given text"
+				opts.on("-c", "--clear", "delete all tasks" ) do
 					List.clear
-				when "-d","--delete"
+					puts "List cleared."
+					done = true
+					return
+				end
+				opts.on("-d", "--delete", "delete the last task" ) do
 					List.remove
 					display_tasks
-				when "-e","--edit"
+					done = true
+					return
+				end
+				opts.on("-e", "--edit", "open data file in a text editor" ) do
 					List.edit
-				when "-h","--help"
-					List.help
+					done = true
+					return
+				end
+				opts.on("-h", "--help", "displays this help information" ) do
+					puts opts
+					done = true
+					return
+				end
+			end.parse!
+
+			if not done
+				if ARGV.count == 0
+					#display all tasks
+					display_tasks
 				else
+					#start a new task
 					List.add ARGV.join(" ")
 					display_tasks
 				end
