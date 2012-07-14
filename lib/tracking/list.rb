@@ -107,5 +107,65 @@ module Tracking
       end
     end
 
+    #gets and formats the amount of time passed between two times
+    def get_elapsed_time(time1, time2, format=:colons)
+      #calculate the elapsed time and break it down into different units
+      seconds = (time2 - time1).floor
+      if seconds >= 60
+        minutes = seconds / 60
+        seconds = seconds % 60
+        if minutes >= 60
+          hours = minutes / 60
+          minutes = minutes % 60
+          if hours >= 24
+            days = hours / 24
+            hours = hours % 24
+          end
+        end
+      end
+      #return a string of the formatted elapsed time
+      case format
+      when :colons
+        elapsed = ""
+        elapsed += "%02d:" % hours if hours
+        if $config[:show_elapsed_seconds]
+          elapsed += "%02d:" % minutes if minutes
+        else
+        end
+        if seconds
+          elapsed += "%02d" % seconds if $config[:show_elapsed_seconds]
+          if minutes
+            elapsed += "%02d" % minutes + $config[:show_elapsed_seconds] ? " " : ""
+            if hours
+              elapsed += "#{hours.to_s}h "
+              if days
+                elapsed += "%02d:" % days
+              end
+            end
+          elsif seconds == 0
+            elapsed = ""
+          end
+        end
+        return elapsed
+      when :letters
+        elapsed = ""
+        if seconds
+          elapsed += "#{seconds.to_s}s" if $config[:show_elapsed_seconds]
+          if minutes
+            elapsed += "#{minutes.to_s}m" + $config[:show_elapsed_seconds] ? " " : ""
+            if hours
+              elapsed += "#{hours.to_s}h "
+              if days
+                elapsed += "#{days.to_s}d "
+              end
+            end
+          elsif seconds == 0
+            elapsed = ""
+          end
+        end
+        return elapsed
+      end
+    end
+
   end
 end
