@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "tracking"
   gem.homepage = "http://github.com/thenickperson/tracking"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = "Flexible and efficient time tracking for command line nerds."
+  gem.description = "Flexible and efficient time tracking for command line nerds."
   gem.email = "thenickperson@gmail.com"
   gem.authors = ["Nicolas McCurdy"]
   # dependencies defined in Gemfile
@@ -32,12 +32,10 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
+desc "Code coverage detail"
+task :simplecov do
+	ENV['COVERAGE'] = "true"
+	Rake::Task['spec'].execute
 end
 
 task :default => :test
