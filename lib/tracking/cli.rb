@@ -137,24 +137,24 @@ EOF
 				opts.banner = "Usage: tracking [mode]"
 				opts.separator "                                     display all tasks"
 				opts.separator "    <task>                           start a new task with the given text"
-				opts.on("-c", "--clear", "delete all tasks" ) do
+				opts.on("-c", "--clear", "delete all tasks") do
 					List.clear
 					puts "List cleared."
 					done = true
 					return
 				end
-				opts.on("-d", "--delete", "delete the last task" ) do
+				opts.on("-d", "--delete", "delete the last task") do
 					List.delete
 					display
 					done = true
 					return
 				end
-				opts.on("-e", "--edit", "open data file in a text editor" ) do
+				opts.on("-e", "--edit", "open data file in a text editor") do
 					List.edit
 					done = true
 					return
 				end
-				opts.on("-h", "--help", "displays this help information" ) do
+				opts.on("-h", "--help", "displays this help information") do
 					puts opts
 					done = true
 					return
@@ -167,7 +167,7 @@ EOF
 					display
 				else
 					#start a new task
-					List.add ARGV.join(" ")
+					List.add ARGV.join(" ").gsub("\t","")
 					display
 				end
 			end
