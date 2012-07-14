@@ -36,24 +36,26 @@ EOF
 			#display data
 			for i in 0..data.length-1
 				if data[i].length == 2
-					#grab and reformat data
-					time = Time.parse(data[i][0]).strftime("%H:%M")
-					task = data[i][1].chomp
-					if i < data.length - 1
-						elapsed = List.get_elapsed_time(Time.parse(data[i][0]), Time.parse(data[i+1][0]))
-					else
-						elapsed = List.get_elapsed_time(Time.parse(data[i][0]), Time.now())
+					begin
+						#grab and reformat data
+						time_string = Time.parse(data[i][0]).strftime("%H:%M")
+						task_string = data[i][1].chomp
+						start_time = Time.parse(data[i][0])
+						end_time = i<data.length-1 ? Time.parse(data[i+1][0]) : Time.now
+						elapsed_string = List.get_elapsed_time(start_time,end_time)
+						#ready data for display
+						task_split = split_task task_string
+						line = "| #{pad(time_string,5)} | #{pad(task_split[0],20)} | #{pad(elapsed_string,13,:right)} |"
+						task_split[1..-1].each do |x|
+							line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
+						end
+						#print data
+						puts horizontal_border if valid_lines == 0
+						puts line
+						valid_lines += 1
+					rescue
+						invalid_lines += 1
 					end
-					tasks = split_task(task)
-					#ready data for display
-					line = "| #{pad(time,5)} | #{pad(tasks[0],20)} | #{pad(elapsed,13,:right)} |"
-					tasks[1..-1].each do |x|
-						line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
-					end
-					#print data
-					puts horizontal_border if valid_lines == 0
-					puts line
-					valid_lines += 1
 				else
 					invalid_lines += 1
 				end
