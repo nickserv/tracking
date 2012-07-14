@@ -142,7 +142,7 @@ EOF
 					return
 				end
 				opts.on("-d", "--delete", "delete the last task" ) do
-					List.remove
+					List.delete
 					display
 					done = true
 					return

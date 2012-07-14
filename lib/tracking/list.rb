@@ -22,8 +22,8 @@ module Tracking
 			$data_file << [ newline+date, item.chomp ]
 		end
 
-		#removes an item from the list
-		def remove
+		#deletes an item from the list
+		def delete
 			lines = $data_file.readlines
 			lines.pop
 			$data_file.write do |f|
