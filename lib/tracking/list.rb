@@ -107,5 +107,61 @@ module Tracking
       end
     end
 
+		#gets and formats the amount of time passed between two times
+		def get_elapsed_time(time1, time2, format=:colons)
+			#calculate the elapsed time and break it down into different units
+			seconds = (time2 - time1).floor
+			minutes, hours, days = 0
+			if seconds >= 60
+				minutes = seconds / 60
+				seconds = seconds % 60
+				if minutes >= 60
+					hours = minutes / 60
+					minutes = minutes % 60
+					if hours >= 24
+						days = hours / 24
+						hours = hours % 24
+					end
+				end
+			elsif seconds == 0
+				seconds = nil
+			end
+			#return a string of the formatted elapsed time
+			case format
+			when :colons
+				elapsed = ""
+				elapsed += "%02d:" % days if days
+				elapsed += "%02d:" % hours if hours
+				elapsed += "%02d:" % minutes if minutes
+				elapsed += "%02d" % seconds if seconds
+			when :letters
+				elapsed = ""
+				elapsed += "#{days.to_s}d " if days
+				elapsed += "#{hours.to_s}h " if hours
+				elapsed += "#{minutes.to_s}m " if minutes
+				elapsed += "#{seconds.to_s}s" if seconds
+			else
+				elapsed = ""
+			end
+			return elapsed
+		end
+
+		def format_elapsed_time(seperator, items)
+			seconds = items[:seconds]
+			minutes = items[:minutes]
+			hours   = items[:hours]
+			days    = items[:days]
+			seconds_suffix = items[:seconds_suffix]
+			minutes_suffix = items[:minutes_suffix]
+			hours_suffix   = items[:hours_suffix]
+			days_suffix    = items[:days_suffix]
+			elapsed = ""
+			elapsed += days.to_s    + separator if days
+			elapsed += hours.to_s   + separator if hours or days
+			elapsed += minutes.to_s + separator if minutes or hours or days
+			elapsed += seconds.to_s + separator if seconds or minutes or hours or days
+			return elapsed
+		end
+
   end
 end
