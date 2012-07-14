@@ -18,8 +18,12 @@ module Tracking
 				:data_file => "~/.tracking/data.txt",
 				#number of lines to be displayed at once by default
 				:lines => 10,
+				#format to use for elapsed time display
+				:elapsed_format => :colons,
 				#toggle header describing tracking's display columns
-				:show_header => true
+				:show_header => true,
+				#toggle display of seconds in elapsed times
+				:show_elapsed_seconds => false
 			}
 		end
 
