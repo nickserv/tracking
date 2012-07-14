@@ -54,8 +54,10 @@ EOF
 						#print data
 						if valid_lines == 0
 							puts horizontal_border
-							puts header
-							puts horizontal_border
+							if $config[:show_header]
+								puts header
+								puts horizontal_border
+							end
 						end
 						puts line
 						valid_lines += 1

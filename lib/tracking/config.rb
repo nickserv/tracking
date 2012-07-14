@@ -14,10 +14,12 @@ module Tracking
 		#default values
 		def defaults
 			{
-				# path to the data file
+				#path to the data file
 				:data_file => "~/.tracking/data.txt",
-				# number of lines to be displayed at once by default
-				:lines => 10
+				#number of lines to be displayed at once by default
+				:lines => 10,
+				#toggle header describing tracking's display columns
+				:show_header => true
 			}
 		end
 
