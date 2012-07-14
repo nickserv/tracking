@@ -47,7 +47,7 @@ module Tracking
 
 
 		#gets and formats the amount of time passed between two times
-		def get_elapsed_time(time1, time2)
+		def get_elapsed_time(time1, time2, format=:colons)
 			#calculate the elapsed time and break it down into different units
 			seconds = (time2 - time1).floor
 			if seconds >= 60
@@ -63,20 +63,22 @@ module Tracking
 				end
 			end
 			#return a string of the formatted elapsed time
-			elapsed = ""
-			if days
-				elapsed += "#{days.to_s}d "
+			case format
+			when :colons
+				elapsed = ""
+				elapsed += "%02d:" % days if days
+				elapsed += "%02d:" % hours if hours
+				elapsed += "%02d:" % minutes if minutes
+				elapsed += "%02d" % seconds if seconds
+				return elapsed
+			when :letters
+				elapsed = ""
+				elapsed += "#{days.to_s}d " if days
+				elapsed += "#{hours.to_s}h " if hours
+				elapsed += "#{minutes.to_s}m " if minutes
+				elapsed += "#{seconds.to_s}s" if seconds
+				return elapsed
 			end
-			if hours
-				elapsed += "#{hours.to_s}h "
-			end
-			if minutes
-				elapsed += "#{minutes.to_s}m "
-			end
-			if seconds
-				elapsed += "#{seconds.to_s}s"
-			end
-			return elapsed
 		end
 
 	end
