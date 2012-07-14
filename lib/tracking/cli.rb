@@ -12,7 +12,9 @@ module Tracking
 		#displays the entire list
 		def display
 			#horizontal border for the top or bottom of tracking's display
-			horizontal_border = "+-------+--------------------------------------+"
+			horizontal_border = "+-------+----------------------+---------------+"
+			#header row describing tracking's display columns
+			header = "| start |     description      |    elapsed    |"
 			#intro message, displayed when no valid tasks are found
 			introduction = <<EOF
 +----------------------------------------------+
@@ -50,7 +52,11 @@ EOF
 							line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
 						end
 						#print data
-						puts horizontal_border if valid_lines == 0
+						if valid_lines == 0
+							puts horizontal_border
+							puts header
+							puts horizontal_border
+						end
 						puts line
 						valid_lines += 1
 					rescue
