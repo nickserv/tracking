@@ -15,7 +15,7 @@ module Tracking
 		def defaults
 			{
 				#path to the data file
-				:data_file => "~/.tracking/data.txt",
+				:data_file => "~/.tracking/data.csv",
 				#number of lines to be displayed at once by default
 				:lines => 10,
 				#format to use for elapsed time display
