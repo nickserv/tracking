@@ -18,7 +18,9 @@ module Tracking
 		#adds an item to the list
 		def add item
 			date = Time.now.to_s
-			$data_file << [ date, item ]
+			CSV.open($data_file.path, "a", {:col_sep => "\t"}) do |csv|
+				csv << [ date, item ]
+			end
 		end
 
 		#deletes an item from the list
