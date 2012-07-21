@@ -29,7 +29,7 @@ module Tracking
 			#lines = File.readlines($config[:data_file])
 			lines.pop #or delete specific lines in the future
 			#File.open($config[:data_file], "w") do |f| 
-			$data_file.write do |f| 
+			CSV.open($data_file.path, "w", {:col_sep => "\t"}) do |f| 
 				lines.each do |line|
 					f.puts line
 				end
