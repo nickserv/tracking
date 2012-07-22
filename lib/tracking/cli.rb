@@ -11,18 +11,20 @@ module Tracking
 
 		#displays the entire list
 		def display
+			#length of strings produced by the current elapsed time format
+			elapsed_time_length = List.get_elapsed_time(Time.now, Time.now).length
 			#horizontal border for the top or bottom of tracking's display
-			horizontal_border = "+-------+----------------------+---------------+"
+			horizontal_border = "+-------+----------------------+-#{"-"*elapsed_time_length}-+"
 			#header row describing tracking's display columns
-			header = "| start |     description      |    elapsed    |"
+			header = "| start |     description      | #{pad("elapsed", elapsed_time_length, :center)} |"
 			#intro message, displayed when no valid tasks are found
 			introduction = <<EOF
-+----------------------------------------------+
-| You haven't started any tasks yet! :(        |
-|                                              |
-| Run this to begin your first task:           |
-|     tracking starting some work              |
-+----------------------------------------------+
++---------------------------------------+
+| You haven't started any tasks yet! :( |
+|                                       |
+| Run this to begin your first task:    |
+|     tracking starting some work       |
++---------------------------------------+
 EOF
 			#read data file
 			data = []
@@ -47,9 +49,9 @@ EOF
 						elapsed_string = List.get_elapsed_time(start_time,end_time)
 						#ready data for display
 						task_split = split_task task_string
-						line = "| #{pad(time_string,5)} | #{pad(task_split[0],20)} | #{pad(elapsed_string,13,:right)} |"
+						line = "| #{pad(time_string,5)} | #{pad(task_split[0],20)} | #{elapsed_string} |"
 						task_split[1..-1].each do |x|
-							line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",13,:right)} |"
+							line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",elapsed_time_length)} |"
 						end
 						#print data
 						if valid_lines == 0
