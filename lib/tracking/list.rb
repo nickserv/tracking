@@ -11,9 +11,9 @@ module Tracking
 
 		extend self
 
-		$config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
-		$config[:data_file] = File.expand_path($config[:data_file])
-		$data_file = CSV.open($config[:data_file], "r+", {:col_sep => "\t"})
+		Config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
+		Config[:data_file] = File.expand_path(Config[:data_file])
+		$data_file = CSV.open(Config[:data_file], "r+", {:col_sep => "\t"})
 
 		#adds an item to the list
 		def add item
@@ -26,9 +26,9 @@ module Tracking
 		#deletes an item from the list
 		def delete
 			lines = $data_file.readlines
-			#lines = File.readlines($config[:data_file])
+			#lines = File.readlines(Config[:data_file])
 			lines.pop #or delete specific lines in the future
-			#File.open($config[:data_file], "w") do |f| 
+			#File.open(Config[:data_file], "w") do |f| 
 			CSV.open($data_file.path, "w", {:col_sep => "\t"}) do |f| 
 				lines.each do |line|
 					f.puts line
@@ -38,13 +38,13 @@ module Tracking
 
 		#clears the entire list
 		def clear
-			FileUtils.rm $config[:data_file]
-			FileUtils.touch $config[:data_file]
+			FileUtils.rm Config[:data_file]
+			FileUtils.touch Config[:data_file]
 		end
 
 		#opens the list data file in a text editor
 		def edit
-			system ENV["EDITOR"] + " " + $config[:data_file]
+			system ENV["EDITOR"] + " " + Config[:data_file]
 		end
 
 
@@ -66,15 +66,15 @@ module Tracking
 				end
 			end
 			#return a string of the formatted elapsed time
-			case $config[:elapsed_format]
+			case Config[:elapsed_format]
 			when :colons
-				if $config[:show_elapsed_seconds]
+				if Config[:show_elapsed_seconds]
 					return "%02d:%02d:%02d:%02d" % [days, hours, minutes, seconds]
 				else
 					return "%02d:%02d:%02d" % [days, hours, minutes]
 				end
 			when :letters
-				if $config[:show_elapsed_seconds]
+				if Config[:show_elapsed_seconds]
 					return "%02dd %02dh %02dm %02ds" % [days, hours, minutes, seconds]
 				else
 					return "%02dd %02dh %02dm" % [days, hours, minutes]

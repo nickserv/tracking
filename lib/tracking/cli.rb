@@ -14,9 +14,9 @@ module Tracking
 			#length of strings produced by the current elapsed time format
 			elapsed_time_length = List.get_elapsed_time(Time.now, Time.now).length
 			#horizontal border for the top or bottom of tracking's display
-			horizontal_border = "+-------+----------------------+-#{"-"*elapsed_time_length}-+"
+			horizontal_border = "+-------+-#{"-"*Config[:task_width]}-+-#{"-"*elapsed_time_length}-+"
 			#header row describing tracking's display columns
-			header = "| start |         task         | #{pad("elapsed", elapsed_time_length, :center)} |"
+			header = "| start | #{pad("task", Config[:task_width], :center)} | #{pad("elapsed", elapsed_time_length, :center)} |"
 			#intro message, displayed when no valid tasks are found
 			introduction = <<EOF
 +---------------------------------------+
@@ -33,7 +33,7 @@ EOF
 			file_length = $data_file.readlines.size
 			$data_file.seek(0)
 			$data_file.each_with_index do |line, index=0|
-				if index+1 > file_length - $config[:lines]
+				if index+1 > file_length - Config[:lines]
 					data << line
 				end
 			end
@@ -49,14 +49,14 @@ EOF
 						elapsed_string = List.get_elapsed_time(start_time,end_time)
 						#ready data for display
 						task_split = split_task task_string
-						line = "| #{pad(time_string,5)} | #{pad(task_split[0],20)} | #{elapsed_string} |"
+						line = "| #{pad(time_string,5)} | #{pad(task_split[0],Config[:task_width])} | #{elapsed_string} |"
 						task_split[1..-1].each do |x|
-							line += "\n| #{pad("",5)} | #{pad(x,20)} | #{pad("",elapsed_time_length)} |"
+							line += "\n| #{pad("",5)} | #{pad(x,Config[:task_width])} | #{pad("",elapsed_time_length)} |"
 						end
 						#print data
 						if valid_lines == 0
 							puts horizontal_border
-							if $config[:show_header]
+							if Config[:show_header]
 								puts header
 								puts horizontal_border
 							end
@@ -112,26 +112,25 @@ EOF
 
 		#word wraps tasks for display
 		def split_task(task)
-			width = 20
 			split = Array.new
-			if task.length > width #if the task needs to be split
+			if task.length > Config[:task_width] #if the task needs to be split
 				task_words = task.split(" ")
 				line = ""
 				task_words.each do |x|
-					if x.length > width #if the word needs to be split
+					if x.length > Config[:task_width] #if the word needs to be split
 						#add the start of the word onto the first line (even if it has already started)
-						while line.length < width
+						while line.length < Config[:task_width]
 							line += x[0]
 							x = x[1..-1]
 						end
 						split << line
 						#split the rest of the word up onto new lines
-						split_word = x.scan(%r[.{1,#{width}}])
+						split_word = x.scan(%r[.{1,#{Config[:task_width]}}])
 						split_word[0..-2].each do |word|
 							split << word
 						end
 						line = split_word.last+" "
-					elsif (line + x).length > width-1 #if the word would fit alone on its own line
+					elsif (line + x).length > Config[:task_width]-1 #if the word would fit alone on its own line
 						split << line.chomp
 						line = x
 					else #if the word can be added to this line

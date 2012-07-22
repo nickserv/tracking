@@ -18,6 +18,8 @@ module Tracking
 				:data_file => "~/.tracking/data.csv",
 				#number of lines to be displayed at once by default
 				:lines => 10,
+				#width of the task name column, in characters
+				:task_width => 20,
 				#format to use for elapsed time display
 				:elapsed_format => :colons,
 				#toggle header describing tracking's display columns
