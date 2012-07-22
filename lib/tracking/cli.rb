@@ -84,15 +84,25 @@ EOF
 
 		#pads tasks with whitespace to align them for display
 		def pad(string, length, align=:left)
-			if align==:right
+			case align
+			when :left
+				until string.length >= length
+					string += " "
+				end
+			when :right
 				until string.length >= length
 					string.insert(0," ")
 				end
-			#elsif align==:center
-				#do stuff
-			else
+			when :center
+				current_side = :left
 				until string.length >= length
-					string += " "
+					string = pad(string, string.length+1, current_side)
+					case current_side
+					when :left
+						current_side = :right
+					when :right
+						current_side = :left
+					end
 				end
 			end
 			return string
