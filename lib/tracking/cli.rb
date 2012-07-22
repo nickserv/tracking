@@ -16,7 +16,7 @@ module Tracking
 			#horizontal border for the top or bottom of tracking's display
 			horizontal_border = "+-------+----------------------+-#{"-"*elapsed_time_length}-+"
 			#header row describing tracking's display columns
-			header = "| start |     description      | #{pad("elapsed", elapsed_time_length, :center)} |"
+			header = "| start |         task         | #{pad("elapsed", elapsed_time_length, :center)} |"
 			#intro message, displayed when no valid tasks are found
 			introduction = <<EOF
 +---------------------------------------+
