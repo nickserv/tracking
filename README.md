@@ -44,6 +44,17 @@ gem install tracking
 +-------+------------------------------------------+----------+
 ```
 
+##Usage
+```
+Usage: tracking [mode]
+                                     display all tasks
+    <task>                           start a new task with the given text
+    -c, --clear                      delete all tasks
+    -d, --delete                     delete the last task
+    -e, --edit                       open data file in a text editor
+    -h, --help                       displays this help information
+```
+
 ##Ideas (future)
 - hashtag-like tags for organizing tasks
 - different ways to view your data
