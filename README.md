@@ -14,27 +14,27 @@ gem install tracking
 
 ##Tutorial
 ```
-~ ➜ tracking essay for English class
+$ tracking essay for English class
 +-------+------------------------------------------+----------+
 | start |                   task                   | elapsed  |
 +-------+------------------------------------------+----------+
 | 12:00 | essay for English class                  | 00:00:00 |
 +-------+------------------------------------------+----------+
-~ ➜ tracking getting distracted on Reddit
+$ tracking getting distracted on Reddit
 +-------+------------------------------------------+----------+
 | start |                   task                   | elapsed  |
 +-------+------------------------------------------+----------+
 | 12:00 | essay for English class                  | 00:00:20 |
 | 12:20 | getting distracted on Reddit             | 00:00:00 |
 +-------+------------------------------------------+----------+
-~ ➜ tracking
+$ tracking
 +-------+------------------------------------------+----------+
 | start |                   task                   | elapsed  |
 +-------+------------------------------------------+----------+
 | 12:00 | essay for English class                  | 00:00:20 |
 | 12:20 | getting distracted on Reddit             | 00:00:05 |
 +-------+------------------------------------------+----------+
-~ ➜ tracking back to work
+$ tracking back to work
 +-------+------------------------------------------+----------+
 | start |                   task                   | elapsed  |
 +-------+------------------------------------------+----------+
