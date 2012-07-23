@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "tracking"
   gem.homepage = "http://github.com/thenickperson/tracking"
   gem.license = "MIT"
-  gem.summary = "Flexible and efficient time tracking for command line nerds."
-  gem.description = "Flexible and efficient time tracking for command line nerds."
+  gem.summary = "A simple and configurable command line time tracker."
+  gem.description = "See README for more information."
   gem.email = "thenickperson@gmail.com"
   gem.authors = ["Nicolas McCurdy"]
   # dependencies defined in Gemfile
