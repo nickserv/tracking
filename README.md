@@ -60,19 +60,22 @@ Usage: tracking [mode]
 ```
 
 ##Configuration
+The config file for tracking is located in `~/.tracking/config.yml`.
+
+The default settings are listed below, along with a description of each setting.
 ```ruby
 # path to the data file (string, ~ can be used)
-:data_file => "~/.tracking/data.csv",
+:data_file: ~/.tracking/data.csv
 # number of lines to be displayed at once by default (integer)
-:lines => 10,
+:lines: 10
 # width of the task name column, in characters (integer)
-:task_width => 40,
+:task_width: 40
 # format to use for elapsed time display (:colons or :letters)
-:elapsed_format => :colons,
+:elapsed_format: :colons
 # toggle header describing tracking's display columns (true or false)
-:show_header => true,
+:show_header: true
 # toggle display of seconds in elapsed time (true of false)
-:show_elapsed_seconds => false
+:show_elapsed_seconds: false
 ```
 
 ##Contributing to tracking
