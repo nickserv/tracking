@@ -5,6 +5,8 @@ require "yaml"
 
 #config module methods
 module Tracking
+	# similar to Sam Goldstein's config.rb for timetrap
+	# @see https://github.com/samg/timetrap/
 	module Config
 
 		extend self
