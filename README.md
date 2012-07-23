@@ -59,6 +59,21 @@ Usage: tracking [mode]
     -h, --help                       displays this help information
 ```
 
+##Configuration
+```ruby
+# path to the data file (string, ~ can be used)
+:data_file => "~/.tracking/data.csv",
+# number of lines to be displayed at once by default (integer)
+:lines => 10,
+# width of the task name column, in characters (integer)
+:task_width => 40,
+# format to use for elapsed time display (:colons or :letters)
+:elapsed_format => :colons,
+# toggle header describing tracking's display columns (true or false)
+:show_header => true,
+# toggle display of seconds in elapsed time (true of false)
+:show_elapsed_seconds => false
+```
 
 ##Contributing to tracking
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
