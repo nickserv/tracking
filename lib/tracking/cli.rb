@@ -154,8 +154,8 @@ EOF
 				version_path = File.expand_path("../../VERSION", File.dirname(__FILE__))
 				opts.version = File.exist?(version_path) ? File.read(version_path) : ""
 				opts.banner = "Usage: tracking [mode]"
-				opts.separator "                                     display all tasks"
-				opts.separator "    <task>                           start a new task with the given text"
+				opts.separator "                                     display tasks"
+				opts.separator "    <task description>               start a new task with the given text (spaces allowed)"
 				opts.on("-c", "--clear", "delete all tasks") do
 					List.clear
 					puts "List cleared."
@@ -173,7 +173,7 @@ EOF
 					done = true
 					return
 				end
-				opts.on("-h", "--help", "displays this help information") do
+				opts.on("-h", "--help", "display this help information") do
 					puts opts
 					done = true
 					return
