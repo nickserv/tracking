@@ -12,6 +12,10 @@ gem install tracking
 - simple syntax
 - portable data
 
+##Ideas (future)
+- hashtag-like tags for organizing tasks
+- different ways to view your data
+
 ##Tutorial
 ```
 $ tracking essay for English class
@@ -55,9 +59,6 @@ Usage: tracking [mode]
     -h, --help                       displays this help information
 ```
 
-##Ideas (future)
-- hashtag-like tags for organizing tasks
-- different ways to view your data
 
 ##Contributing to tracking
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
