@@ -12,6 +12,38 @@ gem install tracking
 - simple syntax
 - portable data
 
+##Tutorial
+```
+~ ➜ tracking essay for English class
++-------+------------------------------------------+----------+
+| start |                   task                   | elapsed  |
++-------+------------------------------------------+----------+
+| 12:00 | essay for English class                  | 00:00:00 |
++-------+------------------------------------------+----------+
+~ ➜ tracking getting distracted on Reddit
++-------+------------------------------------------+----------+
+| start |                   task                   | elapsed  |
++-------+------------------------------------------+----------+
+| 12:00 | essay for English class                  | 00:00:20 |
+| 12:20 | getting distracted on Reddit             | 00:00:00 |
++-------+------------------------------------------+----------+
+~ ➜ tracking
++-------+------------------------------------------+----------+
+| start |                   task                   | elapsed  |
++-------+------------------------------------------+----------+
+| 12:00 | essay for English class                  | 00:00:20 |
+| 12:20 | getting distracted on Reddit             | 00:00:05 |
++-------+------------------------------------------+----------+
+~ ➜ tracking back to work
++-------+------------------------------------------+----------+
+| start |                   task                   | elapsed  |
++-------+------------------------------------------+----------+
+| 12:00 | essay for English class                  | 00:00:20 |
+| 12:20 | getting distracted on Reddit             | 00:00:10 |
+| 12:30 | back to work                             | 00:00:00 |
++-------+------------------------------------------+----------+
+```
+
 ##Ideas (future)
 - hashtag-like tags for organizing tasks
 - different ways to view your data
