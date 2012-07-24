@@ -168,11 +168,6 @@ EOF
 					done = true
 					return
 				end
-				opts.on("-e", "--edit", "open data file in a text editor") do
-					List.edit
-					done = true
-					return
-				end
 				opts.on("-h", "--help", "display this help information") do
 					puts opts
 					done = true

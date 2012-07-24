@@ -59,7 +59,6 @@ Usage: tracking [mode]
     <task>                           start a new task with the given text
     -c, --clear                      delete all tasks
     -d, --delete                     delete the last task
-    -e, --edit                       open data file in a text editor
     -h, --help                       displays this help information
 ```
 

@@ -42,12 +42,6 @@ module Tracking
 			FileUtils.touch Config[:data_file]
 		end
 
-		#opens the list data file in a text editor
-		def edit
-			system ENV["EDITOR"] + " " + Config[:data_file]
-		end
-
-
 		#gets and formats the amount of time passed between two times
 		def get_elapsed_time(time1, time2)
 			#calculate the elapsed time and break it down into different units
