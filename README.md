@@ -7,6 +7,10 @@ A simple and configurable command line time tracker.
 gem install tracking
 ```
 
+If you're on Windows, you should set up [Ruby Installer](http://rubyinstaller.org/downloads/) and [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) first.
+
+If you come across any installation issues, please [submit an issue](https://github.com/thenickperson/tracking/issues) to tracking.
+
 ##Features
 - concise and configurable display
 - simple syntax
