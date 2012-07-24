@@ -1,4 +1,5 @@
-require_relative 'helper'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+require 'helper'
 
 class TestCLI < Test::Unit::TestCase
 	context "Tracking's CLI" do
