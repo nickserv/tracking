@@ -12,25 +12,22 @@ module Tracking
 		extend self
 
 		Config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
-		Config[:data_file] = File.expand_path(Config[:data_file])
-		@csv_options = { :col_sep => "\t" }
-		$data_file = CSV.open(Config[:data_file], "r+", @csv_options)
+		$data_file = File.expand_path(Config[:data_file])
+		$csv_options = { :col_sep => "\t" }
 
 		#adds an item to the list
 		def add item
 			date = Time.now.to_s
-			File.open($data_file.path, "a") do |file|
-					file << [ date, item ].to_csv(@csv_options)
+			File.open($data_file, "a") do |file|
+					file << [ date, item ].to_csv($csv_options)
 			end
 		end
 
 		#deletes an item from the list
 		def delete
-			lines = $data_file.readlines
-			#lines = File.readlines(Config[:data_file])
+			lines = File.readlines $data_file
 			lines.pop #or delete specific lines in the future
-			#File.open(Config[:data_file], "w") do |file| 
-			CSV.open($data_file.path, "w", @csv_options) do |file| 
+			CSV.open($data_file, "w", $csv_options) do |file| 
 				lines.each do |line|
 					file.puts line
 				end
@@ -39,8 +36,8 @@ module Tracking
 
 		#clears the entire list
 		def clear
-			FileUtils.rm Config[:data_file]
-			FileUtils.touch Config[:data_file]
+			FileUtils.rm $data_file
+			FileUtils.touch $data_file
 		end
 
 		#gets and formats the amount of time passed between two times
