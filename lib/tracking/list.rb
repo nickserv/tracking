@@ -13,13 +13,14 @@ module Tracking
 
 		Config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
 		Config[:data_file] = File.expand_path(Config[:data_file])
-		$data_file = CSV.open(Config[:data_file], "r+", {:col_sep => "\t"})
+		@csv_options = { :col_sep => "\t" }
+		$data_file = CSV.open(Config[:data_file], "r+", @csv_options)
 
 		#adds an item to the list
 		def add item
 			date = Time.now.to_s
 			File.open($data_file.path, "a") do |file|
-					file << [ date, item ].to_csv({:col_sep => "\t"})
+					file << [ date, item ].to_csv(@csv_options)
 			end
 		end
 
@@ -28,10 +29,10 @@ module Tracking
 			lines = $data_file.readlines
 			#lines = File.readlines(Config[:data_file])
 			lines.pop #or delete specific lines in the future
-			#File.open(Config[:data_file], "w") do |f| 
-			CSV.open($data_file.path, "w", {:col_sep => "\t"}) do |f| 
+			#File.open(Config[:data_file], "w") do |file| 
+			CSV.open($data_file.path, "w", @csv_options) do |file| 
 				lines.each do |line|
-					f.puts line
+					file.puts line
 				end
 			end
 		end
