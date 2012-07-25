@@ -13,7 +13,7 @@ if not File.exist? File.join(ENV["HOME"], ".tracking", "config.yml")
 end
 
 #create data file
-if not File.exist? File.join(File.expand_path Tracking::Config[:data_file])
+if not File.exist? File.expand_path Tracking::Config[:data_file]
 	FileUtils.touch File.expand_path Tracking::Config[:data_file]
 end
 
