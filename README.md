@@ -81,6 +81,15 @@ The default settings are listed below, along with a description of each setting.
 :show_elapsed_seconds: false
 ```
 
+##Elapsed Time Formats
+Elapsed times are displayed in this order: days, hours, minutes, seconds (if enabled)
+- hide elapsed seconds
+	- colons: `01:02:03` (default)
+	- letters: `01d 02h 03m`
+- show elapsed seconds
+	- colons: `01:02:03:04`
+	- letters: `01d 02h 03m 04s`
+
 ##Contributing to tracking
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 - Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
