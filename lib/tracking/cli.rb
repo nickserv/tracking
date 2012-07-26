@@ -48,7 +48,15 @@ EOF
 						start_time = Time.parse(data[i][0])
 						end_time = i<data.length-1 ? Time.parse(data[i+1][0]) : Time.now
 						elapsed_string = List.get_elapsed_time(start_time,end_time)
-						#display border/header if needed
+						#format data into lines
+						lines = []
+						split_task(task_string).each_with_index do |task_line, i|
+							col_1 = pad(i==0 ? time_string : nil, 5)
+							col_2 = pad(task_line, Config[:task_width])
+							col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
+							lines << "| #{col_1} | #{col_2} | #{col_3} |"
+						end
+						#display lines
 						if valid_lines == 0
 							puts horizontal_border
 							if Config[:show_header]
@@ -56,13 +64,7 @@ EOF
 								puts horizontal_border
 							end
 						end
-						#display data
-						split_task(task_string).each_with_index do |task_line, i|
-							col_1 = pad(i==0 ? time_string : nil, 5)
-							col_2 = pad(task_line, Config[:task_width])
-							col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
-							puts "| #{col_1} | #{col_2} | #{col_3} |"
-						end
+						lines.each { |line| puts line }
 						valid_lines += 1
 					rescue
 						invalid_lines += 1
