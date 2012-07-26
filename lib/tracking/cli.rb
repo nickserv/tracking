@@ -77,11 +77,9 @@ EOF
 			else
 				puts introduction
 			end
-			#display warnings, if needed
-			if invalid_lines == 1
-				warn "Error: 1 invalid line found in data file."
-			elsif invalid_lines > 1
-				warn "Error: #{invalid_lines} invalid lines found in data file."
+			#display a warning, if needed
+			if invalid_lines > 0
+				warn "Error: #{invalid_lines} invalid line#{"s" if invalids_lines > 1} found in data file."
 			end
 		end
 
