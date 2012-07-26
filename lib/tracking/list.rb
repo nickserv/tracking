@@ -27,9 +27,9 @@ module Tracking
 		def delete
 			lines = File.readlines $data_file
 			lines.pop #or delete specific lines in the future
-			CSV.open($data_file, "w", $csv_options) do |file| 
+			CSV.open($data_file, "w", $csv_options) do |csv| 
 				lines.each do |line|
-					file.puts line
+					csv << line
 				end
 			end
 		end
