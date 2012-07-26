@@ -33,7 +33,10 @@ class TestCLI < Test::Unit::TestCase
 		end
 
 		should "display help information (run from the system's shell)" do
-			capture_output { `#{ File.join(File.dirname(__FILE__), "..", "bin", "tracking") } --help` }
+			capture_output do
+				path = File.join(File.dirname(__FILE__), "..", "bin", "tracking")
+				`ruby #{path} --help`
+			end
 		end
 
 	end
