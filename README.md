@@ -3,9 +3,7 @@ A simple and configurable command line time tracker.
 
 ##Installation
 
-```
-gem install tracking
-```
+~~`gem install tracking`~~ Sorry, tracking 1.0 isn't released yet! Hang on....
 
 If you're on Windows, you should set up [Ruby Installer](http://rubyinstaller.org/downloads/) and [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) first.
 
