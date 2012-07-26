@@ -58,9 +58,9 @@ EOF
 						end
 						#display data
 						split_task(task_string).each_with_index do |task_line, i|
-							col_1 = pad(i==0 ? time_string : "", 5)
+							col_1 = pad(i==0 ? time_string : nil, 5)
 							col_2 = pad(task_line, Config[:task_width])
-							col_3 = pad(i==0 ? elapsed_string : "", elapsed_time_length)
+							col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
 							puts "| #{col_1} | #{col_2} | #{col_3} |"
 						end
 						valid_lines += 1
@@ -85,28 +85,23 @@ EOF
 
 		#pads tasks with whitespace to align them for display
 		def pad(string, length, align=:left)
-			case align
-			when :left
-				until string.length >= length
-					string += " "
-				end
-			when :right
-				until string.length >= length
-					string.insert(0," ")
-				end
-			when :center
-				current_side = :left
-				until string.length >= length
-					string = pad(string, string.length+1, current_side)
-					case current_side
-					when :left
-						current_side = :right
-					when :right
-						current_side = :left
-					end
+			if string == nil
+				return " " * length
+			elsif string.length >= length
+				return string
+			else
+				difference = (length - string.length).to_f
+				case align
+				when :left
+					return string + " " * difference
+				when :right
+					return " " * difference + string
+				when :center
+					return " "*(difference/2).floor + string + " "*(difference/2).ceil
+				else
+					return string
 				end
 			end
-			return string
 		end
 
 		#word wraps tasks for display
