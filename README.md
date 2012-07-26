@@ -1,4 +1,4 @@
-#tracking (in development)
+#tracking (in development) [![Build Status](https://secure.travis-ci.org/thenickperson/tracking.png?branch=master)](http://travis-ci.org/thenickperson/tracking)
 A simple and configurable command line time tracker.
 
 ##Installation
