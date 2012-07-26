@@ -105,30 +105,30 @@ EOF
 		end
 
 		#word wraps tasks for display
-		def split_task(task)
+		def split_task task
 			split = Array.new
 			if task.length > Config[:task_width] #if the task needs to be split
 				task_words = task.split(" ")
 				line = ""
-				task_words.each do |x|
-					if x.length > Config[:task_width] #if the word needs to be split
+				task_words.each do |word|
+					if word.length > Config[:task_width] #if the word needs to be split
 						#add the start of the word onto the first line (even if it has already started)
 						while line.length < Config[:task_width]
-							line += x[0]
-							x = x[1..-1]
+							line += word[0]
+							word = word[1..-1]
 						end
 						split << line
 						#split the rest of the word up onto new lines
-						split_word = x.scan(%r[.{1,#{Config[:task_width]}}])
-						split_word[0..-2].each do |word|
-							split << word
+						split_word = word.scan(%r[.{1,#{Config[:task_width]}}])
+						split_word[0..-2].each do |word_section|
+							split << word_section
 						end
 						line = split_word.last+" "
-					elsif (line + x).length > Config[:task_width]-1 #if the word would fit alone on its own line
+					elsif (line + word).length > Config[:task_width]-1 #if the word would fit alone on its own line
 						split << line.chomp
-						line = x
+						line = word
 					else #if the word can be added to this line
-						line += x + " "
+						line += word + " "
 					end
 				end
 				split << line
