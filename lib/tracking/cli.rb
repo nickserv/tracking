@@ -79,7 +79,7 @@ EOF
 			end
 			#display a warning, if needed
 			if invalid_lines > 0
-				warn "Error: #{invalid_lines} invalid line#{"s" if invalids_lines > 1} found in data file."
+				warn "Error: #{invalid_lines} invalid line#{"s" if invalid_lines > 1} found in data file."
 			end
 		end
 
