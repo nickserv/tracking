@@ -126,7 +126,7 @@ EOF
 							split << word_section
 						end
 						line = split_word.last+" "
-					elsif (line + word).length > Config[:task_width]-1 #if the word would fit alone on its own line
+					elsif (line + word).length >= Config[:task_width] #if the word would fit alone on its own line
 						split << line.chomp
 						line = word
 					else #if the word can be added to this line
