@@ -108,12 +108,20 @@ EOF
 
 		#word wraps tasks for display
 		def split_task task
-			split = Array.new
-			if task.length > Config[:task_width] #if the task needs to be split
-				task_words = task.split(" ")
+
+			#if the task fits
+			if task.length <= Config[:task_width]
+				return [task]
+
+			#if the task needs to be split
+			else
+				words = task.split(" ")
+				split = []
 				line = ""
-				task_words.each do |word|
-					if word.length > Config[:task_width] #if the word needs to be split
+				words.each do |word|
+
+					#if the word needs to be split
+					if word.length > Config[:task_width]
 						#add the start of the word onto the first line (even if it has already started)
 						while line.length < Config[:task_width]
 							line += word[0]
@@ -125,20 +133,25 @@ EOF
 						split_word[0..-2].each do |word_section|
 							split << word_section
 						end
-						line = split_word.last+" "
-					elsif (line + word).length >= Config[:task_width] #if the word would fit alone on its own line
+						line = split_word.last
+
+					#if the word would fit on a new line
+					elsif (line + word).length > Config[:task_width]
 						split << line.chomp
 						line = word
-					else #if the word can be added to this line
-						line += word + " "
+
+					#if the word can be added to this line
+					else
+						line += word
 					end
+
+					#add a space to the end of the last word, if it would fit
+					line += " " if line.length != Config[:task_width]
+
 				end
 				split << line
-			else #if the task doesn't need to be split
-				split = [task]
+				return split
 			end
-			#give back the split line
-			return split
 		end
 
 		#use option parser to parse command line arguments
