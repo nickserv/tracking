@@ -4,39 +4,37 @@ require 'helper'
 class TestCLI < Test::Unit::TestCase
 	context "Tracking's CLI" do
 
+
 		should "clear list (to prepare for other tests)" do
-			capture_output { Tracking::List.clear }
+			test_command "-c"
 		end
 
 		should "display empty list" do
-			capture_output { Tracking::CLI.display }
+			test_command
 		end
 
 		should "add a task" do
-			capture_output { Tracking::List.add "first task" }
+			test_command "first task"
 		end
 
 		should "add another task" do
-			capture_output { Tracking::List.add "second task" }
+			test_command "second task"
 		end
 
 		should "display list with two items" do
-			capture_output { Tracking::CLI.display }
+			test_command
 		end
 
 		should "delete the second task" do
-			capture_output { Tracking::List.delete }
+			test_command "-d"
 		end
 
 		should "clear list" do
-			capture_output { Tracking::List.clear }
+			test_command "-c"
 		end
 
 		should "display help information (run from the system's shell)" do
-			capture_output do
-				path = File.join(File.dirname(__FILE__), "..", "bin", "tracking")
-				`ruby #{path} --help`
-			end
+			test_command "-h"
 		end
 
 	end
