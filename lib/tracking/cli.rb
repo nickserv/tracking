@@ -160,11 +160,14 @@ EOF
 			done = false
 
 			OptionParser.new do |opts|
+				#setup
 				version_path = File.expand_path("../../VERSION", File.dirname(__FILE__))
 				opts.version = File.exist?(version_path) ? File.read(version_path) : ""
+				#start of help text
 				opts.banner = "Usage: tracking [mode]"
 				opts.separator "                                     display tasks"
 				opts.separator "    <task description>               start a new task with the given text (spaces allowed)"
+				#modes
 				opts.on("-c", "--clear", "delete all tasks") do
 					List.clear
 					puts "List cleared."
@@ -184,6 +187,7 @@ EOF
 				end
 			end.parse!
 
+			#basic modes (display and add)
 			if not done
 				if ARGV.count == 0
 					#display all tasks
