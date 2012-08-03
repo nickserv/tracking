@@ -1,4 +1,4 @@
-#Tracking's core.
+#tracking's core
 
 #imports
 require "yaml"

@@ -1,4 +1,4 @@
-#Utilities for Tracking's config file.
+#utilities for tracking's config file
 
 #imports
 require "yaml"

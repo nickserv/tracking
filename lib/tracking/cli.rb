@@ -1,4 +1,4 @@
-#Tracking's command line interface (view).
+#tracking's command line interface (view)
 
 #imports
 require "optparse"
