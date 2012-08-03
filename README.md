@@ -98,8 +98,9 @@ Elapsed times are displayed in this order: days, hours, minutes, seconds (if ena
 - Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
 ##Similar Projects
-- [timetrap](https://github.com/samg/timetrap)
+- [timetrap](https://github.com/samg/timetrap) (tracking borrows a little bit of its code)
 - [d-time-tracker](https://github.com/DanielVF/d-time-tracker)
+- Also, if you want an awesome command line todo manager, check out [to-do](http://github.com/kristenmills/to-do). Tracking and to-do are close friends. Every once in a while they borrow some code from each other, and they also like to watch football and practice extreme basketweaving together on weekends.
 
 ##Copyright
 Copyright (c) 2012 Nicolas McCurdy. See LICENSE.txt for
