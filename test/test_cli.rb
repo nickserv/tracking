@@ -4,7 +4,6 @@ require 'helper'
 class TestCLI < Test::Unit::TestCase
 	context "Tracking's CLI" do
 
-
 		should "clear list (to prepare for other tests)" do
 			test_command "-c"
 		end
