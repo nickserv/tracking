@@ -1,19 +1,9 @@
-#tracking (in development) [![Build Status](https://secure.travis-ci.org/thenickperson/tracking.png?branch=master)](http://travis-ci.org/thenickperson/tracking)
+#tracking [![Build Status](https://secure.travis-ci.org/thenickperson/tracking.png?branch=master)](http://travis-ci.org/thenickperson/tracking)
 A simple and configurable command line time tracker.
 
 ##Installation
 
-~~`gem install tracking`~~ Sorry, tracking 1.0 isn't released yet....
-
-If you're really impatient, you can grab the dev builds now: (they're kind of stable by now)
-
-```
-cd ~
-git clone git://github.com/thenickperson/tracking.git tracking
-cd tracking
-bundle install
-rake install
-```
+`gem install tracking`
 
 If you're on Windows, you should set up [Ruby Installer](http://rubyinstaller.org/downloads/) and [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) first.
 
