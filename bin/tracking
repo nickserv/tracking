@@ -6,6 +6,6 @@ else
 	File.dirname __FILE__
 end
 
-require File.join(File.expand_path("..", current_directory), "lib", "tracking")
+require File.join(File.expand_path('..', current_directory), 'lib', 'tracking')
 
 Tracking::CLI.parse
