@@ -19,9 +19,7 @@ module Tracking
 		#@return a list of lists
 		def get
 			tasks = CSV.read($data_file, $csv_options)
-			if tasks.length > Config[:lines]
-				tasks = tasks[-Config[:lines]..-1]
-			end
+			tasks = tasks[-Config[:lines]..-1] if tasks.length > Config[:lines]
 			return tasks
 		end
 
