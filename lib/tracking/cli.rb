@@ -28,6 +28,7 @@ module Tracking
 EOF
 			#read data file
 			tasks = List.get
+			first_task = true
 			#display data
 			tasks.each_with_index do |task, i|
 				#grab and reformat data
@@ -45,25 +46,28 @@ EOF
 					lines << "| #{col_1} | #{col_2} | #{col_3} |"
 				end
 				#display lines
-				if valid_lines == 0
+				if first_task
 					puts horizontal_border
 					if Config[:show_header]
 						puts header
 						puts horizontal_border
 					end
+					first_task = false
 				end
 				lines.each { |line| puts line }
 			end
 			#display intro, if needed
-			if valid_lines > 0
+			if tasks.length > 0
 				puts horizontal_border
 			else
 				puts introduction
 			end
 			#display a warning, if needed
+=begin
 			if invalid_lines > 0
 				warn "Error: #{invalid_lines} invalid line#{"s" if invalid_lines > 1} found in data file."
 			end
+=end
 		end
 
 		#pads tasks with whitespace to align them for display
