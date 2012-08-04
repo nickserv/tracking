@@ -30,38 +30,29 @@ EOF
 			tasks = List.get
 			#display data
 			tasks.each_with_index do |task, i|
-				if task.length == 2
-					begin
-						#grab and reformat data
-						time_string = Time.parse(task[0]).strftime("%H:%M")
-						task_string = task[1].chomp
-						start_time = Time.parse(task[0])
-						end_time = i<tasks.length-1 ? Time.parse(tasks[i+1][0]) : Time.now
-						elapsed_string = List.get_elapsed_time(start_time,end_time)
-						#format data into lines
-						lines = []
-						split_task(task_string).each_with_index do |task_line, i|
-							col_1 = pad(i==0 ? time_string : nil, 5)
-							col_2 = pad(task_line, Config[:task_width])
-							col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
-							lines << "| #{col_1} | #{col_2} | #{col_3} |"
-						end
-						#display lines
-						if valid_lines == 0
-							puts horizontal_border
-							if Config[:show_header]
-								puts header
-								puts horizontal_border
-							end
-						end
-						lines.each { |line| puts line }
-						valid_lines += 1
-					rescue
-						invalid_lines += 1
-					end
-				else
-					invalid_lines += 1
+				#grab and reformat data
+				time_string = Time.parse(task[0]).strftime("%H:%M")
+				task_string = task[1].chomp
+				start_time = Time.parse(task[0])
+				end_time = i<tasks.length-1 ? Time.parse(tasks[i+1][0]) : Time.now
+				elapsed_string = List.get_elapsed_time(start_time,end_time)
+				#format data into lines
+				lines = []
+				split_task(task_string).each_with_index do |task_line, i|
+					col_1 = pad(i==0 ? time_string : nil, 5)
+					col_2 = pad(task_line, Config[:task_width])
+					col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
+					lines << "| #{col_1} | #{col_2} | #{col_3} |"
 				end
+				#display lines
+				if valid_lines == 0
+					puts horizontal_border
+					if Config[:show_header]
+						puts header
+						puts horizontal_border
+					end
+				end
+				lines.each { |line| puts line }
 			end
 			#display intro, if needed
 			if valid_lines > 0
