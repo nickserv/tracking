@@ -18,7 +18,7 @@ module Tracking
 		#read and convert part of the data file into 2D lists
 		#@return a list of lists
 		def get
-			tasks = CSV.read($data_file, "r", $csv_options)
+			tasks = CSV.read($data_file, $csv_options)
 			if tasks.length > Config[:lines]
 				tasks = tasks[-Config[:lines]..-1]
 			end
