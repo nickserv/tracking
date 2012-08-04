@@ -1,4 +1,4 @@
-#tracking [![Build Status](https://secure.travis-ci.org/thenickperson/tracking.png?branch=master)](http://travis-ci.org/thenickperson/tracking)
+#tracking [![Build Status](https://secure.travis-ci.org/thenickperson/tracking.png?branch=master)](http://travis-ci.org/thenickperson/tracking) [![Dependency Status](https://gemnasium.com/thenickperson/tracking.png)](https://gemnasium.com/thenickperson/tracking)
 A simple and configurable command line time tracker.
 
 ##Installation
