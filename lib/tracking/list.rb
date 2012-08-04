@@ -18,9 +18,9 @@ module Tracking
 		#read and convert part of the data file into 2D lists
 		#@return a list of lists
 		def get
-			tasks = []
-			CSV.open($data_file, "r", $csv_options)[-Config[:lines],-1].each do |line|
-				tasks << line
+			tasks = CSV.read($data_file, "r", $csv_options)
+			if tasks.length > Config[:lines]
+				tasks = tasks[-Config[:lines]..-1]
 			end
 			return tasks
 		end
@@ -29,7 +29,7 @@ module Tracking
 		def add item
 			date = Time.now.to_s
 			File.open($data_file, "a") do |file|
-					file << [ date, item ].to_csv($csv_options)
+				file << [ date, item ].to_csv($csv_options)
 			end
 		end
 
