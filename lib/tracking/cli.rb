@@ -1,7 +1,7 @@
 #tracking's command line interface (view)
 
 #imports
-require "optparse"
+require 'optparse'
 
 #view module methods
 module Tracking
@@ -14,9 +14,9 @@ module Tracking
 			#length of strings produced by the current elapsed time format
 			elapsed_time_length = List.get_elapsed_time(Time.now, Time.now).length
 			#horizontal border for the top or bottom of tracking's display
-			horizontal_border = "+-------+-#{"-"*Config[:task_width]}-+-#{"-"*elapsed_time_length}-+"
+			horizontal_border = "+-------+-#{'-'*Config[:task_width]}-+-#{'-'*elapsed_time_length}-+"
 			#header row describing tracking's display columns
-			header = "| start | #{pad("task", Config[:task_width], :center)} | #{pad("elapsed", elapsed_time_length, :center)} |"
+			header = "| start | #{pad('task', Config[:task_width], :center)} | #{pad('elapsed', elapsed_time_length, :center)} |"
 			#intro message, displayed when no valid tasks are found
 			introduction = <<EOF
 +---------------------------------------+
@@ -32,7 +32,7 @@ EOF
 			#display data
 			tasks.each_with_index do |task, i|
 				#grab and reformat data
-				time_string = Time.parse(task[0]).strftime("%H:%M")
+				time_string = Time.parse(task[0]).strftime('%H:%M')
 				task_string = task[1].chomp
 				start_time = Time.parse(task[0])
 				end_time = i<tasks.length-1 ? Time.parse(tasks[i+1][0]) : Time.now
@@ -65,7 +65,7 @@ EOF
 			#display a warning, if needed
 =begin
 			if invalid_lines > 0
-				warn "Error: #{invalid_lines} invalid line#{"s" if invalid_lines > 1} found in data file."
+				warn "Error: #{invalid_lines} invalid line#{'s' if invalid_lines > 1} found in data file."
 			end
 =end
 		end
@@ -73,18 +73,18 @@ EOF
 		#pads tasks with whitespace to align them for display
 		def pad(string, length, align=:left)
 			if string == nil
-				return " " * length
+				return ' ' * length
 			elsif string.length >= length
 				return string
 			else
 				difference = (length - string.length).to_f
 				case align
 				when :left
-					return string + " " * difference
+					return string + ' ' * difference
 				when :right
-					return " " * difference + string
+					return ' ' * difference + string
 				when :center
-					return " "*(difference/2).floor + string + " "*(difference/2).ceil
+					return ' '*(difference/2).floor + string + ' '*(difference/2).ceil
 				else
 					return string
 				end
@@ -100,9 +100,9 @@ EOF
 
 			#if the task needs to be split
 			else
-				words = task.split(" ")
+				words = task.split(' ')
 				split = []
-				line = ""
+				line = ''
 				words.each do |word|
 
 					#if the word needs to be split
@@ -131,7 +131,7 @@ EOF
 					end
 
 					#add a space to the end of the last word, if it would fit
-					line += " " if line.length != Config[:task_width]
+					line += ' ' if line.length != Config[:task_width]
 
 				end
 				split << line
@@ -146,26 +146,26 @@ EOF
 
 			OptionParser.new do |opts|
 				#setup
-				version_path = File.expand_path("../../VERSION", File.dirname(__FILE__))
-				opts.version = File.exist?(version_path) ? File.read(version_path) : ""
+				version_path = File.expand_path('../../VERSION', File.dirname(__FILE__))
+				opts.version = File.exist?(version_path) ? File.read(version_path) : ''
 				#start of help text
-				opts.banner = "Usage: tracking [mode]"
-				opts.separator "                                     display tasks"
-				opts.separator "    <task description>               start a new task with the given text (spaces allowed)"
+				opts.banner = 'Usage: tracking [mode]'
+				opts.separator '                                     display tasks'
+				opts.separator '    <task description>               start a new task with the given text (spaces allowed)'
 				#modes
-				opts.on("-c", "--clear", "delete all tasks") do
+				opts.on('-c', '--clear', 'delete all tasks') do
 					List.clear
-					puts "List cleared."
+					puts 'List cleared.'
 					done = true
 					return
 				end
-				opts.on("-d", "--delete", "delete the last task") do
+				opts.on('-d', '--delete', 'delete the last task') do
 					List.delete
 					display
 					done = true
 					return
 				end
-				opts.on("-h", "--help", "display this help information") do
+				opts.on('-h', '--help', 'display this help information') do
 					puts opts
 					done = true
 					return
@@ -179,7 +179,7 @@ EOF
 					display
 				else
 					#start a new task
-					List.add ARGV.join(" ").gsub("\t","")
+					List.add ARGV.join(' ').gsub("\t",'')
 					display
 				end
 			end

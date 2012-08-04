@@ -1,9 +1,9 @@
 #tracking's core
 
 #imports
-require "yaml"
-require "time"
-require "csv"
+require 'yaml'
+require 'time'
+require 'csv'
 
 #model/controller module methods
 module Tracking
@@ -11,7 +11,7 @@ module Tracking
 
 		extend self
 
-		Config = YAML.load_file(ENV["HOME"] + "/.tracking/config.yml")
+		Config = YAML.load_file(ENV['HOME'] + '/.tracking/config.yml')
 		$data_file = File.expand_path(Config[:data_file])
 		$csv_options = { :col_sep => "\t" }
 
@@ -26,7 +26,7 @@ module Tracking
 		#adds an item to the list
 		def add item
 			date = Time.now.to_s
-			File.open($data_file, "a") do |file|
+			File.open($data_file, 'a') do |file|
 				file << [ date, item ].to_csv($csv_options)
 			end
 		end
@@ -35,7 +35,7 @@ module Tracking
 		def delete
 			lines = File.readlines $data_file
 			lines.pop #or delete specific lines in the future
-			File.open($data_file, "w") do |file| 
+			File.open($data_file, 'w') do |file| 
 				lines.each do |line|
 					file << line
 				end
@@ -69,15 +69,15 @@ module Tracking
 			case Config[:elapsed_format]
 			when :colons
 				if Config[:show_elapsed_seconds]
-					return "%02d:%02d:%02d:%02d" % [days, hours, minutes, seconds]
+					return '%02d:%02d:%02d:%02d' % [days, hours, minutes, seconds]
 				else
-					return "%02d:%02d:%02d" % [days, hours, minutes]
+					return '%02d:%02d:%02d' % [days, hours, minutes]
 				end
 			when :letters
 				if Config[:show_elapsed_seconds]
-					return "%02dd %02dh %02dm %02ds" % [days, hours, minutes, seconds]
+					return '%02dd %02dh %02dm %02ds' % [days, hours, minutes, seconds]
 				else
-					return "%02dd %02dh %02dm" % [days, hours, minutes]
+					return '%02dd %02dh %02dm' % [days, hours, minutes]
 				end
 			end
 		end

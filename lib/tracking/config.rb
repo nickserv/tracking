@@ -1,7 +1,7 @@
 #utilities for tracking's config file
 
 #imports
-require "yaml"
+require 'yaml'
 
 #config module methods
 module Tracking
@@ -11,13 +11,13 @@ module Tracking
 
 		extend self
 
-		PATH = File.join(ENV["HOME"], ".tracking", "config.yml")
+		PATH = File.join(ENV['HOME'], '.tracking', 'config.yml')
 		
 		#default values
 		def defaults
 			{
 				# path to the data file (string, ~ can be used)
-				:data_file => "~/.tracking/data.csv",
+				:data_file => '~/.tracking/data.csv',
 				# number of lines to be displayed at once by default (integer)
 				:lines => 10,
 				# width of the task name column, in characters (integer)
@@ -42,7 +42,7 @@ module Tracking
 			data = YAML.load_file PATH
 			configs = defaults.merge(data)
 			configs[key] = value
-			File.open(PATH, "w") do |fh|
+			File.open(PATH, 'w') do |fh|
 				fh.puts(configs.to_yaml)
 			end
 		end
@@ -54,7 +54,7 @@ module Tracking
 			else 
 				defaults
 			end
-			File.open(PATH, "w") do |fh|
+			File.open(PATH, 'w') do |fh|
 				fh.puts configs.to_yaml
 			end
 		end
