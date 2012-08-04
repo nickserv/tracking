@@ -15,6 +15,16 @@ module Tracking
 		$data_file = File.expand_path(Config[:data_file])
 		$csv_options = { :col_sep => "\t" }
 
+		#read and convert part of the data file into 2D lists
+		#@return a list of lists
+		def get
+			tasks = []
+			CSV.open($data_file, "r", $csv_options)[-Config[:lines],-1].each do |line|
+				tasks << line
+			end
+			return tasks
+		end
+
 		#adds an item to the list
 		def add item
 			date = Time.now.to_s

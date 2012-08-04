@@ -27,17 +27,7 @@ module Tracking
 +---------------------------------------+
 EOF
 			#read data file
-			tasks = []
-			valid_lines = 0
-			invalid_lines = 0
-			data_file = CSV.open($data_file, "r", $csv_options)
-			file_length = data_file.readlines.size
-			data_file.seek(0)
-			data_file.each_with_index do |line, index|
-				if index+1 > file_length - Config[:lines]
-					tasks << line
-				end
-			end
+			tasks = List.get
 			#display data
 			tasks.each_with_index do |task, i|
 				if task.length == 2
