@@ -27,7 +27,7 @@ module Tracking
 +---------------------------------------+
 EOF
 			#read data file
-			data = []
+			tasks = []
 			valid_lines = 0
 			invalid_lines = 0
 			data_file = CSV.open($data_file, "r", $csv_options)
@@ -35,18 +35,18 @@ EOF
 			data_file.seek(0)
 			data_file.each_with_index do |line, index|
 				if index+1 > file_length - Config[:lines]
-					data << line
+					tasks << line
 				end
 			end
 			#display data
-			for i in 0..data.length-1
-				if data[i].length == 2
+			tasks.each_with_index do |task, i|
+				if task.length == 2
 					begin
 						#grab and reformat data
-						time_string = Time.parse(data[i][0]).strftime("%H:%M")
-						task_string = data[i][1].chomp
-						start_time = Time.parse(data[i][0])
-						end_time = i<data.length-1 ? Time.parse(data[i+1][0]) : Time.now
+						time_string = Time.parse(task[0]).strftime("%H:%M")
+						task_string = task[1].chomp
+						start_time = Time.parse(task[0])
+						end_time = i<tasks.length-1 ? Time.parse(tasks[i+1][0]) : Time.now
 						elapsed_string = List.get_elapsed_time(start_time,end_time)
 						#format data into lines
 						lines = []
