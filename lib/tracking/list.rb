@@ -1,40 +1,45 @@
-#tracking's core
-
-#imports
 require 'yaml'
 require 'time'
 require 'csv'
 
-#model/controller module methods
 module Tracking
+	# Tracking's core. Contains methods for manipulating tasks in the data file
+	# and preparing its data for a user interface.
 	module List
-
 		extend self
 
+		# A hash of tracking's config
 		Config = YAML.load_file(ENV['HOME'] + '/.tracking/config.yml')
+
+		# The path to tracking's data file
 		$data_file = File.expand_path(Config[:data_file])
+
+		# The options tracking uses for Ruby's CSV interface
 		$csv_options = { :col_sep => "\t" }
 
-		#read and convert part of the data file into 2D lists
-		#@return a list of lists
+		# Read the end of the data file and convert it into list data
+		#
+		# @return [Array] an array of arrays (tasks), each consisting of two strings (the tasks's start time and the task's name)
 		def get
 			tasks = CSV.read($data_file, $csv_options)
 			tasks = tasks[-Config[:lines]..-1] if tasks.length > Config[:lines]
 			return tasks
 		end
 
-		#adds an item to the list
-		def add item
-			date = Time.now.to_s
+		# Adds a task to the list
+		#
+		# @param [String] task the name of the task to add to the list
+		def add task
+			time = Time.now.to_s
 			File.open($data_file, 'a') do |file|
-				file << [ date, item ].to_csv($csv_options)
+				file << [ time, task ].to_csv($csv_options)
 			end
 		end
 
-		#deletes an item from the list
+		# Deletes the last task from the list
 		def delete
 			lines = File.readlines $data_file
-			lines.pop #or delete specific lines in the future
+			lines.pop # Or delete specific lines in the future
 			File.open($data_file, 'w') do |file| 
 				lines.each do |line|
 					file << line
@@ -42,15 +47,20 @@ module Tracking
 			end
 		end
 
-		#clears the entire list
+		# Clears the entire list
 		def clear
 			FileUtils.rm $data_file
 			FileUtils.touch $data_file
 		end
 
-		#gets and formats the amount of time passed between two times
+		# Gets the elapsed time between two times and formats it into a string for
+		# display (depending on the user's display settings for elapsed times)
+		#
+		# @param [Time] time1 the start time of a task
+		# @param [Time] time2 the end time of a task
+		# @return [String] a formatted string of the elapsed time between time1 and time2
 		def get_elapsed_time(time1, time2)
-			#calculate the elapsed time and break it down into different units
+			# Calculate the elapsed time and break it down into different units
 			seconds = (time2 - time1).floor
 			minutes = hours = days = 0
 			if seconds >= 60
@@ -65,7 +75,7 @@ module Tracking
 					end
 				end
 			end
-			#return a string of the formatted elapsed time
+			# Return a string of the formatted elapsed time
 			case Config[:elapsed_format]
 			when :colons
 				if Config[:show_elapsed_seconds]

@@ -1,7 +1,7 @@
 require 'yaml'
 
 module Tracking
-	# Contains methods relevant to interfacing with tracking's config file.
+	# Contains methods to interface with tracking's config file.
 	#
 	# similar to Sam Goldstein's config.rb for timetrap
 	# @see https://github.com/samg/timetrap/

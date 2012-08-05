@@ -1,23 +1,20 @@
-#tracking's command line interface (view)
-
-#imports
 require 'optparse'
 
-#view module methods
 module Tracking
+	# Contains methods for displaying the list in a command line and parsing
+	# command line arguments.
 	module CLI
-
 		extend self
 
-		#displays the entire list
+		# Displays the end of the list in the command line
 		def display
-			#length of strings produced by the current elapsed time format
+			# Length of strings produced by the current elapsed time format
 			elapsed_time_length = List.get_elapsed_time(Time.now, Time.now).length
-			#horizontal border for the top or bottom of tracking's display
+			# Horizontal border for the top or bottom of tracking's display
 			horizontal_border = "+-------+-#{'-'*Config[:task_width]}-+-#{'-'*elapsed_time_length}-+"
-			#header row describing tracking's display columns
+			# Header row describing tracking's display columns
 			header = "| start | #{pad('task', Config[:task_width], :center)} | #{pad('elapsed', elapsed_time_length, :center)} |"
-			#intro message, displayed when no valid tasks are found
+			# Intro message, displayed when no valid tasks are found
 			introduction = <<EOF
 +---------------------------------------+
 | You haven't started any tasks yet! :( |
@@ -26,18 +23,18 @@ module Tracking
 |     tracking starting some work       |
 +---------------------------------------+
 EOF
-			#read data file
+			# Read data file
 			tasks = List.get
 			first_task = true
-			#display data
+			# Display data
 			tasks.each_with_index do |task, i|
-				#grab and reformat data
+				# Grab and reformat data
 				time_string = Time.parse(task[0]).strftime('%H:%M')
 				task_string = task[1].chomp
 				start_time = Time.parse(task[0])
 				end_time = i<tasks.length-1 ? Time.parse(tasks[i+1][0]) : Time.now
 				elapsed_string = List.get_elapsed_time(start_time,end_time)
-				#format data into lines
+				# Format data into lines
 				lines = []
 				split_task(task_string).each_with_index do |task_line, i|
 					col_1 = pad(i==0 ? time_string : nil, 5)
@@ -45,7 +42,7 @@ EOF
 					col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
 					lines << "| #{col_1} | #{col_2} | #{col_3} |"
 				end
-				#display lines
+				# Display lines
 				if first_task
 					puts horizontal_border
 					if Config[:show_header]
@@ -56,13 +53,13 @@ EOF
 				end
 				lines.each { |line| puts line }
 			end
-			#display intro, if needed
+			# Display intro, if needed
 			if tasks.length > 0
 				puts horizontal_border
 			else
 				puts introduction
 			end
-			#display a warning, if needed
+			# Display a warning, if needed
 =begin
 			if invalid_lines > 0
 				warn "Error: #{invalid_lines} invalid line#{'s' if invalid_lines > 1} found in data file."
@@ -70,7 +67,12 @@ EOF
 =end
 		end
 
-		#pads tasks with whitespace to align them for display
+		# Pads tasks with whitespace to align them for display
+		#
+		# @param [String] string the string to pad
+		# @param [Integer] length the length of the resultant string
+		# @param [Symbol] align the alignment of the start string within the end string (:left/:right/:center)
+		# @return [String] the padded string
 		def pad(string, length, align=:left)
 			if string == nil
 				return ' ' * length
@@ -91,46 +93,49 @@ EOF
 			end
 		end
 
-		#word wraps tasks for display
+		# Word wraps tasks into multiple lines for display (based on the user's task width setting)
+		#
+		# @param [String] task the task string to split up
+		# @return [Array] an array of strings, each containing an individual line of wrapped text
 		def split_task task
 
-			#if the task fits
+			# If the task fits
 			if task.length <= Config[:task_width]
 				return [task]
 
-			#if the task needs to be split
+			# If the task needs to be split
 			else
 				words = task.split(' ')
 				split = []
 				line = ''
 				words.each do |word|
 
-					#if the word needs to be split
+					# If the word needs to be split
 					if word.length > Config[:task_width]
-						#add the start of the word onto the first line (even if it has already started)
+						# Add the start of the word onto the first line (even if it has already started)
 						while line.length < Config[:task_width]
 							line += word[0]
 							word = word[1..-1]
 						end
 						split << line
-						#split the rest of the word up onto new lines
+						# Split the rest of the word up onto new lines
 						split_word = word.scan(%r[.{1,#{Config[:task_width]}}])
 						split_word[0..-2].each do |word_section|
 							split << word_section
 						end
 						line = split_word.last
 
-					#if the word would fit on a new line
+					# If the word would fit on a new line
 					elsif (line + word).length > Config[:task_width]
 						split << line.chomp
 						line = word
 
-					#if the word can be added to this line
+					# If the word can be added to this line
 					else
 						line += word
 					end
 
-					#add a space to the end of the last word, if it would fit
+					# Add a space to the end of the last word, if it would fit
 					line += ' ' if line.length != Config[:task_width]
 
 				end
@@ -139,20 +144,20 @@ EOF
 			end
 		end
 
-		#use option parser to parse command line arguments
+		# Use option parser to parse command line arguments and run the selected command with its selected options
 		def parse
 			#options = {}
 			done = false
 
 			OptionParser.new do |opts|
-				#setup
+				# Setup
 				version_path = File.expand_path('../../VERSION', File.dirname(__FILE__))
 				opts.version = File.exist?(version_path) ? File.read(version_path) : ''
-				#start of help text
+				# Start of help text
 				opts.banner = 'Usage: tracking [mode]'
 				opts.separator '                                     display tasks'
 				opts.separator '    <task description>               start a new task with the given text (spaces allowed)'
-				#modes
+				# Modes
 				opts.on('-c', '--clear', 'delete all tasks') do
 					List.clear
 					puts 'List cleared.'
@@ -172,13 +177,13 @@ EOF
 				end
 			end.parse!
 
-			#basic modes (display and add)
+			# Basic modes (display and add)
 			if not done
 				if ARGV.count == 0
-					#display all tasks
+					# Display all tasks
 					display
 				else
-					#start a new task
+					# Start a new task
 					List.add ARGV.join(' ').gsub("\t",'')
 					display
 				end
