@@ -8,9 +8,6 @@ module Tracking
 	module List
 		extend self
 
-		# A hash of tracking's config
-		Config = YAML.load_file(ENV['HOME'] + '/.tracking/config.yml')
-
 		# The path to tracking's data file
 		$data_file = File.expand_path(Config[:data_file])
 
