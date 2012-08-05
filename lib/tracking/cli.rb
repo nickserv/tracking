@@ -178,7 +178,7 @@ EOF
 			end.parse!
 
 			# Basic modes (display and add)
-			if not done
+			unless done
 				if ARGV.count == 0
 					# Display all tasks
 					display
