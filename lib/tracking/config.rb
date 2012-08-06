@@ -11,6 +11,9 @@ module Tracking
 		# The path to the config file
 		PATH = File.join(ENV['HOME'], '.tracking', 'config.yml')
 
+		# The path to the config file's parent directory
+		DIR = File.join(ENV['HOME'], '.tracking')
+
 		# Default config hash
 		#
 		# @return [Hash<Symbol,Object>] the default config in a hash
@@ -66,6 +69,7 @@ module Tracking
 			else 
 				defaults
 			end
+			FileUtils.mkdir DIR
 			File.open(PATH, 'w') do |fh|
 				fh.puts configs.to_yaml
 			end
