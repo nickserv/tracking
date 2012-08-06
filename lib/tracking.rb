@@ -9,12 +9,6 @@ unless File.exist? File.join(ENV['HOME'], '.tracking')
 	Dir.mkdir File.join(ENV['HOME'], '.tracking')
 end
 
-
-# Create data file
-unless File.exist? File.expand_path Tracking::Config[:data_file]
-	FileUtils.touch File.expand_path Tracking::Config[:data_file]
-end
-
 # Require the rest of tracking
 require File.join(File.dirname(__FILE__), 'tracking', 'list')
 require File.join(File.dirname(__FILE__), 'tracking', 'cli')
