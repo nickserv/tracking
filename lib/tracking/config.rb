@@ -38,6 +38,7 @@ module Tracking
 		# @param [Symbol] key the key in the config hash
 		# @return [Object] the value associated with that key
 		def [] key
+			write unless File.exist? PATH
 			data = YAML.load_file PATH
 			defaults.merge(data)[key]
 		end
@@ -49,6 +50,7 @@ module Tracking
 		# @param [Symbol] key the key you are setting a value for
 		# @param [Object] value the value you associated with the key
 		def []= key, value
+			write unless File.exist? PATH
 			data = YAML.load_file PATH
 			configs = defaults.merge(data)
 			configs[key] = value

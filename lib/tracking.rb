@@ -9,10 +9,6 @@ unless File.exist? File.join(ENV['HOME'], '.tracking')
 	Dir.mkdir File.join(ENV['HOME'], '.tracking')
 end
 
-# Create config file
-unless File.exist? File.join(ENV['HOME'], '.tracking', 'config.yml')
-	Tracking::Config.write
-end
 
 # Create data file
 unless File.exist? File.expand_path Tracking::Config[:data_file]
