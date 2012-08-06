@@ -69,7 +69,7 @@ module Tracking
 			else 
 				defaults
 			end
-			FileUtils.mkdir DIR
+			FileUtils.mkdir DIR unless File.directory? DIR
 			File.open(PATH, 'w') do |fh|
 				fh.puts configs.to_yaml
 			end
