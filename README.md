@@ -5,7 +5,9 @@ A simple and configurable command line time tracker.
 
 `gem install tracking`
 
-If you're on Windows, you should set up [Ruby Installer](http://rubyinstaller.org/downloads/) and [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) first.
+If you're on Windows, you should set up
+[Ruby Installer](http://rubyinstaller.org/downloads/) and
+[DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) first.
 
 Also, tracking does not work on Ruby 1.8 (yet). Please upgrade to Ruby 1.9.3.
 
@@ -80,7 +82,8 @@ The default settings are listed below, along with a description of each setting.
 ```
 
 ##Elapsed Time Formats
-Elapsed times are displayed in this order: days, hours, minutes, seconds (if enabled)
+Elapsed times are displayed in this order: days, hours, minutes, seconds (if
+enabled)
 - hide elapsed seconds
 	- colons: `01:02:03` (default)
 	- letters: `01d 02h 03m`
@@ -89,22 +92,28 @@ Elapsed times are displayed in this order: days, hours, minutes, seconds (if ena
 	- letters: `01d 02h 03m 04s`
 
 ##Contributing to tracking
-- Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
-- Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
+- Check out the latest master to make sure the feature hasn't been implemented
+or the bug hasn't been fixed yet.
+- Check out the issue tracker to make sure someone already hasn't requested it
+and/or contributed it.
 - Fork the project.
 - Start a feature/bugfix branch.
 - Commit and push until you are happy with your contribution.
-- Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-- Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+- Make sure to add tests for it. This is important so I don't break it in a
+future version unintentionally.
+- Please try not to mess with the Rakefile, version, or history. If you want to
+have your own version, or is otherwise necessary, that is fine, but please
+isolate to its own commit so I can cherry-pick around it.
 
 ##Similar Projects
 - [timetrap](https://github.com/samg/timetrap)
 - [d-time-tracker](https://github.com/DanielVF/d-time-tracker)
-- [to-do](http://github.com/kristenmills/to-do) if you want a good command command line todo manager to complement tracking
+- [to-do](http://github.com/kristenmills/to-do) if you want a good command line
+todo manager to complement tracking
 
 ##Special Thanks
-- [to-do](http://github.com/kristenmills/to-do) and [timetrap](https://github.com/samg/timetrap) for letting me borrow some code
+- [to-do](http://github.com/kristenmills/to-do) and
+[timetrap](https://github.com/samg/timetrap) for letting me borrow some code
 
 ##Copyright
-Copyright (c) 2012 Nicolas McCurdy. See LICENSE.txt for
-further details.
+Copyright (c) 2012 Nicolas McCurdy. See LICENSE.txt for further details.
