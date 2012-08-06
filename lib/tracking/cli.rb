@@ -15,14 +15,14 @@ module Tracking
 			# Header row describing tracking's display columns
 			header = "| start | #{pad('task', Config[:task_width], :center)} | #{pad('elapsed', elapsed_time_length, :center)} |"
 			# Intro message, displayed when no valid tasks are found
-			introduction = <<EOF
+			introduction = <<-EOF
 +---------------------------------------+
 | You haven't started any tasks yet! :( |
 |                                       |
 | Run this to begin your first task:    |
 |     tracking starting some work       |
 +---------------------------------------+
-EOF
+			EOF
 			# Read data file
 			tasks = List.get
 			first_task = true
