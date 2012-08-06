@@ -9,16 +9,16 @@ module Tracking
 		extend self
 
 		# The path to tracking's data file
-		$data_file = File.expand_path(Config[:data_file])
+		@data_file = File.expand_path(Config[:data_file])
 
 		# The options tracking uses for Ruby's CSV interface
-		$csv_options = { :col_sep => "\t" }
+		@csv_options = { :col_sep => "\t" }
 
 		# Read the end of the data file and convert it into list data
 		#
 		# @return [Array] an array of arrays (tasks), each consisting of two strings (the tasks's start time and the task's name)
 		def get
-			tasks = CSV.read($data_file, $csv_options)
+			tasks = CSV.read(@data_file, @csv_options)
 			tasks = tasks[-Config[:lines]..-1] if tasks.length > Config[:lines]
 			return tasks
 		end
@@ -28,16 +28,16 @@ module Tracking
 		# @param [String] task the name of the task to add to the list
 		def add task
 			time = Time.now.to_s
-			File.open($data_file, 'a') do |file|
-				file << [ time, task ].to_csv($csv_options)
+			File.open(@data_file, 'a') do |file|
+				file << [ time, task ].to_csv(@csv_options)
 			end
 		end
 
 		# Deletes the last task from the list
 		def delete
-			lines = File.readlines $data_file
+			lines = File.readlines @data_file
 			lines.pop # Or delete specific lines in the future
-			File.open($data_file, 'w') do |file| 
+			File.open(@data_file, 'w') do |file| 
 				lines.each do |line|
 					file << line
 				end
@@ -46,8 +46,8 @@ module Tracking
 
 		# Clears the entire list
 		def clear
-			FileUtils.rm $data_file
-			FileUtils.touch $data_file
+			FileUtils.rm @data_file
+			FileUtils.touch @data_file
 		end
 
 		# Gets the elapsed time between two times and formats it into a string for
