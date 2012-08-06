@@ -1,15 +1,5 @@
-# Require file utilities
-require 'fileutils'
-
-# Require Tracking::Config
+# Require all of tracking's stuff
 require File.join(File.dirname(__FILE__), 'tracking', 'config')
-
-# Create ~/.tracking
-unless File.exist? File.join(ENV['HOME'], '.tracking')
-	Dir.mkdir File.join(ENV['HOME'], '.tracking')
-end
-
-# Require the rest of tracking
 require File.join(File.dirname(__FILE__), 'tracking', 'list')
 require File.join(File.dirname(__FILE__), 'tracking', 'cli')
 
