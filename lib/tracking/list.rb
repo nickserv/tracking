@@ -16,7 +16,8 @@ module Tracking
 
 		# Read the end of the data file and convert it into list data
 		#
-		# @return [Array] an array of arrays (tasks), each consisting of two strings (the tasks's start time and the task's name)
+		# @return [Array] an array of arrays (tasks), each consisting of two strings
+		# (the tasks's start time and the task's name)
 		def get
 			if File.exist? @data_file
 				tasks = CSV.read(@data_file, @csv_options)
@@ -64,7 +65,8 @@ module Tracking
 		#
 		# @param [Time] time1 the start time of a task
 		# @param [Time] time2 the end time of a task
-		# @return [String] a formatted string of the elapsed time between time1 and time2
+		# @return [String] a formatted string of the elapsed time between time1 and
+		# time2
 		def get_elapsed_time(time1, time2)
 			# Calculate the elapsed time and break it down into different units
 			seconds = (time2 - time1).floor

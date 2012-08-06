@@ -71,7 +71,8 @@ EOF
 		#
 		# @param [String] string the string to pad
 		# @param [Integer] length the length of the resultant string
-		# @param [Symbol] align the alignment of the start string within the end string (:left/:right/:center)
+		# @param [Symbol] align the alignment of the start string within the end
+		# string (:left/:right/:center)
 		# @return [String] the padded string
 		def pad(string, length, align=:left)
 			if string == nil
@@ -93,10 +94,12 @@ EOF
 			end
 		end
 
-		# Word wraps tasks into multiple lines for display (based on the user's task width setting)
+		# Word wraps tasks into multiple lines for display (based on the user's task
+		# width setting)
 		#
 		# @param [String] task the task string to split up
-		# @return [Array] an array of strings, each containing an individual line of wrapped text
+		# @return [Array] an array of strings, each containing an individual line of
+		# wrapped text
 		def split_task task
 
 			# If the task fits
@@ -112,7 +115,8 @@ EOF
 
 					# If the word needs to be split
 					if word.length > Config[:task_width]
-						# Add the start of the word onto the first line (even if it has already started)
+						# Add the start of the word onto the first line (even if it has
+						# already started)
 						while line.length < Config[:task_width]
 							line += word[0]
 							word = word[1..-1]
@@ -144,7 +148,8 @@ EOF
 			end
 		end
 
-		# Use option parser to parse command line arguments and run the selected command with its selected options
+		# Use option parser to parse command line arguments and run the selected
+		# command with its selected options
 		def parse
 			#options = {}
 			done = false
