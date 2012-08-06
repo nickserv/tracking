@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'yaml'
 require 'time'
 require 'csv'

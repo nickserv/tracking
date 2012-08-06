@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'yaml'
 
 module Tracking
