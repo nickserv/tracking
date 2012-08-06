@@ -8,12 +8,16 @@ class TestCLI < Test::Unit::TestCase
 		def setup
 			FileUtils.cd File.expand_path('~/.tracking')
 			FileUtils.mkdir 'test_backup'
-			FileUtils.mv %w(config.yml data.csv), 'test_backup'
+			%w(config.yml data.csv).each do |f|
+				FileUtils.mv(f, 'test_backup') if File.exist? f
+			end
 		end
 
 		def teardown
 			FileUtils.cd File.expand_path('~/.tracking/test_backup')
-			FileUtils.mv %w(config.yml data.csv), File.expand_path('..')
+			%w(config.yml data.csv).each do |f|
+				FileUtils.mv(f, File.expand_path('..')) if File.exist? f
+			end
 			FileUtils.cd File.expand_path('..')
 			FileUtils.rmdir 'test_backup'
 		end
