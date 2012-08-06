@@ -14,14 +14,27 @@ module Tracking
 		# The options tracking uses for Ruby's CSV interface
 		@csv_options = { :col_sep => "\t" }
 
-		# Read the end of the data file and convert it into list data
+		# Read the end of the data file and convert it into tasks (for display).
+		# Note that this currently only works if the requested tasks are contiguous,
+		# ending with the last task in the data file.
 		#
-		# @return [Array] an array of arrays (tasks), each consisting of two strings
-		# (the tasks's start time and the task's name)
+		# @return [Array] an array of arrays of strings
 		def get
 			if File.exist? @data_file
-				tasks = CSV.read(@data_file, @csv_options)
-				tasks = tasks[-Config[:lines]..-1] if tasks.length > Config[:lines]
+				all_lines = CSV.read(@data_file, @csv_options)
+				lines = all_lines.length > Config[:lines] ? all_lines[-Config[:lines]..-1] : all_lines
+
+				tasks = []
+				lines.each_with_index do |line, i|
+					name = line[1]
+					start_time = Time.parse line[0]
+					end_time = i<lines.length-1 ? Time.parse(lines[i+1][0]) : Time.now
+					tasks << [
+						start_time.strftime('%H:%M'), # Start Time
+						name, # Name
+						get_elapsed_time(start_time, end_time) # Elapsed time
+					]
+				end
 				return tasks
 			else
 				return []

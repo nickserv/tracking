@@ -28,18 +28,14 @@ module Tracking
 			first_task = true
 			# Display data
 			tasks.each_with_index do |task, i|
-				# Grab and reformat data
-				time_string = Time.parse(task[0]).strftime('%H:%M')
-				task_string = task[1].chomp
-				start_time = Time.parse(task[0])
-				end_time = i<tasks.length-1 ? Time.parse(tasks[i+1][0]) : Time.now
-				elapsed_string = List.get_elapsed_time(start_time,end_time)
+				# Grab data
+				start_time, name, elapsed_time = task
 				# Format data into lines
 				lines = []
-				split_task(task_string).each_with_index do |task_line, i|
-					col_1 = pad(i==0 ? time_string : nil, 5)
-					col_2 = pad(task_line, Config[:task_width])
-					col_3 = pad(i==0 ? elapsed_string : nil, elapsed_time_length)
+				split_task(name).each_with_index do |name_line, i|
+					col_1 = pad(i==0 ? start_time : nil, 5)
+					col_2 = pad(name_line, Config[:task_width])
+					col_3 = pad(i==0 ? elapsed_time : nil, elapsed_time_length)
 					lines << "| #{col_1} | #{col_2} | #{col_3} |"
 				end
 				# Display lines
