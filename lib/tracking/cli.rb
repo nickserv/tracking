@@ -30,14 +30,6 @@ module Tracking
 			tasks.each_with_index do |task, i|
 				# Grab data
 				start_time, name, elapsed_time = task
-				# Format data into lines
-				lines = []
-				split_task(name).each_with_index do |name_line, i|
-					col_1 = pad(i==0 ? start_time : nil, 5)
-					col_2 = pad(name_line, Config[:task_width])
-					col_3 = pad(i==0 ? elapsed_time : nil, elapsed_time_length)
-					lines << "| #{col_1} | #{col_2} | #{col_3} |"
-				end
 				# Display lines
 				if first_task
 					puts horizontal_border
@@ -47,7 +39,12 @@ module Tracking
 					end
 					first_task = false
 				end
-				lines.each { |line| puts line }
+				split_task(name).each_with_index do |name_line, i|
+					col_1 = pad(i==0 ? start_time : nil, 5)
+					col_2 = pad(name_line, Config[:task_width])
+					col_3 = pad(i==0 ? elapsed_time : nil, elapsed_time_length)
+					puts "| #{col_1} | #{col_2} | #{col_3} |"
+				end
 			end
 			# Display intro, if needed
 			if tasks.length > 0
