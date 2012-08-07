@@ -6,14 +6,21 @@ module Tracking
 	module CLI
 		extend self
 
+		# Width of the first column (start time)
+		@start_time_width = 5
+
+		# Width of the second column (name)
+		@name_width = Config[:task_width]
+
+		# Width of the third column (elapsed time)
+		@elapsed_time_width = List.get_elapsed_time(Time.now, Time.now).length
+
 		# Displays the end of the list in the command line
 		def display
-			# Length of strings produced by the current elapsed time format
-			elapsed_time_length = List.get_elapsed_time(Time.now, Time.now).length
 			# Horizontal border for the top or bottom of tracking's display
-			horizontal_border = "+-------+-#{'-'*Config[:task_width]}-+-#{'-'*elapsed_time_length}-+"
+			horizontal_border = "+-------+-#{'-'*@name_width}-+-#{'-'*@elapsed_time_width}-+"
 			# Header row describing tracking's display columns
-			header = "| start | #{pad('task', Config[:task_width], :center)} | #{pad('elapsed', elapsed_time_length, :center)} |"
+			header = "| start | #{pad('task', @name_width, :center)} | #{pad('elapsed', @elapsed_time_width, :center)} |"
 			# Intro message, displayed when no valid tasks are found
 			introduction = <<-EOF
 +---------------------------------------+
@@ -41,8 +48,8 @@ module Tracking
 				end
 				split_task(name).each_with_index do |name_line, i|
 					col_1 = pad(i==0 ? start_time : nil, 5)
-					col_2 = pad(name_line, Config[:task_width])
-					col_3 = pad(i==0 ? elapsed_time : nil, elapsed_time_length)
+					col_2 = pad(name_line, @name_width)
+					col_3 = pad(i==0 ? elapsed_time : nil, @elapsed_time_width)
 					puts "| #{col_1} | #{col_2} | #{col_3} |"
 				end
 			end
