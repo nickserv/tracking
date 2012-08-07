@@ -17,54 +17,58 @@ module Tracking
 
 		# Displays the end of the list in the command line
 		def display
-			# Horizontal border for the top or bottom of tracking's display
-			horizontal_border = "+-------+-#{'-'*@name_width}-+-#{'-'*@elapsed_time_width}-+"
-			# Header row describing tracking's display columns
-			header = "| start | #{pad('task', @name_width, :center)} | #{pad('elapsed', @elapsed_time_width, :center)} |"
-			# Intro message, displayed when no valid tasks are found
-			introduction = <<-EOF
-+---------------------------------------+
-| You haven't started any tasks yet! :( |
-|                                       |
-| Run this to begin your first task:    |
-|     tracking starting some work       |
-+---------------------------------------+
-			EOF
 			# Read data file
 			tasks = List.get
 			first_task = true
 			# Display data
-			tasks.each_with_index do |task, i|
-				# Grab data
-				start_time, name, elapsed_time = task
-				# Display lines
-				if first_task
-					puts horizontal_border
-					if Config[:show_header]
-						puts header
-						puts horizontal_border
-					end
-					first_task = false
-				end
-				split_task(name).each_with_index do |name_line, i|
-					col_1 = pad(i==0 ? start_time : nil, 5)
-					col_2 = pad(name_line, @name_width)
-					col_3 = pad(i==0 ? elapsed_time : nil, @elapsed_time_width)
-					puts "| #{col_1} | #{col_2} | #{col_3} |"
-				end
-			end
-			# Display intro, if needed
+			display_object :top
 			if tasks.length > 0
-				puts horizontal_border
+				tasks.each_with_index do |task, i|
+					start_time, name, elapsed_time = task
+					split_task(name).each_with_index do |name_line, i|
+						col_1 = pad(i==0 ? start_time : nil, 5)
+						col_2 = pad(name_line, @name_width)
+						col_3 = pad(i==0 ? elapsed_time : nil, @elapsed_time_width)
+						puts "| #{col_1} | #{col_2} | #{col_3} |"
+					end
+				end
 			else
-				puts introduction
+				display_object :intro
 			end
+			display_object :bottom
 			# Display a warning, if needed
 =begin
 			if invalid_lines > 0
 				warn "Error: #{invalid_lines} invalid line#{'s' if invalid_lines > 1} found in data file."
 			end
 =end
+		end
+
+		# Displays commonly used text objects in the command line
+		#
+		# @param type the type of text object to display (:top/:bottom/:intro)
+		def display_object type
+			horizontal_border = "+-------+-#{'-'*@name_width}-+-#{'-'*@elapsed_time_width}-+"
+			case type
+			when :top
+				puts horizontal_border
+				if Config[:show_header]
+					puts "| start | #{pad('task', @name_width, :center)} | #{pad('elapsed', @elapsed_time_width, :center)} |"
+					puts horizontal_border
+				end
+			when :bottom
+				puts horizontal_border
+			when :intro
+				intro_text = <<-EOF
+You haven't started any tasks yet! :(
+
+Run this to begin your first task:
+  tracking starting some work
+				EOF
+				intro_text.each_line do |line|
+					puts "|       | #{pad(line.chomp, @name_width)} | #{pad(nil, @elapsed_time_width)} |"
+				end
+			end
 		end
 
 		# Pads tasks with whitespace to align them for display
