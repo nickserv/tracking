@@ -17,11 +17,8 @@ module Tracking
 
 		# Displays the end of the list in the command line
 		def display
-			# Read data file
-			tasks = List.get
-			first_task = true
-			# Display data
 			display_object :top
+			tasks = List.get
 			if tasks.length > 0
 				tasks.each_with_index do |task, i|
 					start_time, name, elapsed_time = task
