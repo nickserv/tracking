@@ -18,6 +18,15 @@ module Tracking
 			@end_time = end_time
 		end
 
+		# Calculates the length of strings from Task#elapsed_time (using the current
+		# elapsed time format).
+		#
+		# @return [String] the length of strings from Task#elapsed_time
+		def self.elapsed_time_length
+			test_task = Task.new('test', Time.now, Time.now)
+			return test_task.elapsed_time.length
+		end
+
 		# Accessor for this tasks's name (read/write)
 		attr_accessor :name
 
@@ -28,12 +37,40 @@ module Tracking
 			return @start_time.strftime('%H:%M')
 		end
 
-		# Calculates, formats, and returns the elapsed time of this task. Currently
-		# just a wrapper for List.get_elapsed_time, using the Task's own data.
+		# Calculates, formats, and returns the elapsed time of this task.
 		#
 		# @return [String] the formatted elapsed time of this task
 		def elapsed_time
-			return List.get_elapsed_time(@start_time, @end_time)
+			# Calculate the elapsed time and break it down into different units
+			seconds = (@end_time - @start_time).floor
+			minutes = hours = days = 0
+			if seconds >= 60
+				minutes = seconds / 60
+				seconds = seconds % 60
+				if minutes >= 60
+					hours = minutes / 60
+					minutes = minutes % 60
+					if hours >= 24
+						days = hours / 24
+						hours = hours % 24
+					end
+				end
+			end
+			# Return a string of the formatted elapsed time
+			case Config[:elapsed_format]
+			when :colons
+				if Config[:show_elapsed_seconds]
+					return '%02d:%02d:%02d:%02d' % [days, hours, minutes, seconds]
+				else
+					return '%02d:%02d:%02d' % [days, hours, minutes]
+				end
+			when :letters
+				if Config[:show_elapsed_seconds]
+					return '%02dd %02dh %02dm %02ds' % [days, hours, minutes, seconds]
+				else
+					return '%02dd %02dh %02dm' % [days, hours, minutes]
+				end
+			end
 		end
 
 	end

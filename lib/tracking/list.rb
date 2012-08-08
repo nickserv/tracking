@@ -70,45 +70,5 @@ module Tracking
 			end
 		end
 
-		# Gets the elapsed time between two times and formats it into a string for
-		# display (depending on the user's display settings for elapsed times)
-		#
-		# @param [Time] time1 the start time of a task
-		# @param [Time] time2 the end time of a task
-		# @return [String] a formatted string of the elapsed time between time1 and
-		# time2
-		def get_elapsed_time(time1, time2)
-			# Calculate the elapsed time and break it down into different units
-			seconds = (time2 - time1).floor
-			minutes = hours = days = 0
-			if seconds >= 60
-				minutes = seconds / 60
-				seconds = seconds % 60
-				if minutes >= 60
-					hours = minutes / 60
-					minutes = minutes % 60
-					if hours >= 24
-						days = hours / 24
-						hours = hours % 24
-					end
-				end
-			end
-			# Return a string of the formatted elapsed time
-			case Config[:elapsed_format]
-			when :colons
-				if Config[:show_elapsed_seconds]
-					return '%02d:%02d:%02d:%02d' % [days, hours, minutes, seconds]
-				else
-					return '%02d:%02d:%02d' % [days, hours, minutes]
-				end
-			when :letters
-				if Config[:show_elapsed_seconds]
-					return '%02dd %02dh %02dm %02ds' % [days, hours, minutes, seconds]
-				else
-					return '%02dd %02dh %02dm' % [days, hours, minutes]
-				end
-			end
-		end
-
 	end
 end

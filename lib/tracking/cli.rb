@@ -13,7 +13,7 @@ module Tracking
 		@name_width = Config[:task_width]
 
 		# Width of the third column (elapsed time)
-		@elapsed_time_width = List.get_elapsed_time(Time.now, Time.now).length
+		@elapsed_time_width = Task.elapsed_time_length
 
 		# Displays the end of the list in the command line
 		def display
