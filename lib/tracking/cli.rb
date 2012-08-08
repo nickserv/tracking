@@ -21,11 +21,10 @@ module Tracking
 			tasks = List.get
 			if tasks.length > 0
 				tasks.each_with_index do |task, i|
-					start_time, name, elapsed_time = task
-					split_task(name).each_with_index do |name_line, i|
-						col_1 = pad(i==0 ? start_time : nil, 5)
+					split_task(task.name).each_with_index do |name_line, i|
+						col_1 = pad(i==0 ? task.start_time : nil, 5)
 						col_2 = pad(name_line, @name_width)
-						col_3 = pad(i==0 ? elapsed_time : nil, @elapsed_time_width)
+						col_3 = pad(i==0 ? task.elapsed_time : nil, @elapsed_time_width)
 						puts "| #{col_1} | #{col_2} | #{col_3} |"
 					end
 				end

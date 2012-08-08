@@ -30,11 +30,7 @@ module Tracking
 					name = line[1]
 					start_time = Time.parse line[0]
 					end_time = i<lines.length-1 ? Time.parse(lines[i+1][0]) : Time.now
-					tasks << [
-						start_time.strftime('%H:%M'), # Start Time
-						name, # Name
-						get_elapsed_time(start_time, end_time) # Elapsed time
-					]
+					tasks << Task.new(name, start_time, end_time)
 				end
 				return tasks
 			else
