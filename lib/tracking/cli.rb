@@ -22,14 +22,12 @@ module Tracking
 			tasks = List.get
 			if tasks.length > 0
 				tasks.each_with_index do |task, task_index|
-					last_task = (task_index + 1 == tasks.length)
+					current_task = (task_index + 1 == tasks.length)
 					split_task(task.name).each_with_index do |name_line, line_index|
 						col_1 = pad(line_index==0 ? task.start_time : nil, 5)
 						col_2 = pad(name_line, @name_width)
 						col_3 = pad(line_index==0 ? task.elapsed_time : nil, @elapsed_time_width)
-						if last_task
-							col_1, col_2, col_3 = col_1.red, col_2.red, col_3.red
-						end
+						col_1,col_2,col_3 = col_1.red,col_2.red,col_3.red if current_task
 						puts "| #{col_1} | #{col_2} | #{col_3} |"
 					end
 				end
