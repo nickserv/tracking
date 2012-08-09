@@ -75,6 +75,8 @@ The default settings are listed below, along with a description of each setting.
 :task_width: 40
 # format to use for elapsed time display (:colons or :letters)
 :elapsed_format: :colons
+# toggle colored display of the current (last) task
+:color_current_task: true
 # toggle header describing tracking's display columns (true or false)
 :show_header: true
 # toggle display of seconds in elapsed time (true of false)
