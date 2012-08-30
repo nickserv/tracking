@@ -15,13 +15,17 @@ module Tracking
 		# The options tracking uses for Ruby's CSV interface
 		@csv_options = { :col_sep => "\t" }
 
-		# Reads part of the data file and converts the data into Task objects.
+		# Reads part of the data file and converts the data into Task objects
+		#
+		# @param [Integer] max the maximum number of items to get from the end of
+		# the data file
 		#
 		# @return [Array] an array of Task objects
-		def get
+		def get max=Config[:lines]
 			if File.exist? @data_file
 				all_lines = CSV.read(@data_file, @csv_options)
-				lines = all_lines.length > Config[:lines] ? all_lines[-Config[:lines]..-1] : all_lines
+				lines = all_lines[-max..-1]
+				lines = all_lines if lines.nil?
 
 				tasks = []
 				lines.each_with_index do |line, i|

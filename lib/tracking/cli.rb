@@ -16,10 +16,12 @@ module Tracking
 		# Width of the third column (elapsed time)
 		@elapsed_time_width = Task.elapsed_time_length
 
-		# Displays the end of the list in the command line
-		def display
+		# Displays part of the list in the command line
+		#
+		# @param [Integer] max the maximum number of items to display
+		def display max=Config[:lines]
 			display_object :top
-			tasks = List.get
+			tasks = List.get max
 			if tasks.length > 0
 				tasks.each_with_index do |task, task_index|
 					current_task = (task_index + 1 == tasks.length)
