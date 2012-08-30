@@ -15,11 +15,9 @@ module Tracking
 		# The options tracking uses for Ruby's CSV interface
 		@csv_options = { :col_sep => "\t" }
 
-		# Read the end of the data file and convert it into tasks (for display).
-		# Note that this currently only works if the requested tasks are contiguous,
-		# ending with the last task in the data file.
+		# Reads part of the data file and converts the data into Task objects.
 		#
-		# @return [Array] an array of arrays of strings
+		# @return [Array] an array of Task objects
 		def get
 			if File.exist? @data_file
 				all_lines = CSV.read(@data_file, @csv_options)
