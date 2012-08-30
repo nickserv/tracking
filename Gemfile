@@ -12,5 +12,10 @@ group :development do
   gem 'jeweler', '~> 1.8.4'
   gem 'simplecov', '>= 0'
   gem 'yard', '>= 0'
-  gem 'redcarpet', '>= 0'
+  platforms :ruby do
+    gem 'redcarpet', '>= 0'
+  end
+  platforms :jruby do
+    gem 'kramdown', '>= 0'
+  end
 end
