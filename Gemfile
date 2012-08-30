@@ -6,16 +6,16 @@ gem 'colorize', '~> 0.5'
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
-  gem 'shoulda', '>= 0'
+  gem 'shoulda'
   gem 'rdoc', '~> 3.12'
   gem 'bundler', '>= 1.0.0'
   gem 'jeweler', '~> 1.8.4'
-  gem 'simplecov', '>= 0'
-  gem 'yard', '>= 0'
+  gem 'simplecov'
+  gem 'yard'
   platforms :ruby do
-    gem 'redcarpet', '>= 0'
+    gem 'redcarpet'
   end
   platforms :jruby do
-    gem 'kramdown', '>= 0'
+    gem 'kramdown'
   end
 end
