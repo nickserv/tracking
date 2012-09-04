@@ -31,6 +31,8 @@ class TestCLI < Test::Unit::TestCase
 			capture_output { Tracking::List.add 'first task' }
 			#test_command 'second task'
 			capture_output { Tracking::List.add 'second task' }
+			#test_command '-r second task, renamed'
+			capture_output { Tracking::List.rename 'second task, renamed' }
 			#test_command
 			capture_output { Tracking::CLI.display }
 			#test_command '-d'
