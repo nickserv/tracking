@@ -18,6 +18,28 @@ module Tracking
 			@end_time = end_time
 		end
 
+		# Gets raw data from the task object, without doing any conversions or
+		# formatting
+		#
+		# @param [Symbol] key the key of the desired value
+		#
+		# @return the value of the requested key
+		def raw key
+			case key
+			when :name
+				return @name
+			when :start_time
+				return @start_time
+			when :end_time
+				return @end_time
+			end
+		end
+
+		# Converts the task object into a string (for debugging)
+		def to_s
+			return "name: #{name}; start: #{@start_time}; end: #{@end_time};"
+		end
+
 		# Calculates the length of strings from Task#elapsed_time (using the current
 		# elapsed time format).
 		#

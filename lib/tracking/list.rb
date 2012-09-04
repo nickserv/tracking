@@ -53,12 +53,11 @@ module Tracking
 
 		# Adds a task to the list
 		#
-		# @param [String] task the name of the task to add to the list
-		def add task
-			time = Time.now.to_s
+		# @param [String] name the name of the task to add to the list
+		def add name, time=Time.now
 			FileUtils.touch @data_file unless File.exist? @data_file
 			File.open(@data_file, 'a') do |file|
-				file << [ time, task ].to_csv(@csv_options)
+				file << [ time.to_s, name ].to_csv(@csv_options)
 			end
 		end
 
@@ -73,6 +72,18 @@ module Tracking
 					end
 				end
 			end
+		end
+
+		# Renames the last task in the list
+		#
+		# @param [String] name the new name for the last task
+		def rename name
+			# get task data
+			old_task = get(1).first
+			# delete last task
+			delete
+			# add new task with old time
+			add(name, old_task.raw(:start_time))
 		end
 
 		# Clears the entire list

@@ -170,6 +170,12 @@ Run this to begin your first task:
 				opts.separator '                                     display tasks'
 				opts.separator '    <task description>               start a new task with the given text (spaces allowed)'
 				# Modes
+				opts.on('-r', '--rename', 'rename the last task') do
+					List.rename ARGV.join(' ').gsub("\t",'')
+					display
+					done = true
+					return
+				end
 				opts.on('-d', '--delete', 'delete the last task') do
 					List.delete
 					display
