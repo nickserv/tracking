@@ -41,6 +41,8 @@ module Tracking
 		#
 		# @param [Array] line the line of semi-parsed CSV data to use
 		# @param [Array] next_line the next line of data, if it exists
+		#
+		# @return [Task] the generated Task object
 		def create_task_from_data(line, next_line=nil)
 			name = line[1]
 			start_time = Time.parse line[0]
