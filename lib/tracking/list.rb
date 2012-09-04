@@ -15,7 +15,7 @@ module Tracking
 		# The options tracking uses for Ruby's CSV interface
 		@csv_options = { :col_sep => "\t" }
 
-		# Reads part of the data file and converts the data into Task objects
+		# Reads part of the data file and creates Task objects from that data
 		#
 		# @param [Integer] max the maximum number of items to get from the end of
 		# the data file
@@ -29,15 +29,24 @@ module Tracking
 
 				tasks = []
 				lines.each_with_index do |line, i|
-					name = line[1]
-					start_time = Time.parse line[0]
-					end_time = i<lines.length-1 ? Time.parse(lines[i+1][0]) : Time.now
-					tasks << Task.new(name, start_time, end_time)
+					tasks << create_task_from_data(line, lines[i+1])
 				end
 				return tasks
 			else
 				return []
 			end
+		end
+
+		# Generates a Task object from one or two lines of semi-parsed CSV data
+		#
+		# @param [Array] line the line of semi-parsed CSV data to use
+		# @param [Array] next_line the next line of data, if it exists
+		def create_task_from_data(line, next_line=nil)
+			name = line[1]
+			start_time = Time.parse line[0]
+			end_time = next_line.nil? ? Time.now : Time.parse(next_line[0])
+
+			return Task.new(name, start_time, end_time)
 		end
 
 		# Adds a task to the list
