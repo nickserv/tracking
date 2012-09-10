@@ -21,14 +21,16 @@ describe Tracking::CLI do
 	end
 
 	it 'performs a few operations on a new list and then clears it' do
-		capture_output { Tracking::List.clear }
-		capture_output { Tracking::CLI.display }
-		capture_output { Tracking::List.add 'first task' }
-		capture_output { Tracking::List.add 'second task' }
-		capture_output { Tracking::List.rename 'second task, renamed' }
-		capture_output { Tracking::CLI.display }
-		capture_output { Tracking::List.delete }
-		capture_output { Tracking::List.clear }
+		capture_output do
+			Tracking::List.clear
+			Tracking::CLI.display
+			Tracking::List.add 'first task'
+			Tracking::List.add 'second task'
+			Tracking::List.rename 'second task, renamed'
+			Tracking::CLI.display
+			Tracking::List.delete
+			Tracking::List.clear
+		end
 	end
 
 =begin
