@@ -55,11 +55,12 @@ $ tracking back to work
 ##Usage
 ```
 Usage: tracking [mode]
-                                     display all tasks
-    <task>                           start a new task with the given text
-    -c, --clear                      delete all tasks
+                                     display tasks
+    <task description>               start a new task with the given text (spaces allowed)
+    -r, --rename                     rename the last task
     -d, --delete                     delete the last task
-    -h, --help                       displays this help information
+    -c, --clear                      delete all tasks
+    -h, --help                       display this help information
 ```
 
 ##Configuration
