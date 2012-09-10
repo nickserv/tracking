@@ -25,7 +25,7 @@ module Tracking
 			if tasks.length > 0
 				tasks.each_with_index do |task, task_index|
 					current_task = (task_index + 1 == tasks.length)
-					split_task(task.name).each_with_index do |name_line, line_index|
+					word_wrap(task.name).split("\n").each_with_index do |name_line, line_index|
 						col_1 = pad(line_index==0 ? task.start_time : nil, 5)
 						col_2 = pad(name_line, @name_width)
 						col_3 = pad(line_index==0 ? task.elapsed_time : nil, @elapsed_time_width)
@@ -101,58 +101,21 @@ Run this to begin your first task:
 			end
 		end
 
-		# Word wraps tasks into multiple lines for display (based on the user's task
+		# Word wraps text into multiple lines for display (based on the user's task
 		# width setting)
 		#
-		# @param [String] task the task string to split up
-		# @return [Array] an array of strings, each containing an individual line of
-		# wrapped text
-		def split_task task
-
-			# If the task fits
-			if task.length <= Config[:task_width]
-				return [task]
-
-			# If the task needs to be split
-			else
-				words = task.split(' ')
-				split = []
-				line = ''
-				words.each do |word|
-
-					# If the word needs to be split
-					if word.length > Config[:task_width]
-						# Add the start of the word onto the first line (even if it has
-						# already started)
-						while line.length < Config[:task_width]
-							line += word[0]
-							word = word[1..-1]
-						end
-						split << line
-						# Split the rest of the word up onto new lines
-						split_word = word.scan(%r[.{1,#{Config[:task_width]}}])
-						split_word[0..-2].each do |word_section|
-							split << word_section
-						end
-						line = split_word.last
-
-					# If the word would fit on a new line
-					elsif (line + word).length > Config[:task_width]
-						split << line.chomp
-						line = word
-
-					# If the word can be added to this line
-					else
-						line += word
-					end
-
-					# Add a space to the end of the last word, if it would fit
-					line += ' ' if line.length != Config[:task_width]
-
-				end
-				split << line
-				return split
-			end
+		# This implementation is borrowed from
+		# ActionView::Helpers::TextHelper#word_wrap in Rails (commit 7b31a43085).
+		#
+		# @see https://github.com/rails/rails/blob/master/actionpack/lib/action_view/helpers/text_helper.rb
+		#
+		# @param [String] text the text to wrap
+		#
+		# @return [String] the wrapped text (with newline characters)
+		def word_wrap(text)
+			text.split("\n").collect do |line|
+				line.length > Config[:task_width] ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1\n").strip : line
+			end * "\n"
 		end
 
 		# Use option parser to parse command line arguments and run the selected
