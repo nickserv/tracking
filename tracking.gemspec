@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "tracking"
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nicolas McCurdy"]
-  s.date = "2012-08-03"
+  s.date = "2012-09-10"
   s.description = "See README for more information."
   s.email = "thenickperson@gmail.com"
   s.executables = ["tracking"]
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".travis.yml",
+    "CHANGELOG.md",
     "Gemfile",
     "LICENSE.txt",
     "README.md",
@@ -30,40 +31,51 @@ Gem::Specification.new do |s|
     "lib/tracking/cli.rb",
     "lib/tracking/config.rb",
     "lib/tracking/list.rb",
-    "test/helper.rb",
-    "test/test_cli.rb"
+    "lib/tracking/task.rb",
+    "spec/cli_spec.rb",
+    "spec/helper.rb",
+    "tracking.gemspec"
   ]
   s.homepage = "http://github.com/thenickperson/tracking"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.24"
   s.summary = "A simple and configurable command line time tracker."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<shoulda>, [">= 0"])
+      s.add_runtime_dependency(%q<colorize>, ["~> 0.5"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, [">= 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<redcarpet>, [">= 0"])
+      s.add_development_dependency(%q<kramdown>, [">= 0"])
     else
-      s.add_dependency(%q<shoulda>, [">= 0"])
+      s.add_dependency(%q<colorize>, ["~> 0.5"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, [">= 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<redcarpet>, [">= 0"])
+      s.add_dependency(%q<kramdown>, [">= 0"])
     end
   else
-    s.add_dependency(%q<shoulda>, [">= 0"])
+    s.add_dependency(%q<colorize>, ["~> 0.5"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, [">= 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<redcarpet>, [">= 0"])
+    s.add_dependency(%q<kramdown>, [">= 0"])
   end
 end
 
