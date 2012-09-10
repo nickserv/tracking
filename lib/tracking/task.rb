@@ -11,11 +11,13 @@ module Tracking
 		#
 		# @param [String] name the tasks's name
 		# @param [Time] start_time the tasks's start time
-		# @param [Time] end_time the tasks's end time
+		# @param [Time] end_time the tasks's end time (can be nil, which marks a
+		# task as the current task)
 		def initialize(name, start_time, end_time)
 			@name = name
 			@start_time = start_time
 			@end_time = end_time
+			@current = end_time.nil? ? true : false
 		end
 
 		# Gets raw data from the task object, without doing any conversions or
@@ -38,6 +40,13 @@ module Tracking
 		# Converts the task object into a string (for debugging)
 		def to_s
 			return "name: #{name}; start: #{@start_time}; end: #{@end_time};"
+		end
+
+		# Returns true if this task is the current (last) task
+		#
+		# @return [Boolean] true if this is the current task, false otherwise
+		def current?
+			return @current
 		end
 
 		# Calculates the length of strings from Task#elapsed_time (using the current
@@ -64,7 +73,7 @@ module Tracking
 		# @return [String] the formatted elapsed time of this task
 		def elapsed_time
 			# Calculate the elapsed time and break it down into different units
-			seconds = (@end_time - @start_time).floor
+			seconds = ((self.current? ? Time.now : @end_time) - @start_time).floor
 			minutes = hours = days = 0
 			if seconds >= 60
 				minutes = seconds / 60

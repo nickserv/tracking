@@ -25,7 +25,7 @@ module Tracking
 			if tasks.length > 0
 				tasks.each_with_index do |task, task_index|
 					is_current = (task_index + 1 == tasks.length)
-					display_task(task, is_current)
+					display_task(task)
 				end
 			else
 				display_object :intro
@@ -42,14 +42,12 @@ module Tracking
 		# Displays a single formatted task in the command line
 		#
 		# @param [Task] task the task to display
-		# @param [Boolean] is_current true if and only if the given task is the
-		# current (last) task
-		def display_task(task, is_current)
+		def display_task(task)
 			word_wrap(task.name).split("\n").each_with_index do |name_line, line_index|
 				col_1 = pad(line_index==0 ? task.start_time : nil, 5)
 				col_2 = pad(name_line, @name_width)
 				col_3 = pad(line_index==0 ? task.elapsed_time : nil, @elapsed_time_width)
-				if is_current and Config[:color_current_task]
+				if task.current? and Config[:color_current_task]
 					col_1,col_2,col_3 = col_1.yellow,col_2.yellow,col_3.yellow
 				end
 				puts "| #{col_1} | #{col_2} | #{col_3} |"

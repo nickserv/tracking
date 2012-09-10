@@ -46,7 +46,7 @@ module Tracking
 		def create_task_from_data(line, next_line=nil)
 			name = line[1]
 			start_time = Time.parse line[0]
-			end_time = next_line.nil? ? Time.now : Time.parse(next_line[0])
+			end_time = next_line.nil? ? nil : Time.parse(next_line[0])
 
 			return Task.new(name, start_time, end_time)
 		end
