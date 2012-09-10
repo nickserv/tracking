@@ -30,7 +30,7 @@ module Tracking
 						col_2 = pad(name_line, @name_width)
 						col_3 = pad(line_index==0 ? task.elapsed_time : nil, @elapsed_time_width)
 						if current_task and Config[:color_current_task]
-							col_1,col_2,col_3 = col_1.red,col_2.red,col_3.red
+							col_1,col_2,col_3 = col_1.yellow,col_2.yellow,col_3.yellow
 						end
 						puts "| #{col_1} | #{col_2} | #{col_3} |"
 					end
