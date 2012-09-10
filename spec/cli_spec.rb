@@ -33,21 +33,4 @@ describe Tracking::CLI do
 		end
 	end
 
-=begin
-	it 'performs a few operations on a new list and then clears it' do
-		test_command '-c'
-		test_command
-		test_command 'first task'
-		test_command 'second task'
-		test_command '-r second task, renamed'
-		test_command
-		test_command '-d'
-		test_command '-c'
-	end
-=end
-
-	it 'displays help information (run from the system shell)' do
-		test_command '-h'
-	end
-
 end
