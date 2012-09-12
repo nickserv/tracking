@@ -45,9 +45,9 @@ module Tracking
 		# @param [Task] task the task to display
 		def display_task(task)
 			word_wrap(task.name).split("\n").each_with_index do |name_line, line_index|
-				col_1 = pad(line_index==0 ? task.start_time : nil, 5)
+				col_1 = pad((task.start_time if line_index==0), 5)
 				col_2 = pad(name_line, @name_width)
-				col_3 = pad(line_index==0 ? task.elapsed_time : nil, @elapsed_time_width)
+				col_3 = pad((task.elapsed_time if line_index==0), @elapsed_time_width)
 				if task.current? and Config[:color_current_task]
 					col_1,col_2,col_3 = col_1.yellow,col_2.yellow,col_3.yellow
 				end
