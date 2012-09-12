@@ -21,6 +21,8 @@ module Tracking
 		# @option options [Integer] :max the maximum number of tasks to retrieve.
 		# can also be :all, which retrieves all tasks. defaults to the value of
 		# Config[:lines].
+		# @option options [String] :query the search pattern to restrict to when
+		# retrieving tasks. optional. if set, it overrides :max.
 		#
 		# @return [Array] an array of Task objects
 		def get options={}
@@ -28,7 +30,7 @@ module Tracking
 				# Read all lines from the data file
 				lines = CSV.read(@data_file, @csv_options)
 				# Shorten lines to meet Config[:lines], if needed
-				if options[:max] != :all
+				if options[:max] != :all and not options[:query]
 					max = options[:max] || Config[:lines]
 					lines = lines[-max..-1] if lines.length > max
 				end
@@ -36,6 +38,10 @@ module Tracking
 				tasks = []
 				lines.each_with_index do |line, i|
 					tasks << create_task_from_data(line, lines[i+1])
+				end
+				# Restrict to a search query, if needed
+				if options[:query]
+					tasks.select! { |task| task.name.match options[:query] }
 				end
 				# Return tasks
 				return tasks
