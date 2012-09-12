@@ -18,7 +18,7 @@ module Tracking
 		# Reads part of the data file and creates Task objects from that data
 		#
 		# @param [Integer] max the maximum number of items to get from the end of
-		# the data file
+		# the data file (Note: when max is set to 0, all tasks are retrieved)
 		#
 		# @return [Array] an array of Task objects
 		def get max=Config[:lines]
