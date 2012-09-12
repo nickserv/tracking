@@ -143,44 +143,37 @@ Run this to begin your first task:
 				# Modes
 				opts.on('-a', '--all', 'display all tasks') do
 					display(:max => :all)
-					done = true
 					return
 				end
 				opts.on('-r', '--rename', 'rename the last task') do
 					List.rename ARGV.join(' ').gsub("\t",'')
 					display
-					done = true
 					return
 				end
 				opts.on('-d', '--delete', 'delete the last task') do
 					List.delete
 					display
-					done = true
 					return
 				end
 				opts.on('-c', '--clear', 'delete all tasks') do
 					List.clear
 					puts 'List cleared.'
-					done = true
 					return
 				end
 				opts.on('-h', '--help', 'display this help information') do
 					puts opts
-					done = true
 					return
 				end
 			end.parse!
 
 			# Basic modes (display and add)
-			unless done
-				if ARGV.count == 0
-					# Display all tasks
-					display
-				else
-					# Start a new task
-					List.add ARGV.join(' ').gsub("\t",'')
-					display
-				end
+			if ARGV.count == 0
+				# Display all tasks
+				display
+			else
+				# Start a new task
+				List.add ARGV.join(' ').gsub("\t",'')
+				display
 			end
 		end
 
