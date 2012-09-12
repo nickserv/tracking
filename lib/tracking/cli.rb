@@ -138,9 +138,14 @@ Run this to begin your first task:
 				opts.version = File.exist?(version_path) ? File.read(version_path) : ''
 				# Start of help text
 				opts.banner = 'Usage: tracking [mode]'
-				opts.separator '                                     display tasks'
+				opts.separator '                                     display recent tasks'
 				opts.separator '    <task description>               start a new task with the given text (spaces allowed)'
 				# Modes
+				opts.on('-a', '--all', 'display all tasks') do
+					display(:max => :all)
+					done = true
+					return
+				end
 				opts.on('-r', '--rename', 'rename the last task') do
 					List.rename ARGV.join(' ').gsub("\t",'')
 					display
