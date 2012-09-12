@@ -122,7 +122,7 @@ Run this to begin your first task:
 		# @return [String] the wrapped text (with newline characters)
 		def word_wrap(text)
 			text.split("\n").collect do |line|
-				line.length > Config[:task_width] ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1\n").strip : line
+				line.length > Config[:task_width] ? line.gsub(/(.{1,#{Config[:line_width]}})(\s+|$)/, "\\1\n").strip : line
 			end * "\n"
 		end
 
