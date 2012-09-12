@@ -22,3 +22,20 @@ def capture_output &block
 	end
 	fake.string
 end
+
+def backup_data
+	FileUtils.cd File.expand_path('~/.tracking')
+	FileUtils.mkdir 'test_backup'
+	%w(config.yml data.csv).each do |f|
+		FileUtils.mv(f, 'test_backup') if File.exist? f
+	end
+end
+
+def restore_data
+	FileUtils.cd File.expand_path('~/.tracking/test_backup')
+	%w(config.yml data.csv).each do |f|
+		FileUtils.mv(f, File.expand_path('..')) if File.exist? f
+	end
+	FileUtils.cd File.expand_path('..')
+	FileUtils.rmdir 'test_backup'
+end

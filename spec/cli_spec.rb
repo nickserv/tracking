@@ -4,20 +4,11 @@ require 'fileutils'
 describe Tracking::CLI do
 
 	before :each do
-		FileUtils.cd File.expand_path('~/.tracking')
-		FileUtils.mkdir 'test_backup'
-		%w(config.yml data.csv).each do |f|
-			FileUtils.mv(f, 'test_backup') if File.exist? f
-		end
+		backup_data
 	end
 
 	after :each do
-		FileUtils.cd File.expand_path('~/.tracking/test_backup')
-		%w(config.yml data.csv).each do |f|
-			FileUtils.mv(f, File.expand_path('..')) if File.exist? f
-		end
-		FileUtils.cd File.expand_path('..')
-		FileUtils.rmdir 'test_backup'
+		restore_data
 	end
 
 	it 'performs a few operations on a new list and then clears it' do
