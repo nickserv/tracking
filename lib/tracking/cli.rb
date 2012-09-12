@@ -145,6 +145,10 @@ Run this to begin your first task:
 					display(:max => :all)
 					return
 				end
+				opts.on('-n', '--number integer', 'display n tasks') do |number_str|
+					display(:max => number_str.to_i)
+					return
+				end
 				opts.on('-r', '--rename', 'rename the last task') do
 					List.rename ARGV.join(' ').gsub("\t",'')
 					display
