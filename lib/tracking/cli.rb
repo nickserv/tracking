@@ -18,10 +18,11 @@ module Tracking
 
 		# Displays part of the list in the command line
 		#
-		# @param [Integer] max the maximum number of items to display
-		def display max=Config[:lines]
+		# @param [Hash] options the options to use for retrieving tasks (passed to
+		# List#get)
+		def display options={}
 			display_object :top
-			tasks = List.get max
+			tasks = List.get options
 			if tasks.length > 0
 				tasks.each_with_index do |task, task_index|
 					is_current = (task_index + 1 == tasks.length)

@@ -17,20 +17,27 @@ module Tracking
 
 		# Reads part of the data file and creates Task objects from that data
 		#
-		# @param [Integer] max the maximum number of items to get from the end of
-		# the data file (Note: when max is set to 0, all tasks are retrieved)
+		# @param [Hash] options the options to use for retrieving tasks
+		# @option options [Integer] :max the maximum number of tasks to retrieve.
+		# can also be :all, which retrieves all tasks. defaults to the value of
+		# Config[:lines].
 		#
 		# @return [Array] an array of Task objects
-		def get max=Config[:lines]
+		def get options={}
 			if File.exist? @data_file
-				all_lines = CSV.read(@data_file, @csv_options)
-				lines = all_lines[-max..-1]
-				lines = all_lines if lines.nil?
-
+				# Read all lines from the data file
+				lines = CSV.read(@data_file, @csv_options)
+				# Shorten lines to meet Config[:lines], if needed
+				if options[:max] != :all
+					max = options[:max] || Config[:lines]
+					lines = lines[-max..-1] if lines.length > max
+				end
+				# Create task objects from lines
 				tasks = []
 				lines.each_with_index do |line, i|
 					tasks << create_task_from_data(line, lines[i+1])
 				end
+				# Return tasks
 				return tasks
 			else
 				return []
@@ -79,7 +86,7 @@ module Tracking
 		# @param [String] name the new name for the last task
 		def rename name
 			# get task data
-			old_task = get(1).first
+			old_task = get(:max => 1).first
 			# delete last task
 			delete
 			# add new task with old time
