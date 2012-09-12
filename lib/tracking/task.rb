@@ -90,13 +90,14 @@ module Tracking
 			# Return a string of the formatted elapsed time
 			case Config[:elapsed_format]
 			when :colons
-				elapsed = '%02d:%02d:%02d' % [days, hours, minutes]
-				elapsed += ':%02d' % seconds if Config[:show_elapsed_seconds]
+				format = '%02d:%02d:%02d'
+				format_secs = ':%02d'
 			when :letters
-				elapsed = '%02dd %02dh %02dm' % [days, hours, minutes]
-				elapsed += ' %02ds' % seconds if Config[:show_elapsed_seconds]
+				format = '%02dd %02dh %02dm'
+				format_secs = ' %02ds'
 			end
-			return elapsed
+			format += format_secs if Config[:show_elapsed_seconds]
+			return format % [days, hours, minutes, seconds]
 		end
 
 	end
