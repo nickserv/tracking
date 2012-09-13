@@ -71,7 +71,7 @@ module Tracking
 		# Calculates, formats, and returns the elapsed time of this task.
 		#
 		# @return [String] the formatted elapsed time of this task
-		def elapsed_time
+		def elapsed_time format=Config[:elapsed_format], show_seconds=Config[:show_elapsed_seconds]
 			# Calculate the elapsed time and break it down into different units
 			seconds = ((self.current? ? Time.now : @end_time) - @start_time).floor
 			minutes = hours = days = 0
@@ -88,7 +88,7 @@ module Tracking
 				end
 			end
 			# Return a string of the formatted elapsed time
-			case Config[:elapsed_format]
+			case format
 			when :colons
 				format = '%02d:%02d:%02d'
 				format_secs = ':%02d'
@@ -96,7 +96,7 @@ module Tracking
 				format = '%02dd %02dh %02dm'
 				format_secs = ' %02ds'
 			end
-			format += format_secs if Config[:show_elapsed_seconds]
+			format += format_secs if show_seconds
 			return format % [days, hours, minutes, seconds]
 		end
 
