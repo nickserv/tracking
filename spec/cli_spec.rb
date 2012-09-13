@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'fileutils'
 
 describe Tracking::CLI do
 

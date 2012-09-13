@@ -1,6 +1,8 @@
+# Set up simplecov
 require 'simplecov'
 SimpleCov.start
 
+# Set up bundler
 require 'bundler'
 begin
   Bundler.setup(:default, :development)
@@ -10,7 +12,10 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+# Require tracking
 require_relative '../lib/tracking'
+
+# Helper methods
 
 def capture_output &block
 	original_stdout = $stdout
