@@ -1,6 +1,6 @@
 # Set up simplecov
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start { add_filter '/spec/' }
 
 # Set up bundler
 require 'bundler'
