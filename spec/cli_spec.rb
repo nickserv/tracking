@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Tracking::CLI do
 
-	before :each { backup_data }
-	after  :each { restore_data }
+	before(:all) { backup_data }
+	after(:all)  { restore_data }
 
 	it 'performs a few operations on a new list and then clears it' do
 		capture_output do
