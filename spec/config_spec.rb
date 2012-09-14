@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tracking::CLI do
+describe Tracking::Config do
 
 	before(:all) { backup_data }
 	after(:all)  { restore_data }
