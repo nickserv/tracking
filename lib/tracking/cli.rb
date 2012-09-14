@@ -32,12 +32,6 @@ module Tracking
 				display_object :intro
 			end
 			display_object :bottom
-			# Display a warning, if needed
-=begin
-			if invalid_lines > 0
-				warn "Error: #{invalid_lines} invalid line#{'s' if invalid_lines > 1} found in data file."
-			end
-=end
 		end
 
 		# Displays a single formatted task in the command line
