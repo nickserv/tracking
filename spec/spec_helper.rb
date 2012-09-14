@@ -17,6 +17,12 @@ require_relative '../lib/tracking'
 
 # Helper methods
 
+def test_command args=''
+	capture_output do
+		Tracking::CLI.parse args.split(' ')
+	end
+end
+
 def capture_output &block
 	original_stdout = $stdout
 	$stdout = fake = StringIO.new
@@ -26,12 +32,6 @@ def capture_output &block
 		$stdout = original_stdout
 	end
 	fake.string
-end
-
-def test_command args=''
-	capture_output do
-		Tracking::CLI.parse args.split(' ')
-	end
 end
 
 def backup_data
