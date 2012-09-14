@@ -123,9 +123,6 @@ Run this to begin your first task:
 		# Use option parser to parse command line arguments and run the selected
 		# command with its selected options
 		def parse
-			#options = {}
-			done = false
-
 			OptionParser.new do |opts|
 				# Setup
 				version_path = File.expand_path('../../VERSION', File.dirname(__FILE__))
