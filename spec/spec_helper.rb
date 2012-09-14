@@ -14,7 +14,6 @@ end
 
 # Require tracking
 require_relative '../lib/tracking'
-@tracking_path = File.join(File.dirname(__FILE__), '..', 'bin', 'tracking')
 
 # Helper methods
 
@@ -31,7 +30,7 @@ end
 
 def test_command args=''
 	capture_output do
-		system "#{@tracking_path} #{args}"
+		Tracking::CLI.parse args.split(' ')
 	end
 end
 

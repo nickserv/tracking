@@ -6,20 +6,6 @@ describe Tracking::CLI do
 	after(:all)  { restore_data }
 
 	it 'performs a few operations on a new list and then clears it' do
-		capture_output do
-			Tracking::List.clear
-			Tracking::CLI.display
-			Tracking::List.add 'first task'
-			Tracking::List.add 'second task'
-			Tracking::List.rename 'second task, renamed'
-			Tracking::CLI.display
-			Tracking::List.delete
-			Tracking::List.clear
-		end
-	end
-
-=begin
-	it 'performs a few operations on a new list and then clears it' do
 		test_command '-c'
 		test_command
 		test_command 'first task'
@@ -29,9 +15,8 @@ describe Tracking::CLI do
 		test_command '-d'
 		test_command '-c'
 	end
-=end
 
-	it 'displays help information (run from the system shell)' do
+	it 'displays help information' do
 		test_command '-h'
 	end
 
