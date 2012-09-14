@@ -122,7 +122,10 @@ Run this to begin your first task:
 
 		# Use option parser to parse command line arguments and run the selected
 		# command with its selected options
-		def parse
+		#
+		# @param [Array] args the command line arguments passed to OptionParser
+		# (this should only need to be overridden for testing)
+		def parse args=ARGV
 			OptionParser.new do |opts|
 				# Setup
 				version_path = File.expand_path('../../VERSION', File.dirname(__FILE__))
@@ -141,7 +144,7 @@ Run this to begin your first task:
 					return
 				end
 				opts.on('-r', '--rename', 'rename the last task') do
-					List.rename ARGV.join(' ').gsub("\t",'')
+					List.rename args.join(' ').gsub("\t",'')
 					display
 					return
 				end
@@ -159,15 +162,15 @@ Run this to begin your first task:
 					puts opts
 					return
 				end
-			end.parse!
+			end.parse! args
 
 			# Basic modes (display and add)
-			if ARGV.count == 0
+			if args.count == 0
 				# Display all tasks
 				display
 			else
 				# Start a new task
-				List.add ARGV.join(' ').gsub("\t",'')
+				List.add args.join(' ').gsub("\t",'')
 				display
 			end
 		end
