@@ -1,8 +1,9 @@
 # Require all of tracking's stuff
-require File.join(File.dirname(__FILE__), 'tracking', 'config')
-require File.join(File.dirname(__FILE__), 'tracking', 'list')
-require File.join(File.dirname(__FILE__), 'tracking', 'task')
-require File.join(File.dirname(__FILE__), 'tracking', 'cli')
+lib_path = File.join(File.dirname(__FILE__), 'tracking')
+require File.join(lib_path, 'config')
+require File.join(lib_path, 'list')
+require File.join(lib_path, 'task')
+require File.join(lib_path, 'cli')
 
 # Tracking is the main namespace that all of the other modules and classes are a
 # part of
