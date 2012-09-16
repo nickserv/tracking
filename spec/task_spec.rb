@@ -9,7 +9,7 @@ describe Tracking::Task do
 			end_time = nil
 		else
 			start_time = Time.new(1993,6,30, 12) # June 30, 1993, at 12:00 PM
-			end_time = Time.new(1993,6,30, 13)   # June 30, 1993, at 1:00 PM
+			end_time   = Time.new(1993,7,1, 12)  # July 1, 1993, at 12:00 PM
 		end
 		task = Tracking::Task.new('test task', start_time, end_time)
 		# Test raw data
