@@ -118,6 +118,16 @@ Run this to begin your first task:
 			end * "\n"
 		end
 
+		# Gets a string of text from ARGV. Lets the user use spaces in strings
+		# without typing quotes around his/her text. Also removes tab characters
+		# from input data, so they would not interfere with the CSV file (which is
+		# separated with the tab character).
+		#
+		# @return input text from ARGV
+		def text_from_args
+			return ARGV.join(' ').gsub("\t",'')
+		end
+
 		# Use option parser to parse command line arguments and run the selected
 		# command with its selected options
 		#
@@ -142,7 +152,7 @@ Run this to begin your first task:
 					return
 				end
 				opts.on('-r', '--rename', 'rename the last task') do
-					List.rename args.join(' ').gsub("\t",'')
+					List.rename text_from_args
 					display
 					return
 				end
