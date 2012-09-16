@@ -12,10 +12,10 @@ describe Tracking::Config do
 	it 'writes a value to the config file' do
 		Tracking::Config[:lines] = 9001
 		Tracking::Config[:lines].should == 9001
-		File.exist?(Tracking::Config::PATH).should be_true
 	end
 
 	it 'creates a config file' do
+		Tracking::Config.write
 		File.exist?(Tracking::Config::PATH).should be_true
 	end
 
