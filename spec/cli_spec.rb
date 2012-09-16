@@ -12,6 +12,9 @@ describe Tracking::CLI do
 		test_command 'second task'
 		test_command '-r second task, renamed'
 		test_command
+		test_command '-a'
+		test_command '-n 1'
+		test_command
 		test_command '-d'
 		test_command '-c'
 	end
