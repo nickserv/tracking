@@ -12,6 +12,7 @@ describe Tracking::List do
 			Tracking::List.add 'first task'
 			Tracking::List.add 'second task'
 			Tracking::List.get.length.should == 2
+			Tracking::List.get(:query => 'task').length.should == 2
 			Tracking::List.get(:max => :all).length.should == 2
 			Tracking::List.get(:max => 1).length.should == 1
 			Tracking::List.rename 'second task, renamed'

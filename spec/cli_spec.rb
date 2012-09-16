@@ -10,6 +10,7 @@ describe Tracking::CLI do
 		test_command
 		test_command 'first task'
 		test_command 'second task'
+		test_command '-f task'
 		test_command '-r second task, renamed'
 		test_command
 		test_command '-a'

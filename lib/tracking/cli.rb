@@ -143,6 +143,10 @@ Run this to begin your first task:
 				opts.separator '                                     display recent tasks'
 				opts.separator '    <task description>               start a new task with the given text (spaces allowed)'
 				# Modes
+				opts.on('-f', '--find', 'display all tasks that match a search query') do
+					display(:query => text_from_args)
+					return
+				end
 				opts.on('-a', '--all', 'display all tasks') do
 					display(:max => :all)
 					return
