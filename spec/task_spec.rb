@@ -25,7 +25,8 @@ describe Tracking::Task do
 		task.start_time.should == task.raw(:start_time).strftime('%H:%M')
 		task.to_s.should == "name: test task; start: #{task.raw(:start_time)}; end: #{task.raw(:end_time)};"
 		task.current?.should == current
-		task.elapsed_time(:colons,false).should == '00:01:00' if not current
+		task.elapsed_time(:colons, false).should == '01:00:00' if not current
+		task.elapsed_time(:letters, false).should == '01d 00h 00m' if not current
 	end
 
 	it 'creates a Task set in the past and gets data from it' do
