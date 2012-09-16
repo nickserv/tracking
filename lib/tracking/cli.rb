@@ -97,8 +97,6 @@ Run this to begin your first task:
 					return ' ' * difference + string
 				when :center
 					return ' '*(difference/2).floor + string + ' '*(difference/2).ceil
-				else
-					return string
 				end
 			end
 		end

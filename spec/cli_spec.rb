@@ -20,4 +20,10 @@ describe Tracking::CLI do
 		test_command '-h'
 	end
 
+	it 'pads and aligns text' do
+		Tracking::CLI.pad('test', 8, :left).should == 'test    '
+		Tracking::CLI.pad('test', 8, :right).should == '    test'
+		Tracking::CLI.pad('test', 8, :center).should == '  test  '
+	end
+
 end
