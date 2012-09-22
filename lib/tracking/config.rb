@@ -28,6 +28,8 @@ module Tracking
 				:task_width => 40,
 				# format to use for elapsed time display (:colons or :letters)
 				:elapsed_format => :colons,
+				# color for the current (last) task
+				:current_task_color => :yellow,
 				# toggle colored display of the current (last) task
 				:color_current_task => true,
 				# toggle header describing tracking's display columns (true or false)

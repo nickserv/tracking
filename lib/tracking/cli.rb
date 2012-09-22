@@ -42,9 +42,16 @@ module Tracking
 				col_1 = pad((task.start_time if line_index==0), 5)
 				col_2 = pad(name_line, @name_width)
 				col_3 = pad((task.elapsed_time if line_index==0), @elapsed_time_width)
+
 				if task.current? and Config[:color_current_task]
-					col_1,col_2,col_3 = col_1.yellow,col_2.yellow,col_3.yellow
+					current_task_color = Config[:current_task_color]
+					current_task_color = Config.defaults[:current_task_color] unless String.colors.include? current_task_color
+
+					col_1 = col_1.colorize current_task_color
+					col_2 = col_2.colorize current_task_color
+					col_3 = col_3.colorize current_task_color
 				end
+
 				puts "| #{col_1} | #{col_2} | #{col_3} |"
 			end
 		end
