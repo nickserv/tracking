@@ -70,6 +70,10 @@ module Tracking
 
 		# Calculates, formats, and returns the elapsed time of this task.
 		#
+		# @param [String] format the format string (or preset symbol) to use
+		# @param [Boolean] show_seconds toggles the display of seconds (only for
+		# presets)
+		#
 		# @return [String] the formatted elapsed time of this task
 		def elapsed_time format=Config[:elapsed_format], show_seconds=Config[:show_elapsed_seconds]
 			# Calculate the elapsed time and break it down into different units
@@ -88,16 +92,27 @@ module Tracking
 				end
 			end
 			# Return a string of the formatted elapsed time
-			case format
-			when :colons
-				format = '%02d:%02d:%02d'
-				format_secs = ':%02d'
-			when :letters
-				format = '%02dd %02dh %02dm'
-				format_secs = ' %02ds'
-			end
-			format += format_secs if show_seconds
+			format = elapsed_time_preset(format, show_seconds) if format.class == Symbol
 			return format % [days, hours, minutes, seconds]
+		end
+
+		# Gets an elapsed time formatting string from a preset.
+		#
+		# @param [Symbol] preset the preset to use
+		# @param [Boolean] show_seconds toggles the display of seconds
+		#
+		# @return [String] the format string for elapsed time
+		def elapsed_time_preset preset, show_seconds=Config[:show_elapsed_seconds]
+			case preset
+			when :colons
+				preset = '%02d:%02d:%02d'
+				preset_secs = ':%02d'
+			when :letters
+				preset = '%02dd %02dh %02dm'
+				preset_secs = ' %02ds'
+			end
+			preset += preset_secs if show_seconds
+			return preset
 		end
 
 	end
