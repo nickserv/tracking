@@ -8,6 +8,7 @@ rdoc
 # yard generated
 doc
 .yardoc
+_yardoc
 
 # bundler
 .bundle
@@ -15,3 +16,16 @@ Gemfile.lock
 
 # jeweler generated
 pkg
+
+
+.DS_Store
+*.swp
+*.gem
+*.rbc
+.config
+InstalledFiles
+lib/bundler/man
+spec/reports
+test/tmp
+test/version_tmp
+tmp
