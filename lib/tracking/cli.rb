@@ -25,7 +25,6 @@ module Tracking
 			tasks = List.get options
 			if tasks.length > 0
 				tasks.each_with_index do |task, task_index|
-					is_current = (task_index + 1 == tasks.length)
 					display_task(task)
 				end
 			else
