@@ -7,15 +7,15 @@ gem 'colorize', '~> 0.5'
 # Include everything needed to run rake, tests, features, etc.
 group :development do
 	gem 'rdoc', '~> 3.12'
-	gem 'bundler'
-	gem 'jeweler', '~> 1.8.4'
-	gem 'simplecov'
-	gem 'yard'
-	gem 'rspec'
+	gem 'bundler', '~> 1.2'
+	gem 'jeweler', '~> 1.8'
+	gem 'simplecov', '~> 0.7'
+	gem 'yard', '~> 0.8'
+	gem 'rspec', '~> 2.12'
 	platforms :ruby do
-		gem 'redcarpet'
+		gem 'redcarpet', '~> 2.2'
 	end
 	platforms :jruby do
-		gem 'kramdown'
+		gem 'kramdown', '~> 0.14'
 	end
 end
