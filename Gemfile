@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Add dependencies required to use your gem here.
 gem 'colorize', '~> 0.5'
