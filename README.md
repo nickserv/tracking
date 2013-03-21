@@ -119,4 +119,4 @@ todo manager to complement tracking
 [timetrap](https://github.com/samg/timetrap) for letting me borrow some code
 
 ##Copyright
-Copyright (c) 2012 Nicolas McCurdy. See LICENSE.txt for further details.
+Copyright (c) 2013 Nicolas McCurdy. See LICENSE.txt for further details.
