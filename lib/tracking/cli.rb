@@ -23,18 +23,10 @@ module Tracking
     # List#get)
     def display options={}
       tasks = List.get options
-      tasks.each_with_index { |task, task_index| display_task(task) }
-      display_intro if tasks.length.zero?
-    end
-
-    # Displays a single formatted task in the command line
-    #
-    # @param [Task] task the task to display
-    def display_task(task)
-      split_task(task.name).each_with_index do |name_line, line_index|
-        col_1 = task.start_time if line_index==0
-        col_2 = name_line
-        col_3 = task.elapsed_time if line_index==0
+      task_displays = tasks.map do |task|
+        col_1 = task.start_time
+        col_2 = task.name
+        col_3 = task.elapsed_time
 
         if task.current? and Config[:color_current_task]
           current_task_color = Config[:current_task_color]
@@ -45,8 +37,14 @@ module Tracking
           col_3 = col_3.colorize current_task_color
         end
 
-        puts "| #{col_1} | #{col_2} | #{col_3} |"
+        [col_1, col_2, col_3]
       end
+      if Config[:show_header]
+        puts Terminal::Table.new headings: ['start', 'task', 'elapsed'], rows: task_displays, style: { width: 40 }
+      else
+        puts Terminal::Table.new rows: task_displays, style: { width: 40 }
+      end
+      display_intro if tasks.length.zero?
     end
 
     # Displays commonly used text objects in the command line
