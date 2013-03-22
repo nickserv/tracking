@@ -22,16 +22,9 @@ module Tracking
     # @param [Hash] options the options to use for retrieving tasks (passed to
     # List#get)
     def display options={}
-      display_object :top
       tasks = List.get options
-      if tasks.length > 0
-        tasks.each_with_index do |task, task_index|
-          display_task(task)
-        end
-      else
-        display_object :intro
-      end
-      display_object :bottom
+      tasks.each_with_index { |task, task_index| display_task(task) }
+      display_intro if tasks.length.zero?
     end
 
     # Displays a single formatted task in the command line
@@ -59,27 +52,15 @@ module Tracking
     # Displays commonly used text objects in the command line
     #
     # @param type the type of text object to display (:top/:bottom/:intro)
-    def display_object type
-      horizontal_border = "+-------+--+--+"
-      case type
-      when :top
-        puts horizontal_border
-        if Config[:show_header]
-          puts "| start | task | elapsed |"
-          puts horizontal_border
-        end
-      when :bottom
-        puts horizontal_border
-      when :intro
-        intro_text = <<-EOF
+    def display_intro
+      intro_text = <<-EOF
 You haven't started any tasks yet! :(
 
 Run this to begin your first task:
   tracking starting some work
-        EOF
-        intro_text.each_line do |line|
-          puts "|       | #{line.chomp} |  |"
-        end
+      EOF
+      intro_text.each_line do |line|
+        puts "|       | #{line.chomp} |  |"
       end
     end
 
