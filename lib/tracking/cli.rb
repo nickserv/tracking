@@ -1,5 +1,6 @@
 require 'optparse'
 require 'colorize'
+require 'terminal-table'
 
 module Tracking
   # Contains methods for displaying the list in a command line and parsing
