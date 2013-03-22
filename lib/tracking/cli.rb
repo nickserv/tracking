@@ -39,9 +39,9 @@ module Tracking
     # @param [Task] task the task to display
     def display_task(task)
       split_task(task.name).each_with_index do |name_line, line_index|
-        col_1 = pad((task.start_time if line_index==0), 5)
-        col_2 = pad(name_line, @name_width)
-        col_3 = pad((task.elapsed_time if line_index==0), @elapsed_time_width)
+        col_1 = task.start_time if line_index==0
+        col_2 = name_line
+        col_3 = task.elapsed_time if line_index==0
 
         if task.current? and Config[:color_current_task]
           current_task_color = Config[:current_task_color]
@@ -60,12 +60,12 @@ module Tracking
     #
     # @param type the type of text object to display (:top/:bottom/:intro)
     def display_object type
-      horizontal_border = "+-------+-#{'-'*@name_width}-+-#{'-'*@elapsed_time_width}-+"
+      horizontal_border = "+-------+--+--+"
       case type
       when :top
         puts horizontal_border
         if Config[:show_header]
-          puts "| start | #{pad('task', @name_width, :center)} | #{pad('elapsed', @elapsed_time_width, :center)} |"
+          puts "| start | task | elapsed |"
           puts horizontal_border
         end
       when :bottom
@@ -78,32 +78,7 @@ Run this to begin your first task:
   tracking starting some work
         EOF
         intro_text.each_line do |line|
-          puts "|       | #{pad(line.chomp, @name_width)} | #{pad(nil, @elapsed_time_width)} |"
-        end
-      end
-    end
-
-    # Pads tasks with whitespace to align them for display
-    #
-    # @param [String] string the string to pad
-    # @param [Integer] length the length of the resultant string
-    # @param [Symbol] align the alignment of the start string within the end
-    # string (:left/:right/:center)
-    # @return [String] the padded string
-    def pad(string, length, align=:left)
-      if string == nil
-        return ' ' * length
-      elsif string.length >= length
-        return string
-      else
-        difference = (length - string.length).to_f
-        case align
-        when :left
-          return string + ' ' * difference
-        when :right
-          return ' ' * difference + string
-        when :center
-          return ' '*(difference/2).floor + string + ' '*(difference/2).ceil
+          puts "|       | #{line.chomp} |  |"
         end
       end
     end
