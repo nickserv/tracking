@@ -27,6 +27,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rdoc", "~> 3.12"
   spec.add_development_dependency "simplecov", "~> 0.7"
   spec.add_development_dependency "yard", "~> 0.8"
-  spec.add_development_dependency "redcarpet", "~> 2.2"
-  spec.add_development_dependency "kramdown", "~> 0.14"
+
+  if RUBY_PLATFORM == "java"
+    spec.add_development_dependency "kramdown", "~> 0.14"
+  else
+    spec.add_development_dependency "redcarpet", "~> 2.2"
+  end
 end
