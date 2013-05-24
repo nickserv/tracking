@@ -75,7 +75,7 @@ module Tracking
 		# presets)
 		#
 		# @return [String] the formatted elapsed time of this task
-		def elapsed_time format=Config[:elapsed_format], show_seconds=Config[:show_elapsed_seconds]
+		def elapsed_time format=TrackingConfig[:elapsed_format], show_seconds=TrackingConfig[:show_elapsed_seconds]
 			# Calculate the elapsed time and break it down into different units
 			seconds = ((self.current? ? Time.now : @end_time) - @start_time).floor
 			minutes = hours = days = 0
@@ -102,7 +102,7 @@ module Tracking
 		# @param [Boolean] show_seconds toggles the display of seconds
 		#
 		# @return [String] the format string for elapsed time
-		def elapsed_time_preset preset, show_seconds=Config[:show_elapsed_seconds]
+		def elapsed_time_preset preset, show_seconds=TrackingConfig[:show_elapsed_seconds]
 			case preset
 			when :colons
 				preset = '%02d:%02d:%02d'
