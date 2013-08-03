@@ -11,7 +11,7 @@ module Tracking
     @start_time_width = 5
 
     # Width of the second column (name)
-    @name_width = Config[:task_width]
+    @name_width = TrackingConfig[:task_width]
 
     # Width of the third column (elapsed time)
     @elapsed_time_width = Task.elapsed_time_length
@@ -42,9 +42,9 @@ module Tracking
         col_2 = pad(name_line, @name_width)
         col_3 = pad((task.elapsed_time if line_index==0), @elapsed_time_width)
 
-        if task.current? and Config[:color_current_task]
-          current_task_color = Config[:current_task_color]
-          current_task_color = Config.defaults[:current_task_color] unless String.colors.include? current_task_color
+        if task.current? and TrackingConfig[:color_current_task]
+          current_task_color = TrackingConfig[:current_task_color]
+          current_task_color = TrackingConfig.defaults[:current_task_color] unless String.colors.include? current_task_color
 
           col_1 = col_1.colorize current_task_color
           col_2 = col_2.colorize current_task_color
@@ -63,7 +63,7 @@ module Tracking
       case type
       when :top
         puts horizontal_border
-        if Config[:show_header]
+        if TrackingConfig[:show_header]
           puts "| start | #{pad('task', @name_width, :center)} | #{pad('elapsed', @elapsed_time_width, :center)} |"
           puts horizontal_border
         end
@@ -116,7 +116,7 @@ Run this to begin your first task:
     def split_task task
 
       # If the task fits
-      if task.length <= Config[:task_width]
+      if task.length <= TrackingConfig[:task_width]
         return [task]
 
       # If the task needs to be split
@@ -127,23 +127,23 @@ Run this to begin your first task:
         words.each do |word|
 
           # If the word needs to be split
-          if word.length > Config[:task_width]
+          if word.length > TrackingConfig[:task_width]
             # Add the start of the word onto the first line (even if it has
             # already started)
-            while line.length < Config[:task_width]
+            while line.length < TrackingConfig[:task_width]
               line += word[0]
               word = word[1..-1]
             end
             split << line
             # Split the rest of the word up onto new lines
-            split_word = word.scan(%r[.{1,#{Config[:task_width]}}])
+            split_word = word.scan(%r[.{1,#{TrackingConfig[:task_width]}}])
             split_word[0..-2].each do |word_section|
               split << word_section
             end
             line = split_word.last
 
           # If the word would fit on a new line
-          elsif (line + word).length > Config[:task_width]
+          elsif (line + word).length > TrackingConfig[:task_width]
             split << line.chomp
             line = word
 
@@ -153,7 +153,7 @@ Run this to begin your first task:
           end
 
           # Add a space to the end of the last word, if it would fit
-          line += ' ' if line.length != Config[:task_width]
+          line += ' ' if line.length != TrackingConfig[:task_width]
 
         end
         split << line

@@ -6,7 +6,7 @@ module Tracking
   #
   # similar to Sam Goldstein's config.rb for timetrap
   # @see https://github.com/samg/timetrap/
-  module Config
+  module TrackingConfig
     extend self
 
     # The path to the config file
