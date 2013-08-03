@@ -1,4 +1,5 @@
 # Require all of tracking's stuff
+require 'tracking/version'
 require 'tracking/config'
 require 'tracking/task'
 require 'tracking/list'
