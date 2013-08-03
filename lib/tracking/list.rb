@@ -10,7 +10,7 @@ module Tracking
     extend self
 
     # The path to tracking's data file
-    @data_file = File.expand_path(Config[:data_file])
+    @data_file = File.expand_path(TrackingConfig[:data_file])
 
     # The options tracking uses for Ruby's CSV interface
     @csv_options = { :col_sep => "\t" }
@@ -20,7 +20,7 @@ module Tracking
     # @param [Hash] options the options to use for retrieving tasks
     # @option options [Integer] :max the maximum number of tasks to retrieve.
     # can also be :all, which retrieves all tasks. defaults to the value of
-    # Config[:lines].
+    # TrackingConfig[:lines].
     # @option options [String] :query the search pattern to restrict to when
     # retrieving tasks. optional. if set, it overrides :max.
     #
@@ -29,9 +29,9 @@ module Tracking
       if File.exist? @data_file
         # Read all lines from the data file
         lines = CSV.read(@data_file, @csv_options)
-        # Shorten lines to meet Config[:lines], if needed
+        # Shorten lines to meet TrackingConfig[:lines], if needed
         if options[:max] != :all and not options[:query]
-          max = options[:max] || Config[:lines]
+          max = options[:max] || TrackingConfig[:lines]
           lines = lines[-max..-1] if lines.length > max
         end
         # Create task objects from lines

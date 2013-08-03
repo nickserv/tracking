@@ -12,7 +12,7 @@ module Tracking
     @start_time_width = 5
 
     # Width of the second column (name)
-    @name_width = Config[:task_width]
+    @name_width = TrackingConfig[:task_width]
 
     # Width of the third column (elapsed time)
     @elapsed_time_width = Task.elapsed_time_length
@@ -22,43 +22,89 @@ module Tracking
     # @param [Hash] options the options to use for retrieving tasks (passed to
     # List#get)
     def display options={}
+      display_object :top
       tasks = List.get options
-      task_displays = tasks.map do |task|
-        col_1 = task.start_time
-        col_2 = task.name
-        col_3 = task.elapsed_time
+      if tasks.length > 0
+        tasks.each_with_index do |task, task_index|
+          display_task(task)
+        end
+      else
+        display_object :intro
+      end
+      display_object :bottom
+    end
 
-        if task.current? and Config[:color_current_task]
-          current_task_color = Config[:current_task_color]
-          current_task_color = Config.defaults[:current_task_color] unless String.colors.include? current_task_color
+    # Displays a single formatted task in the command line
+    #
+    # @param [Task] task the task to display
+    def display_task(task)
+      split_task(task.name).each_with_index do |name_line, line_index|
+        col_1 = pad((task.start_time if line_index==0), 5)
+        col_2 = pad(name_line, @name_width)
+        col_3 = pad((task.elapsed_time if line_index==0), @elapsed_time_width)
+
+        if task.current? and TrackingConfig[:color_current_task]
+          current_task_color = TrackingConfig[:current_task_color]
+          current_task_color = TrackingConfig.defaults[:current_task_color] unless String.colors.include? current_task_color
 
           col_1 = col_1.colorize current_task_color
           col_2 = col_2.colorize current_task_color
           col_3 = col_3.colorize current_task_color
         end
 
-        [col_1, col_2, col_3]
+        puts "| #{col_1} | #{col_2} | #{col_3} |"
       end
-      if Config[:show_header]
-        puts Terminal::Table.new headings: ['start', 'task', 'elapsed'], rows: task_displays, style: { width: 40 }
-      else
-        puts Terminal::Table.new rows: task_displays, style: { width: 40 }
-      end
-      display_intro if tasks.length.zero?
     end
 
     # Displays commonly used text objects in the command line
     #
     # @param type the type of text object to display (:top/:bottom/:intro)
-    def display_intro
-      intro_text = <<-EOF
+    def display_object type
+      horizontal_border = "+-------+-#{'-'*@name_width}-+-#{'-'*@elapsed_time_width}-+"
+      case type
+      when :top
+        puts horizontal_border
+        if TrackingConfig[:show_header]
+          puts "| start | #{pad('task', @name_width, :center)} | #{pad('elapsed', @elapsed_time_width, :center)} |"
+          puts horizontal_border
+        end
+      when :bottom
+        puts horizontal_border
+      when :intro
+        intro_text = <<-EOF
 You haven't started any tasks yet! :(
 
 Run this to begin your first task:
   tracking starting some work
-      EOF
-      intro_text.each_line do |line|
-        puts "|       | #{line.chomp} |  |"
+        EOF
+        intro_text.each_line do |line|
+          puts "|       | #{pad(line.chomp, @name_width)} | #{pad(nil, @elapsed_time_width)} |"
+        end
+      end
+    end
+
+    # Pads tasks with whitespace to align them for display
+    #
+    # @param [String] string the string to pad
+    # @param [Integer] length the length of the resultant string
+    # @param [Symbol] align the alignment of the start string within the end
+    # string (:left/:right/:center)
+    # @return [String] the padded string
+    def pad(string, length, align=:left)
+      if string == nil
+        return ' ' * length
+      elsif string.length >= length
+        return string
+      else
+        difference = (length - string.length).to_f
+        case align
+        when :left
+          return string + ' ' * difference
+        when :right
+          return ' ' * difference + string
+        when :center
+          return ' '*(difference/2).floor + string + ' '*(difference/2).ceil
+        end
       end
     end
 
@@ -71,7 +117,7 @@ Run this to begin your first task:
     def split_task task
 
       # If the task fits
-      if task.length <= Config[:task_width]
+      if task.length <= TrackingConfig[:task_width]
         return [task]
 
       # If the task needs to be split
@@ -82,23 +128,23 @@ Run this to begin your first task:
         words.each do |word|
 
           # If the word needs to be split
-          if word.length > Config[:task_width]
+          if word.length > TrackingConfig[:task_width]
             # Add the start of the word onto the first line (even if it has
             # already started)
-            while line.length < Config[:task_width]
+            while line.length < TrackingConfig[:task_width]
               line += word[0]
               word = word[1..-1]
             end
             split << line
             # Split the rest of the word up onto new lines
-            split_word = word.scan(%r[.{1,#{Config[:task_width]}}])
+            split_word = word.scan(%r[.{1,#{TrackingConfig[:task_width]}}])
             split_word[0..-2].each do |word_section|
               split << word_section
             end
             line = split_word.last
 
           # If the word would fit on a new line
-          elsif (line + word).length > Config[:task_width]
+          elsif (line + word).length > TrackingConfig[:task_width]
             split << line.chomp
             line = word
 
@@ -108,7 +154,7 @@ Run this to begin your first task:
           end
 
           # Add a space to the end of the last word, if it would fit
-          line += ' ' if line.length != Config[:task_width]
+          line += ' ' if line.length != TrackingConfig[:task_width]
 
         end
         split << line
