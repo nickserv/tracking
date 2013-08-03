@@ -1,4 +1,4 @@
-#tracking
+#Tracking
 [![Gem Version](https://badge.fury.io/rb/tracking.png)](http://badge.fury.io/rb/tracking)
 [![Build Status](https://secure.travis-ci.org/thenickperson/tracking.png?branch=master)](http://travis-ci.org/thenickperson/tracking)
 [![Dependency Status](https://gemnasium.com/thenickperson/tracking.png)](https://gemnasium.com/thenickperson/tracking)
@@ -7,8 +7,17 @@
 A simple and configurable command line time tracker.
 
 ##Installation
+Add this line to your application's Gemfile:
 
-`gem install tracking`
+    gem 'tracking'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install tracking
 
 If you're on Windows, you should set up
 [Ruby Installer](http://rubyinstaller.org/downloads/) and
@@ -100,19 +109,12 @@ enabled)
   - colons: `01:02:03:04`
   - letters: `01d 02h 03m 04s`
 
-##Contributing to tracking
-- Check out the latest master to make sure the feature hasn't been implemented
-or the bug hasn't been fixed yet.
-- Check out the issue tracker to make sure someone already hasn't requested it
-and/or contributed it.
-- Fork the project.
-- Start a feature/bugfix branch.
-- Commit and push until you are happy with your contribution.
-- Make sure to add tests for it. This is important so I don't break it in a
-future version unintentionally.
-- Please try not to mess with the Rakefile, version, or history. If you want to
-have your own version, or is otherwise necessary, that is fine, but please
-isolate to its own commit so I can cherry-pick around it.
+## Contributing
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
 ##Similar Projects
 - [timetrap](https://github.com/samg/timetrap)
@@ -123,6 +125,3 @@ todo manager to complement tracking
 ##Special Thanks
 - [to-do](http://github.com/kristenmills/to-do) and
 [timetrap](https://github.com/samg/timetrap) for letting me borrow some code
-
-##Copyright
-Copyright (c) 2013 Nicolas McCurdy. See LICENSE.txt for further details.

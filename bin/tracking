@@ -1,11 +1,5 @@
 #!/usr/bin/env ruby
 
-current_directory = if File.symlink? __FILE__
-  File.dirname File.readlink __FILE__
-else
-  File.dirname __FILE__
-end
-
-require File.join(File.expand_path('..', current_directory), 'lib', 'tracking')
+require 'tracking'
 
 Tracking::CLI.parse
