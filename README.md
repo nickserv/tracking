@@ -14,7 +14,8 @@ If you're on Windows, you should set up
 [Ruby Installer](http://rubyinstaller.org/downloads/) and
 [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) first.
 
-Also, tracking does not work on Ruby 1.8 (yet). Please upgrade to Ruby 1.9.3.
+Tracking does not officially support versions of Ruby before 1.9.3. Please make
+sure your version of Ruby is up to date.
 
 ##Features
 - concise and configurable display
