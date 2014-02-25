@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
     "spec/helper.rb",
     "tracking.gemspec"
   ]
-  s.homepage = "http://github.com/thenickperson/tracking"
+  s.homepage = "http://github.com/nicolasmccurdy/tracking"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
