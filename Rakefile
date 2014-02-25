@@ -15,7 +15,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = 'tracking'
-  gem.homepage = 'http://github.com/thenickperson/tracking'
+  gem.homepage = 'http://github.com/nicolasmccurdy/tracking'
   gem.license = 'MIT'
   gem.summary = 'A simple and configurable command line time tracker.'
   gem.description = 'See README for more information.'
