@@ -1,3 +1,6 @@
+# Deprecated
+Use [timers](http://orgmode.org/manual/Timers.html) for [Org](http://orgmode.org/).
+
 # tracking
 [![Gem Version](https://badge.fury.io/rb/tracking.png)](http://badge.fury.io/rb/tracking)
 [![Build Status](https://secure.travis-ci.org/nicolasmccurdy/tracking.png?branch=master)](http://travis-ci.org/nicolasmccurdy/tracking)
