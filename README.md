@@ -1,4 +1,4 @@
-#tracking
+# tracking
 [![Gem Version](https://badge.fury.io/rb/tracking.png)](http://badge.fury.io/rb/tracking)
 [![Build Status](https://secure.travis-ci.org/nicolasmccurdy/tracking.png?branch=master)](http://travis-ci.org/nicolasmccurdy/tracking)
 [![Dependency Status](https://gemnasium.com/nicolasmccurdy/tracking.png)](https://gemnasium.com/nicolasmccurdy/tracking)
@@ -6,7 +6,7 @@
 
 A simple and configurable command line time tracker.
 
-##Installation
+## Installation
 
 `gem install tracking`
 
@@ -17,16 +17,16 @@ If you're on Windows, you should set up
 Tracking does not officially support versions of Ruby before 1.9.3. Please make
 sure your version of Ruby is up to date.
 
-##Features
+## Features
 - concise and configurable display
 - simple syntax
 - portable data
 
-##Ideas (future)
+## Ideas (future)
 - hashtag-like tags for organizing tasks
 - different ways to view your data
 
-##Tutorial
+## Tutorial
 ```
 $ tracking essay for English class
 +-------+------------------------------------------+----------+
@@ -58,7 +58,7 @@ $ tracking back to work
 +-------+------------------------------------------+----------+
 ```
 
-##Usage
+## Usage
 ```
 Usage: tracking [mode]
                                      display tasks
@@ -69,7 +69,7 @@ Usage: tracking [mode]
     -h, --help                       display this help information
 ```
 
-##Configuration
+## Configuration
 The config file for tracking is located in `~/.tracking/config.yml`.
 
 The default settings are listed below, along with a description of each setting.
@@ -90,7 +90,7 @@ The default settings are listed below, along with a description of each setting.
 :show_elapsed_seconds: false
 ```
 
-##Elapsed Time Formats
+## Elapsed Time Formats
 Elapsed times are displayed in this order: days, hours, minutes, seconds (if
 enabled)
 - hide elapsed seconds
@@ -100,7 +100,7 @@ enabled)
 	- colons: `01:02:03:04`
 	- letters: `01d 02h 03m 04s`
 
-##Contributing to tracking
+## Contributing to tracking
 - Check out the latest master to make sure the feature hasn't been implemented
 or the bug hasn't been fixed yet.
 - Check out the issue tracker to make sure someone already hasn't requested it
@@ -114,15 +114,15 @@ future version unintentionally.
 have your own version, or is otherwise necessary, that is fine, but please
 isolate to its own commit so I can cherry-pick around it.
 
-##Similar Projects
+## Similar Projects
 - [timetrap](https://github.com/samg/timetrap)
 - [d-time-tracker](https://github.com/DanielVF/d-time-tracker)
 - [to-do](http://github.com/kristenmills/to-do) if you want a good command line
 todo manager to complement tracking
 
-##Special Thanks
+## Special Thanks
 - [to-do](http://github.com/kristenmills/to-do) and
 [timetrap](https://github.com/samg/timetrap) for letting me borrow some code
 
-##Copyright
+## Copyright
 Copyright (c) 2012 Nicolas McCurdy. See LICENSE.txt for further details.
